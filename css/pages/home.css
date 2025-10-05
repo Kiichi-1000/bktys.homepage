@@ -1,0 +1,240 @@
+/* Page: Home (index.html) */
+
+/* ===== Hero / Fullscreen Slideshow ===== */
+.hero{ min-height:100vh }
+.slides{ position:relative; height:100vh; width:100%; overflow:hidden }
+.slide{ position:absolute; inset:0; opacity:0; transform:translateX(0) translateY(0); }
+.slide img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; animation: zoomInOut var(--dur) ease-in-out infinite; }
+
+/* 各スライドのズームアニメーションにディレイを設定 */
+.slide:nth-child(1) img{ animation-delay: 0s }
+.slide:nth-child(2) img{ animation-delay: 7s }
+.slide:nth-child(3) img{ animation-delay: 14s }
+.slide:nth-child(4) img{ animation-delay: 21s }
+
+/* 各スライドのスライドイン方向（アニメーション適用） */
+.slide:nth-child(1){ animation: slideInFromLeft var(--dur) linear infinite; animation-delay: 0s }
+.slide:nth-child(2){ animation: slideInFromRight var(--dur) linear infinite; animation-delay: 7s }
+.slide:nth-child(3){ animation: slideInFromTop var(--dur) linear infinite; animation-delay: 14s }
+.slide:nth-child(4){ animation: slideInFromBottom var(--dur) linear infinite; animation-delay: 21s }
+
+/* ヘッダー下を見やすくするグラデーション（透け感） */
+.slide::after{ content:""; position:absolute; inset:0; background: radial-gradient(1200px 380px at 10% -10%, rgba(0,0,0,.55), transparent 60%), linear-gradient(to bottom, rgba(0,0,0,.35), rgba(0,0,0,.65)) }
+
+/* フェードアウト時の白い画面を防ぐ */
+.slides{ background:#000 }
+
+/* スマホ用Hero画像自動スライド（元の仕様を維持） */
+@media (max-width:768px){
+  .hero{ min-height:100vh; overflow:hidden }
+  .slides{ position:relative; height:100vh; width:150%; overflow:hidden }
+  /* Faster mobile cycle: 2s/slide (total 8s for 4 slides) */
+  .slide{ position:absolute; inset:0; opacity:0; animation: mobileSlideChange 8s linear infinite }
+  .slide:nth-child(1){ animation-delay: 0s }
+  .slide:nth-child(2){ animation-delay: 2s }
+  .slide:nth-child(3){ animation-delay: 4s }
+  .slide:nth-child(4){ animation-delay: 6s }
+  .slide img{ position:absolute; inset:0; width:120%; height:100%; object-fit:cover; animation: mobileImageSlide 2.2s ease-in-out infinite }
+
+  /* 画像の自動スライドアニメーション */
+  @keyframes mobileImageSlide{ 0%{ transform:translateX(0) } 50%{ transform:translateX(-20%) } 100%{ transform:translateX(0) } }
+  @keyframes mobileSlideChange{
+    0%{ opacity:1 }
+    20%{ opacity:1 }
+    25%{ opacity:0 }
+    100%{ opacity:0 }
+  }
+}
+
+/* ===== Works (grid/cards) ===== */
+.works{ padding-block: 96px }
+.works__grid{ display:grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap:28px; align-items:end; width:100% }
+/* PC幅：3枚を横一列（左4 / 中央4 / 右4） */
+.works__grid > .work:nth-child(1){ grid-column: span 4 }
+.works__grid > .work:nth-child(2){ grid-column: span 4 }
+.works__grid > .work:nth-child(3){ grid-column: span 4 }
+@media (max-width:1024px){ .works__grid{ grid-template-columns: repeat(8, 1fr); gap:22px } .works__grid > .work{ grid-column: span 4 } }
+@media (max-width:640px){ .works__grid{ grid-template-columns: repeat(4, 1fr); gap:16px } .works__grid > .work{ grid-column: span 4 } }
+
+/* 中央の動画カード高さ調整 */
+.work:nth-child(2) .work__thumb video{ max-height:960px }
+@media (max-width:1024px){ .work:nth-child(2) .work__thumb video{ max-height:840px } }
+@media (max-width:640px){ .work:nth-child(2) .work__thumb video{ max-height:600px } }
+
+/* Desktop: hide fallback image by default */
+.work:nth-child(2) .work__thumb .mobile-fallback{ display:none }
+
+/* Mobile hero (draft-like): full-screen, contain, gentle pan + crossfade */
+@media (max-width:768px){
+  /* レイヤーは幅150%で横に余白を確保（パン時に外側も見せる） */
+  .slides{ width:150% !important }
+  /* 4枚 × 4s = 16s 周期（各4s: in 0.5s → hold 3s → out 0.5s） */
+  .slide{ opacity:0; animation: draftCycle 16s ease-in-out infinite !important }
+  .slide:nth-child(1){ animation-delay:0s !important }
+  .slide:nth-child(2){ animation-delay:4s !important }
+  .slide:nth-child(3){ animation-delay:8s !important }
+  .slide:nth-child(4){ animation-delay:12s !important }
+
+  /* 画像は常に全体が収まる（切り取りなし）。可視中の前半1.5sだけ右へパン */
+  .slide img{ width:100% !important; height:100% !important; object-fit: contain !important; animation: draftPan 16s ease-in-out infinite !important }
+  .slide:nth-child(1) img{ animation-delay:0s !important }
+  .slide:nth-child(2) img{ animation-delay:4s !important }
+  .slide:nth-child(3) img{ animation-delay:8s !important }
+  .slide:nth-child(4) img{ animation-delay:12s !important }
+}
+
+@keyframes draftCycle{
+  /* 0-3% fade in, 3-21% show, 21-24% fade out; 余白は非表示 */
+  0%{ opacity:0 }
+  3%{ opacity:1 }
+  21%{ opacity:1 }
+  24%{ opacity:0 }
+  100%{ opacity:0 }
+}
+@keyframes draftPan{
+  /* 可視化開始(3%)から約1.5s後(3%+9.375%=12.375%)まで右にゆっくりパン */
+  0%{ transform:translateX(0) }
+  2.99%{ transform:translateX(0) }
+  12.5%{ transform:translateX(20%) }
+  100%{ transform:translateX(20%) }
+}
+/* Mobile: show image fallback instead of video for the middle card */
+@media (max-width: 640px){
+  .work:nth-child(2) .work__thumb video{ display:none }
+  .work:nth-child(2) .work__thumb .mobile-fallback{ display:block !important; width:100%; height:auto; object-fit:cover; border-radius:16px }
+}
+
+/* ===== Works Fullwidth ===== */
+.works--fullwidth{ padding-block:48px }
+
+/* ===== Blog Section Header ===== */
+.blog-section-header{ text-align:center; margin-bottom:48px; padding-top:24px }
+.blog-section-title{ font-size:clamp(24px, 4vw, 32px); font-weight:300; color:var(--text); margin:0 0 8px 0; letter-spacing:.05em; opacity:.8 }
+.blog-section-subtitle{ font-size:14px; color:var(--muted); margin:0; font-weight:400; opacity:.7 }
+.work-header--fullwidth{ margin-bottom:24px; text-align:left }
+.work-header--fullwidth .work__title{ font-size:14px; font-weight:800; letter-spacing:.02em; margin:0; text-align:left; color:var(--text) }
+.work-header--fullwidth .work__meta{ display:flex; flex-wrap:wrap; gap:10px 14px; font-size:12px; color:var(--muted); justify-content:flex-start }
+.work-header--fullwidth .work__title a{ color:var(--text); text-decoration:none }
+.work-header--fullwidth .work__title a:hover{ text-decoration:underline }
+.work-header--fullwidth .work__meta a{ color:var(--muted); text-decoration:none }
+.work-header--fullwidth .work__meta a:hover{ text-decoration:underline }
+.work--fullwidth{ width:100%; max-width:none }
+.work__thumb--fullwidth{ width:100%; height:800px; border-radius:16px }
+.work__thumb--fullwidth img{ width:100%; height:100%; object-fit:cover; border-radius:16px }
+@media (max-width:1024px){ .work__thumb--fullwidth{ height:700px } }
+@media (max-width:640px){ .work-header--fullwidth .work__title{ font-size:13px } .work-header--fullwidth .work__meta{ gap:10px 14px; font-size:11px } .work__thumb--fullwidth{ height:500px } }
+
+/* ===== Go Blog Button ===== */
+.works__blog-button{ text-align:center; margin-top:clamp(40px,6vw,60px); padding-top:clamp(20px,3vw,30px); border-top:none }
+.blog-button{ display:inline-flex; align-items:center; gap:12px; padding:16px 32px; background:linear-gradient(135deg,#667eea 0%,#764ba2 100%); color:#fff; text-decoration:none; border-radius:50px; font-weight:700; font-size:16px; letter-spacing:.02em; position:relative; overflow:hidden; transition:all .4s cubic-bezier(0.175,0.885,0.32,1.275); box-shadow:0 8px 25px rgba(102,126,234,.3); transform:translateY(0) }
+.blog-button:hover{ transform:translateY(-3px); box-shadow:0 15px 35px rgba(102,126,234,.4); background:linear-gradient(135deg,#764ba2 0%,#667eea 100%) }
+.blog-button:active{ transform:translateY(-1px); box-shadow:0 8px 25px rgba(102,126,234,.3) }
+.blog-button__text{ position:relative; z-index:2 }
+.blog-button__icon{ position:relative; z-index:2; font-size:18px; transition:transform .3s ease }
+.blog-button:hover .blog-button__icon{ transform:translateX(4px) }
+.blog-button__glow{ position:absolute; top:0; left:-100%; width:100%; height:100%; background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent); transition:left .6s ease }
+.blog-button:hover .blog-button__glow{ left:100% }
+@media (max-width:640px){ .blog-button{ padding:14px 28px; font-size:15px; gap:10px } .blog-button__icon{ font-size:16px } }
+
+/* ===== Sponsors ===== */
+.sponsors{ padding-block:clamp(64px,10vw,120px); background:linear-gradient(135deg,#f8f9fa 0%,#e9ecef 100%); border-top:1px solid rgba(0,0,0,.05) }
+.sponsors__header{ text-align:center; margin-bottom:clamp(40px,6vw,64px) }
+.sponsors__title{ font-size:clamp(24px,4vw,36px); font-weight:800; letter-spacing:.02em; margin:0 0 16px 0; color:var(--text) }
+.sponsors__subtitle{ font-size:clamp(14px,2vw,16px); color:var(--muted); margin:0; line-height:1.6 }
+.sponsors__grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap:clamp(24px,4vw,40px); max-width:1200px; margin:0 auto }
+.sponsor{ background:#fff; border-radius:16px; padding:clamp(24px,4vw,32px); text-align:center; box-shadow:0 4px 20px rgba(0,0,0,.08); transition:all .3s ease; border:1px solid rgba(0,0,0,.05) }
+.sponsor:hover{ transform:translateY(-4px); box-shadow:0 8px 30px rgba(0,0,0,.12) }
+.sponsor__logo{ margin-bottom:20px; padding:20px; background:#f8f9fa; border-radius:12px; display:flex; align-items:center; justify-content:center; min-height:120px }
+.sponsor__logo img{ max-width:100%; height:auto; max-height:80px; object-fit:contain; filter:grayscale(100%); transition:filter .3s ease }
+.sponsor:hover .sponsor__logo img{ filter:grayscale(0%) }
+.sponsor__name{ font-size:18px; font-weight:700; margin:0 0 8px 0; color:var(--text) }
+.sponsor__category{ font-size:14px; color:var(--muted); margin:0; font-weight:500 }
+@media (max-width:1024px){ .sponsors__grid{ grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap:24px } }
+@media (max-width:640px){ .sponsors{ padding-block:48px } .sponsors__header{ margin-bottom:32px } .sponsors__grid{ grid-template-columns:1fr; gap:20px } .sponsor{ padding:20px } .sponsor__logo{ padding:16px; min-height:100px } .sponsor__logo img{ max-height:60px } .sponsor__name{ font-size:16px } .sponsor__category{ font-size:13px } }
+
+
+/* ===== Sponsor Interactions utilities ===== */
+.main-sponsor .floating-light{ position:absolute; width:4px; height:4px; background:rgba(102,126,234,.6); border-radius:50%; pointer-events:none; animation:floatingLight 15s ease-in-out infinite }
+.main-sponsor .floating-light:nth-child(1){ top:15%; left:10%; animation-delay:0s; animation-duration:18s }
+.main-sponsor .floating-light:nth-child(2){ top:25%; right:15%; animation-delay:3s; animation-duration:22s }
+.main-sponsor .floating-light:nth-child(3){ bottom:20%; left:20%; animation-delay:6s; animation-duration:16s }
+.main-sponsor .floating-light:nth-child(4){ bottom:30%; right:25%; animation-delay:9s; animation-duration:20s }
+.main-sponsor:hover .floating-light{ filter:brightness(1.2) drop-shadow(0 0 8px rgba(102,126,234,.6)) }
+
+.sponsor-ripple{ position:absolute; width:0; height:0; border:2px solid rgba(102,126,234,.6); border-radius:50%; animation:sponsorRipple 1s ease-out forwards; pointer-events:none; z-index:10 }
+.light-burst{ position:absolute; width:4px; height:4px; background:rgba(102,126,234,.8); border-radius:50%; animation:lightBurst 1.5s ease-out forwards; pointer-events:none; z-index:5 }
+.firework{ position:absolute; width:4px; height:4px; border-radius:50%; pointer-events:none; z-index:15; animation:fireworkExplode 2s ease-out forwards }
+.firework-particle{ position:absolute; width:3px; height:3px; border-radius:50%; pointer-events:none; animation:fireworkParticle 1.5s ease-out forwards }
+
+
+
+
+/* ===== Main Sponsor (base styles) ===== */
+.main-sponsor{ padding-block:clamp(80px,10vw,140px); background: radial-gradient(1600px 800px at 50% -20%, rgba(14,22,48,.9), transparent 60%), linear-gradient(180deg, #0b1022 0%, #0d1535 60%, #0b1022 100%); color:#e7ecff; position:relative; overflow:hidden; isolation:isolate }
+.main-sponsor::before{ content:""; position:absolute; inset:-10% -10% auto -10%; height:40%; background: radial-gradient(1200px 280px at 10% -10%, rgba(255,255,255,.06), transparent 60%), linear-gradient(to right, rgba(255,255,255,.08), rgba(255,255,255,0)); transform: skewY(-3deg); pointer-events:none }
+.main-sponsor::after{ content:""; position:absolute; inset:0; background: radial-gradient(circle at 20% 30%, rgba(102,126,234,.12) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(118,75,162,.12) 0%, transparent 50%), radial-gradient(circle at 60% 20%, rgba(255,255,255,.06) 0%, transparent 40%), radial-gradient(circle at 30% 60%, rgba(255,255,255,.05) 0%, transparent 40%); mix-blend-mode: screen; animation: sponsorBgFloat 22s ease-in-out infinite; opacity:.7; pointer-events:none }
+.sponsor-header{ text-align:center; margin-bottom:clamp(40px,6vw,64px); position:relative; z-index:2 }
+.sponsor-badge{ display:inline-block; background:linear-gradient(135deg,#f6e27a,#d4af37); color:#0b1022; padding:8px 16px; border-radius:20px; font-size:12px; font-weight:900; letter-spacing:.6px; text-transform:uppercase; margin-bottom:16px; box-shadow:0 6px 18px rgba(212,175,55,.35), 0 0 0 1px rgba(255,255,255,.2) inset }
+.sponsor-title{ font-size:clamp(28px,4vw,36px); font-weight:800; margin:0 0 16px 0; color:#e9ecff; text-shadow:0 0 10px rgba(140,160,255,.2); letter-spacing:.02em; position:relative }
+.sponsor-title::after{ content:""; display:block; width:72px; height:2px; margin:10px auto 0; background:linear-gradient(90deg, rgba(212,175,55,0), #d4af37, rgba(212,175,55,0)); border-radius:2px; opacity:.9 }
+.sponsor-subtitle{ font-size:18px; color:#c7d2fe; margin:0; line-height:1.6 }
+.sponsor-content{ max-width:1000px; margin:0 auto; position:relative; z-index:2 }
+.sponsor-card{ background:rgba(255,255,255,.95); backdrop-filter:blur(20px); border-radius:24px; padding:clamp(32px,5vw,48px); border:1px solid rgba(102,126,234,.15); box-shadow:0 20px 40px rgba(0,0,0,.08); transition:all .4s ease; position:relative; overflow:hidden; transform-style:preserve-3d }
+.sponsor-card::before{ content:""; position:absolute; top:0; left:-100%; width:100%; height:100%; background:linear-gradient(90deg,transparent,rgba(255,255,255,.05),transparent); transition:left .6s ease }
+.sponsor-card:hover::before{ left:100% }
+.sponsor-card::after{ content:""; position:absolute; inset:0; background:linear-gradient(135deg, rgba(102,126,234,.02) 0%, transparent 50%); opacity:0; transition:opacity .4s ease; pointer-events:none }
+.sponsor-card:hover::after{ opacity:1 }
+.sponsor-logo-container{ display:flex; align-items:center; gap:24px; margin-bottom:32px; padding-bottom:24px; border-bottom:1px solid rgba(255,255,255,.1) }
+.sponsor-logo{ width:80px; height:80px; background:linear-gradient(135deg,#8fb3ff,#b494ff); border-radius:16px; display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 8px 25px rgba(120,140,255,.35); filter:drop-shadow(0 8px 24px rgba(120,140,255,.45)) }
+.logo-placeholder{ font-size:18px; font-weight:700; color:#fff; letter-spacing:1px }
+.sponsor-company-info{ flex:1 }
+.company-name{ font-size:24px; font-weight:700; margin:0 0 12px 0; color:#1e293b }
+.company-description{ font-size:16px; line-height:1.6; margin:0; color:#475569; font-weight:500 }
+.sponsor-message{ text-align:center; margin-bottom:32px; padding:24px; background:rgba(102,126,234,.05); border-radius:16px; border:1px solid rgba(102,126,234,.1); backdrop-filter:blur(24px); color:#0f172a }
+.sponsor-message blockquote{ color:#0f172a }
+.sponsor-message cite{ color:#475569 }
+.message-icon{ font-size:32px; margin-bottom:16px; opacity:.8 }
+.sponsor-cta{ text-align:center }
+.sponsor-link{ display:inline-flex; align-items:center; gap:12px; padding:16px 32px; background:linear-gradient(135deg,#667eea,#764ba2); color:#fff; text-decoration:none; border-radius:50px; font-weight:700; font-size:16px; letter-spacing:.5px; position:relative; overflow:hidden; transition:all .4s ease; box-shadow:0 8px 25px rgba(102,126,234,.3); transform:translateY(0) }
+.sponsor-link:hover{ transform:translateY(-3px); box-shadow:0 15px 35px rgba(102,126,234,.4); background:linear-gradient(135deg,#764ba2,#667eea) }
+.arrow{ font-size:18px; transition:transform .3s ease }
+.sponsor-link:hover .arrow{ transform:translateX(4px) }
+.bg-pattern{ position:absolute; inset:0; pointer-events:none }
+.bg-pattern::before, .bg-pattern::after{ content:""; position:absolute; inset:0; background-image: radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,.7), transparent 60%), radial-gradient(1px 1px at 25% 40%, rgba(255,255,255,.6), transparent 60%), radial-gradient(1px 1px at 60% 15%, rgba(255,255,255,.7), transparent 60%), radial-gradient(1px 1px at 80% 35%, rgba(255,255,255,.6), transparent 60%), radial-gradient(1px 1px at 45% 75%, rgba(255,255,255,.7), transparent 60%); animation: twinkle 6s ease-in-out infinite }
+.bg-pattern::after{ animation-duration:8s; opacity:.6 }
+
+
+
+
+/* ===== Mobile Hero OVERRIDE (full-cover, no gaps) ===== */
+@media (max-width:768px){
+  .hero{ min-height:100svh }
+  .slides{ width:100% !important; height:100svh !important; overflow:hidden }
+  /* 任意枚数対応：親(.slides)に --T: 総周期(s) を与え、各スライドに --d: 遅延(s) を与える */
+  .slide{ opacity:0; animation: mCycle var(--T,16s) ease-in-out infinite !important; animation-delay: var(--d,0s) !important }
+  .slide img{ width:100% !important; height:100% !important; object-fit: cover !important; transform-origin:50% 50%; animation: mKen var(--T,16s) ease-in-out infinite !important; animation-delay: var(--d,0s) !important }
+}
+
+@keyframes mCycle{
+  0%{ opacity:0 }
+  3%{ opacity:1 }
+  88%{ opacity:1 }
+  100%{ opacity:0 }
+}
+@keyframes mKen{
+  /* 常に全画面を埋めるために軽く拡大。可視前半で僅かにパン */
+  0%{ transform: scale(1.08) translateX(0) }
+  25%{ transform: scale(1.12) translateX(2%) }
+  100%{ transform: scale(1.12) translateX(2%) }
+}
+
+/* モバイルでは .mobile-hide のみ表示（それ以外の .slide は非表示） */
+@media (max-width:768px){
+  .slide:not(.mobile-hide){ display:none !important }
+  .slide.mobile-hide{ display:block !important }
+  /* JS制御モード（等間隔・順次表示） */
+  .slides.mobile-controlled .slide{ opacity:0; animation:none !important; transition: opacity .5s ease }
+  .slides.mobile-controlled .slide img{ animation:none !important; transition: transform 1.5s ease; transform-origin:50% 50% }
+  .slides.mobile-controlled .slide.is-active{ opacity:1 }
+  .slides.mobile-controlled .slide.is-active img{ transform: scale(1.12) translateX(2%) }
+}

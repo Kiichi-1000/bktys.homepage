@@ -1,0 +1,502 @@
+/* ===== Global animations ===== */
+
+/* Slideshow */
+@keyframes slideInFromLeft{ 0%{opacity:1; transform:translateX(0) translateY(0)} 23%{opacity:1; transform:translateX(0) translateY(0)} 24%{opacity:0; transform:translateX(-100px) translateY(0)} 100%{opacity:0; transform:translateX(-100px) translateY(0)} }
+@keyframes slideInFromRight{ 0%{opacity:1; transform:translateX(0) translateY(0)} 23%{opacity:1; transform:translateX(0) translateY(0)} 24%{opacity:0; transform:translateX(100px) translateY(0)} 100%{opacity:0; transform:translateX(100px) translateY(0)} }
+@keyframes slideInFromTop{ 0%{opacity:1; transform:translateX(0) translateY(0)} 23%{opacity:1; transform:translateX(0) translateY(0)} 24%{opacity:0; transform:translateX(0) translateY(-100px)} 100%{opacity:0; transform:translateX(0) translateY(-100px)} }
+@keyframes slideInFromBottom{ 0%{opacity:1; transform:translateX(0) translateY(0)} 23%{opacity:1; transform:translateX(0) translateY(0)} 24%{opacity:0; transform:translateX(0) translateY(100px)} 100%{opacity:0; transform:translateX(0) translateY(100px)} }
+@keyframes zoomInOut{ 0%{ transform: scale(1.0) } 50%{ transform: scale(1.1) } 100%{ transform: scale(1.0) } }
+
+/* Scroll-in utility */
+[data-scroll-animation]{ opacity:0; transform: translateY(80px) scale(0.95); filter: blur(2px); transition: all 1.0s cubic-bezier(0.34, 1.56, 0.64, 1) }
+[data-scroll-animation].animate-in{ opacity:1; transform: translateY(0) scale(1); filter: blur(0) }
+[data-scroll-animation]:nth-child(1){ transition-delay:.2s }
+[data-scroll-animation]:nth-child(2){ transition-delay:.4s }
+[data-scroll-animation]:nth-child(3){ transition-delay:.6s }
+
+@media (prefers-reduced-motion: reduce){
+  [data-scroll-animation]{ transition: none }
+}
+
+/* Directional slide-in helpers */
+[data-scroll-direction="left"]{ transform: translateX(-60px); opacity:0; }
+[data-scroll-direction="right"]{ transform: translateX(60px); opacity:0; }
+[data-scroll-direction="up"]{ transform: translateY(60px); opacity:0; }
+[data-scroll-direction="down"]{ transform: translateY(-60px); opacity:0; }
+[data-scroll-direction].animate-in{ transform: translate(0,0); opacity:1 }
+
+/* ===== Introduction hero and text animations ===== */
+@keyframes float { 0%,100%{ transform: translateY(0) rotate(0) } 33%{ transform: translateY(-20px) rotate(1deg) } 66%{ transform: translateY(10px) rotate(-1deg) } }
+@keyframes rotate { from{ transform: rotate(0deg) } to{ transform: rotate(360deg) } }
+@keyframes particle1 { 0%,100%{ transform:translate(0,0) scale(1); opacity:.6 } 25%{ transform:translate(20px,-30px) scale(1.2); opacity:1 } 50%{ transform:translate(40px,-20px) scale(.8); opacity:.4 } 75%{ transform:translate(20px,10px) scale(1.1); opacity:.8 } }
+@keyframes particle2 { 0%,100%{ transform:translate(0,0) scale(1); opacity:.4 } 33%{ transform:translate(-30px,-40px) scale(1.3); opacity:1 } 66%{ transform:translate(-50px,-10px) scale(.7); opacity:.3 } }
+@keyframes particle3 { 0%,100%{ transform:translate(0,0) scale(1) rotate(0deg); opacity:.5 } 25%{ transform:translate(25px,-35px) scale(1.1) rotate(90deg); opacity:1 } 50%{ transform:translate(45px,-15px) scale(.9) rotate(180deg); opacity:.3 } 75%{ transform:translate(25px,15px) scale(1.2) rotate(270deg); opacity:.7 } }
+@keyframes titleGlow { 0%{ text-shadow:0 0 30px rgba(255,255,255,.3) } 100%{ text-shadow:0 0 50px rgba(255,255,255,.5), 0 0 70px rgba(255,255,255,.2) } }
+@keyframes subtitleFloat { 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-5px) } }
+@keyframes descriptionFade { 0%,100%{ opacity:.8 } 50%{ opacity:1 } }
+@keyframes burst { 0%{ transform:scale(0) rotate(0deg); opacity:1 } 100%{ transform:scale(3) rotate(360deg); opacity:0 } }
+@keyframes titleShake { 0%,100%{ transform:translateX(0) } 25%{ transform:translateX(-5px) } 75%{ transform:translateX(5px) } }
+@keyframes subtitleBounce { 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-10px) } }
+@keyframes descriptionPulse { 0%,100%{ transform:scale(1) } 50%{ transform:scale(1.05) } }
+@keyframes ripple { 0%{ width:0; height:0; opacity:1 } 100%{ width:200px; height:200px; opacity:0 } }
+
+/* ===== Main sponsor effect animations ===== */
+@keyframes sponsorBgFloat { 0%,100%{ transform:translateY(0) scale(1); opacity:.15 } 50%{ transform:translateY(-10px) scale(1.05); opacity:.2 } }
+@keyframes floatingLight { 0%,100%{ transform:translate(0,0) scale(1); opacity:.6 } 25%{ transform:translate(20px,-30px) scale(1.2); opacity:1 } 50%{ transform:translate(40px,-20px) scale(.8); opacity:.4 } 75%{ transform:translate(20px,10px) scale(1.1); opacity:.8 } }
+@keyframes bgPatternMove { 0%{ transform:translateX(0) translateY(0) rotate(0deg) } 100%{ transform:translateX(50px) translateY(-30px) rotate(360deg) } }
+@keyframes floatingLightEnhanced { 0%{ transform:scale(1) rotate(0deg); opacity:.6 } 50%{ transform:scale(2) rotate(180deg); opacity:1 } 100%{ transform:scale(1) rotate(360deg); opacity:.6 } }
+@keyframes sponsorRipple { 0%{ width:0; height:0; opacity:1; border-width:2px } 100%{ width:200px; height:200px; opacity:0; border-width:1px } }
+@keyframes lightBurst { 0%{ transform:translate(0,0) scale(1); opacity:1 } 100%{ transform:translate(calc(cos(var(--angle)) * 100px), calc(sin(var(--angle)) * 100px)) scale(0); opacity:0 } }
+@keyframes fireworkExplode { 0%{ transform:scale(0); opacity:1 } 50%{ transform:scale(1); opacity:1 } 100%{ transform:scale(0); opacity:0 } }
+@keyframes fireworkParticle { 0%{ transform:translate(0,0) scale(1); opacity:1 } 100%{ transform:translate(var(--dx), var(--dy)) scale(0); opacity:0 } }
+
+/* Subtle star twinkle */
+@keyframes twinkle {
+  0%, 100% { opacity: .8 }
+  50% { opacity: .4 }
+}
+
+/* ===== Shop-specific animations ===== */
+
+/* ホバークロスフェード（商品カード用） */
+.product-hover-crossfade {
+  position: relative;
+  overflow: hidden;
+}
+
+.product-hover-crossfade img {
+  transition: opacity 0.3s ease, transform 0.4s ease;
+}
+
+.product-hover-crossfade img + img {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+.product-hover-crossfade:hover img {
+  transform: scale(1.02);
+}
+
+.product-hover-crossfade:hover img + img {
+  opacity: 1;
+}
+
+/* Reduced Motion対応 */
+@media (prefers-reduced-motion: reduce) {
+  .product-hover-crossfade img {
+    transition: none;
+  }
+  
+  .product-hover-crossfade:hover img {
+    transform: none;
+  }
+  
+  .product-hover-crossfade:hover img + img {
+    opacity: 0;
+  }
+}
+
+/* 送料無料到達トースト */
+@keyframes shippingFreeToast {
+  0% {
+    transform: translateY(100%) scale(0.8);
+    opacity: 0;
+  }
+  20% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  80% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100%) scale(0.8);
+    opacity: 0;
+  }
+}
+
+.shipping-free-toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: var(--accent);
+  color: #000;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  z-index: 1001;
+  animation: shippingFreeToast 3s ease-in-out forwards;
+  box-shadow: 0 4px 12px rgba(0, 200, 83, 0.3);
+}
+
+/* Reduced Motion対応 */
+@media (prefers-reduced-motion: reduce) {
+  .shipping-free-toast {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* カートアイコン バウンス */
+@keyframes cartBounce {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.cart-bounce {
+  animation: cartBounce 0.6s ease-in-out;
+}
+
+/* Reduced Motion対応 */
+@media (prefers-reduced-motion: reduce) {
+  .cart-bounce {
+    animation: none;
+  }
+}
+
+/* 商品カード ホバー効果 */
+.product-card-hover {
+  transition: transform 0.25s ease-out, box-shadow 0.25s ease-out;
+}
+
+.product-card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Reduced Motion対応 */
+@media (prefers-reduced-motion: reduce) {
+  .product-card-hover {
+    transition: none;
+  }
+  
+  .product-card-hover:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+/* カテゴリチップ ホバー効果 */
+.category-chip-hover {
+  transition: all 0.2s ease;
+}
+
+.category-chip-hover:hover {
+  background: #f5f5f5;
+  transform: translateY(-1px);
+}
+
+/* Reduced Motion対応 */
+@media (prefers-reduced-motion: reduce) {
+  .category-chip-hover {
+    transition: none;
+  }
+  
+  .category-chip-hover:hover {
+    transform: none;
+  }
+}
+
+/* ===== ドーパミン刺激アニメーション ===== */
+
+/* 1. 視覚的フィードバック - 即座の反応 */
+@keyframes dopaminePulse {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 200, 83, 0.7); }
+  70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(0, 200, 83, 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 200, 83, 0); }
+}
+
+@keyframes successGlow {
+  0% { 
+    background: linear-gradient(45deg, #00C853, #4CAF50);
+    box-shadow: 0 0 20px rgba(0, 200, 83, 0.5);
+  }
+  50% { 
+    background: linear-gradient(45deg, #4CAF50, #00C853);
+    box-shadow: 0 0 30px rgba(0, 200, 83, 0.8);
+  }
+  100% { 
+    background: linear-gradient(45deg, #00C853, #4CAF50);
+    box-shadow: 0 0 20px rgba(0, 200, 83, 0.5);
+  }
+}
+
+/* 2. 進捗感 - 達成感の演出 */
+@keyframes progressFill {
+  0% { width: 0%; }
+  100% { width: var(--progress-width, 100%); }
+}
+
+@keyframes achievementUnlock {
+  0% { 
+    transform: scale(0) rotate(0deg);
+    opacity: 0;
+  }
+  50% { 
+    transform: scale(1.2) rotate(180deg);
+    opacity: 1;
+  }
+  100% { 
+    transform: scale(1) rotate(360deg);
+    opacity: 1;
+  }
+}
+
+/* 3. 予期感 - ワクワク感の創出 */
+@keyframes anticipationShimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes mysteryReveal {
+  0% { 
+    filter: blur(10px) brightness(0.5);
+    transform: scale(0.8);
+  }
+  100% { 
+    filter: blur(0) brightness(1);
+    transform: scale(1);
+  }
+}
+
+/* 4. 社会的証明 - 他者の行動への共感 */
+@keyframes socialProof {
+  0% { 
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  50% { 
+    opacity: 1;
+  }
+  100% { 
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes popularityWave {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+/* 5. 希少性 - 限定感の演出 */
+@keyframes scarcityBlink {
+  0%, 50% { opacity: 1; }
+  25%, 75% { opacity: 0.3; }
+}
+
+@keyframes limitedEdition {
+  0% { 
+    background: linear-gradient(45deg, #ff6b6b, #ffa500);
+    transform: scale(1);
+  }
+  50% { 
+    background: linear-gradient(45deg, #ffa500, #ff6b6b);
+    transform: scale(1.05);
+  }
+  100% { 
+    background: linear-gradient(45deg, #ff6b6b, #ffa500);
+    transform: scale(1);
+  }
+}
+
+/* 6. 近未来的エフェクト */
+@keyframes hologramFlicker {
+  0%, 100% { 
+    opacity: 1;
+    filter: hue-rotate(0deg);
+  }
+  25% { 
+    opacity: 0.8;
+    filter: hue-rotate(90deg);
+  }
+  50% { 
+    opacity: 0.9;
+    filter: hue-rotate(180deg);
+  }
+  75% { 
+    opacity: 0.7;
+    filter: hue-rotate(270deg);
+  }
+}
+
+@keyframes neonGlow {
+  0% { 
+    text-shadow: 
+      0 0 5px #00C853,
+      0 0 10px #00C853,
+      0 0 15px #00C853,
+      0 0 20px #00C853;
+  }
+  50% { 
+    text-shadow: 
+      0 0 10px #00C853,
+      0 0 20px #00C853,
+      0 0 30px #00C853,
+      0 0 40px #00C853;
+  }
+  100% { 
+    text-shadow: 
+      0 0 5px #00C853,
+      0 0 10px #00C853,
+      0 0 15px #00C853,
+      0 0 20px #00C853;
+  }
+}
+
+@keyframes cyberGrid {
+  0% { 
+    background-position: 0 0;
+    opacity: 0.3;
+  }
+  50% { 
+    background-position: 20px 20px;
+    opacity: 0.6;
+  }
+  100% { 
+    background-position: 40px 40px;
+    opacity: 0.3;
+  }
+}
+
+/* 7. インタラクティブフィードバック */
+@keyframes buttonPress {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+@keyframes rippleEffect {
+  0% { 
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% { 
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* 8. 感情的な反応 */
+@keyframes heartBeat {
+  0% { transform: scale(1); }
+  25% { transform: scale(1.1); }
+  50% { transform: scale(1); }
+  75% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes joyBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* 9. 購入完了エフェクト */
+@keyframes purchaseSuccess {
+  0% { 
+    transform: scale(0) rotate(0deg);
+    opacity: 0;
+  }
+  50% { 
+    transform: scale(1.2) rotate(180deg);
+    opacity: 1;
+  }
+  100% { 
+    transform: scale(1) rotate(360deg);
+    opacity: 1;
+  }
+}
+
+@keyframes confetti {
+  0% { 
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% { 
+    transform: translateY(-100px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* 10. カスタムクラス */
+.dopamine-pulse {
+  animation: dopaminePulse 2s infinite;
+}
+
+.success-glow {
+  animation: successGlow 1.5s ease-in-out;
+}
+
+.anticipation-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  background-size: 200% 100%;
+  animation: anticipationShimmer 2s infinite;
+}
+
+.social-proof {
+  animation: socialProof 3s ease-in-out infinite;
+}
+
+.scarcity-blink {
+  animation: scarcityBlink 1s infinite;
+}
+
+.hologram-flicker {
+  animation: hologramFlicker 3s ease-in-out infinite;
+}
+
+.neon-glow {
+  animation: neonGlow 2s ease-in-out infinite;
+}
+
+.cyber-grid {
+  background-image: 
+    linear-gradient(rgba(0,200,83,0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,200,83,0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+  animation: cyberGrid 4s linear infinite;
+}
+
+.button-press {
+  animation: buttonPress 0.2s ease-in-out;
+}
+
+.heart-beat {
+  animation: heartBeat 1s ease-in-out infinite;
+}
+
+.joy-bounce {
+  animation: joyBounce 0.6s ease-in-out;
+}
+
+.purchase-success {
+  animation: purchaseSuccess 1s ease-out;
+}
+
+/* Reduced Motion対応 */
+@media (prefers-reduced-motion: reduce) {
+  .dopamine-pulse,
+  .success-glow,
+  .anticipation-shimmer,
+  .social-proof,
+  .scarcity-blink,
+  .hologram-flicker,
+  .neon-glow,
+  .cyber-grid,
+  .button-press,
+  .heart-beat,
+  .joy-bounce,
+  .purchase-success {
+    animation: none;
+  }
+}
+
+

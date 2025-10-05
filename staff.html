@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff - BKTYS</title>
+    <link rel="stylesheet" href="css/sanitize.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/pages/staff.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@600;700;900&display=swap" rel="stylesheet">
+    <link rel="dns-prefetch" href="https://picsum.photos">
+    <link rel="preconnect" href="https://picsum.photos" crossorigin>
+</head>
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="header-inner">
+            <label for="nav-toggle" class="hamburger" aria-label="メニューを開閉">
+                <span></span><span></span><span></span>
+            </label>
+            <a class="brand" href="index.html" aria-label="BKTS Home">BKTYS.</a>
+            <input id="nav-toggle" class="nav-toggle" type="checkbox" aria-hidden="true">
+            <nav class="nav" aria-label="ナビゲーション">
+                <ul>
+                    <li><a href="index.html">Top</a></li>
+                    <li><a href="introduction.html">Introduction</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li><a href="staff.html">Staffs</a></li>
+                    <li><a href="blog.html">Blogs</a></li>
+                    <li><a href="brand.html">BKTYS for Brand</a></li>
+                    <li><a href="links.html">Links</a></li>
+                </ul>
+            </nav>
+            <label class="menu-overlay" for="nav-toggle" aria-hidden="true"></label>
+            <aside class="menu-drawer" aria-label="メニュー">
+                <header class="drawer-head">
+                    <span class="drawer-title">BKTYS.</span>
+                    <label for="nav-toggle" class="drawer-close" aria-label="閉じる">×</label>
+                </header>
+                <ul class="drawer-nav">
+                    <li><a href="index.html">Top</a></li>
+                    <li><a href="introduction.html">Introduction</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li><a href="staff.html">Staffs</a></li>
+                    <li><a href="blog.html">Blogs</a></li>
+                    <li><a href="brand.html">BKTYS for Brand</a></li>
+                    <li><a href="links.html">Links</a></li>
+                </ul>
+            </aside>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero -->
+        <section class="staff-hero" data-scroll-animation data-scroll-direction="up">
+            <div class="container">
+                <h1 class="staff-title">Staff</h1>
+                <p class="staff-subtitle">運営メンバー紹介</p>
+            </div>
+        </section>
+
+        <!-- Staff Grid (6 members) -->
+        <section class="staff-list">
+            <div class="container">
+                <div class="staff-grid">
+                    <!-- 会長 -->
+                    <article class="staff-card staff-card--featured" data-role="会長" data-scroll-animation data-scroll-direction="up">
+                        <img class="staff-photo" src="https://picsum.photos/id/1005/800/1000?grayscale" alt="会長の写真" width="800" height="1000" loading="eager" decoding="async" fetchpriority="high">
+                        <div class="staff-info">
+                            <div class="staff-role">会長</div>
+                            <h3 class="staff-name">氏名</h3>
+                            <p class="staff-bio">紹介文が入ります。経歴や担当、チームへの思いなど、上品で落ち着いた文章でご記載ください。</p>
+                            <blockquote class="staff-comment">「本人コメントが入ります。シックで控えめなトーンで。」</blockquote>
+                        </div>
+                    </article>
+                    <!-- 副会長 -->
+                    <article class="staff-card staff-card--featured" data-role="副会長" data-scroll-animation data-scroll-direction="down">
+                        <img class="staff-photo" src="https://picsum.photos/id/1027/800/1000?grayscale" alt="副会長の写真" width="800" height="1000" loading="eager" decoding="async" fetchpriority="high">
+                        <div class="staff-info">
+                            <div class="staff-role">副会長</div>
+                            <h3 class="staff-name">氏名</h3>
+                            <p class="staff-bio">紹介文が入ります。経歴や担当、チームへの思いなど、上品で落ち着いた文章でご記載ください。</p>
+                            <blockquote class="staff-comment">「本人コメントが入ります。シックで控えめなトーンで。」</blockquote>
+                        </div>
+                    </article>
+                    <!-- 会計 -->
+                    <article class="staff-card" data-role="会計" data-scroll-animation data-scroll-direction="left">
+                        <img class="staff-photo" src="https://picsum.photos/id/1011/640/800?grayscale" alt="会計の写真" width="640" height="800" loading="lazy" decoding="async">
+                        <div class="staff-info">
+                            <div class="staff-role">会計</div>
+                            <h3 class="staff-name">氏名</h3>
+                            <p class="staff-bio">紹介文が入ります。経歴や担当、チームへの思いなど、上品で落ち着いた文章でご記載ください。</p>
+                            <blockquote class="staff-comment">「本人コメントが入ります。シックで控えめなトーンで。」</blockquote>
+                        </div>
+                    </article>
+                    <article class="staff-card" data-role="会計" data-scroll-animation data-scroll-direction="right">
+                        <img class="staff-photo" src="https://picsum.photos/id/1025/640/800?grayscale" alt="会計の写真" width="640" height="800" loading="lazy" decoding="async">
+                        <div class="staff-info">
+                            <div class="staff-role">会計</div>
+                            <h3 class="staff-name">氏名</h3>
+                            <p class="staff-bio">紹介文が入ります。経歴や担当、チームへの思いなど、上品で落ち着いた文章でご記載ください。</p>
+                            <blockquote class="staff-comment">「本人コメントが入ります。シックで控えめなトーンで。」</blockquote>
+                        </div>
+                    </article>
+                    <!-- 役員 -->
+                    <article class="staff-card" data-role="役員" data-scroll-animation data-scroll-direction="left">
+                        <img class="staff-photo" src="https://picsum.photos/id/1001/640/800?grayscale" alt="役員の写真" width="640" height="800" loading="lazy" decoding="async">
+                        <div class="staff-info">
+                            <div class="staff-role">役員</div>
+                            <h3 class="staff-name">氏名</h3>
+                            <p class="staff-bio">紹介文が入ります。経歴や担当、チームへの思いなど、上品で落ち着いた文章でご記載ください。</p>
+                            <blockquote class="staff-comment">「本人コメントが入ります。シックで控えめなトーンで。」</blockquote>
+                        </div>
+                    </article>
+                    <article class="staff-card" data-role="役員" data-scroll-animation data-scroll-direction="right">
+                        <img class="staff-photo" src="https://picsum.photos/id/1002/640/800?grayscale" alt="役員の写真" width="640" height="800" loading="lazy" decoding="async">
+                        <div class="staff-info">
+                            <div class="staff-role">役員</div>
+                            <h3 class="staff-name">氏名</h3>
+                            <p class="staff-bio">紹介文が入ります。経歴や担当、チームへの思いなど、上品で落ち着いた文章でご記載ください。</p>
+                            <blockquote class="staff-comment">「本人コメントが入ります。シックで控えめなトーンで。」</blockquote>
+                        </div>
+                    </article>
+                    <article class="staff-card" data-role="役員" data-scroll-animation data-scroll-direction="left">
+                        <img class="staff-photo" src="https://picsum.photos/id/1012/640/800?grayscale" alt="役員の写真" width="640" height="800" loading="lazy" decoding="async">
+                        <div class="staff-info">
+                            <div class="staff-role">役員</div>
+                            <h3 class="staff-name">氏名</h3>
+                            <p class="staff-bio">紹介文が入ります。経歴や担当、チームへの思いなど、上品で落ち着いた文章でご記載ください。</p>
+                            <blockquote class="staff-comment">「本人コメントが入ります。シックで控えめなトーンで。」</blockquote>
+                        </div>
+                    </article>
+                    <article class="staff-card" data-role="役員" data-scroll-animation data-scroll-direction="right">
+                        <img class="staff-photo" src="https://picsum.photos/id/1013/640/800?grayscale" alt="役員の写真" width="640" height="800" loading="lazy" decoding="async">
+                        <div class="staff-info">
+                            <div class="staff-role">役員</div>
+                            <h3 class="staff-name">氏名</h3>
+                            <p class="staff-bio">紹介文が入ります。経歴や担当、チームへの思いなど、上品で落ち着いた文章でご記載ください。</p>
+                            <blockquote class="staff-comment">「本人コメントが入ります。シックで控えめなトーンで。」</blockquote>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 BKTYS. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="js/app.js"></script>
+</body>
+</html>

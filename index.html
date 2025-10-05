@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BKTYS's Website</title>
+    <link rel="stylesheet" href="css/sanitize.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/pages/home.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">  
+
+
+
+
+</head>
+<body>
+    
+     <!-- ===== Header (透けさせる) ===== -->
+  <header class="site-header">
+    <div class="header-inner">
+      <label for="nav-toggle" class="hamburger" aria-label="メニューを開閉">
+        <span></span><span></span><span></span>
+      </label>
+      <a class="brand" href="#top" aria-label="BKTS Home">BKTYS.</a>
+      <input id="nav-toggle" class="nav-toggle" type="checkbox" aria-hidden="true">
+      <nav class="nav" aria-label="ナビゲーション">
+                        <ul>
+                    <li><a href="#top">Top</a></li>
+                    <li><a href="introduction.html">Introduction</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li><a href="staff.html">Staffs</a></li>
+                    <li><a href="blog.html">Blogs</a></li>
+                    <li><a href="terms.html">BKTYS for Brand</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+      </nav>
+      <!-- ▼▼ index.html：<header class="site-header"><div class="header-inner"> の“末尾”に差し込む。 
+     （必ず <input id="nav-toggle" ...> の“後ろ”に置くこと） -->
+    <label class="menu-overlay" for="nav-toggle" aria-hidden="true"></label>
+
+    <aside class="menu-drawer" aria-label="メニュー">
+        <header class="drawer-head">
+            <span class="drawer-title">BKTS.</span>
+            <label for="nav-toggle" class="drawer-close" aria-label="閉じる">×</label>
+        </header>
+        <ul class="drawer-nav">
+            <li><a href="#top">Top</a></li>
+            <li><a href="introduction.html">Introduction</a></li>
+            <li><a href="news.html">News</a></li>
+            <li><a href="staff.html">Staffs</a></li>
+            <li><a href="blog.html">Blogs</a></li>
+            <li><a href="terms.html">BKTYS for Brand</a></li>
+            <li><a href="links.html">Links</a></li>
+        </ul>
+    </aside>
+
+
+
+    </div>
+  </header>
+
+  <!-- ===== Fullscreen Slideshow =====
+       - スライドは <a class="slide" href="..."><img src="..."></a> を追加するだけ
+       - 画像は任意。リンク先も自由に設定可能
+  -->
+  <main id="top">
+    <section class="hero" aria-label="全画面スライドショー">
+      <div class="slides" style="--T:20s">
+        <!-- 例: 好きなだけ <a.slide> を増やしてください -->
+        <a class="slide" href="#" aria-label="スライド1" style="--d:0s">
+          <img src="assets/images/S__23273487.jpg" alt="思い出の写真">
+        </a>
+        <a class="slide" href="#" aria-label="スライド2" style="--d:4s">
+          <img src="assets/images/S__23273486.jpg" alt="思い出の写真">
+        </a>
+        <a class="slide" href="#" aria-label="スライド3" style="--d:8s">
+          <img src="assets/images/S__23273484.jpg" alt="思い出の写真">
+        </a>
+        <a class="slide" href="#" aria-label="スライド4" style="--d:12s">
+          <img src="assets/images/S__23273488.jpg" alt="思い出の写真  ">
+        </a>
+        <!-- 既存追加分 -->
+        <!-- <a class="slide" href="#" aria-label="スライド5" style="--d:16s">
+          <img src="assets/images/S__23306278.jpg" alt="思い出の写真（追加）">
+        </a> -->
+        <!-- モバイル用に頂いた4枚を追加入れ替え（6-9枚目） -->
+        <a class="slide mobile-hide" href="#" aria-label="スライド6" style="--d:20s">
+          <img src="assets/images/A78FBA5C-5E0C-4692-98B9-76716D00DB82.jpg" alt="モバイルヒーロー1">
+        </a>
+        <a class="slide mobile-hide" href="#" aria-label="スライド7" style="--d:24s">
+          <img src="assets/images/A9FB9AF8-627C-4A5B-8ACA-2A38B03FAF35.jpg" alt="モバイルヒーロー2">
+        </a>
+        <a class="slide mobile-hide" href="#" aria-label="スライド8" style="--d:28s">
+          <img src="assets/images/08EE9307-0C24-4A86-8978-301B57BC0B76.jpg" alt="モバイルヒーロー3">
+        </a>
+        <a class="slide mobile-hide" href="#" aria-label="スライド9" style="--d:32s">
+          <img src="assets/images/45DA1291-F180-45F6-B237-85C156E0E241.jpg" alt="モバイルヒーロー4">
+        </a>
+      </div>
+      
+
+    </section>
+  </main>
+
+
+  <!-- ▼ 実績セクション -->
+    <section class="works" id="works">
+        <div class="container works__grid">
+
+                         <!-- 1：左列（やや小さめ） -->
+             <article class="work col-4" data-scroll-animation>
+             <h3 class="work__title"><a href="#article-1">選手権</a></h3>
+             <div class="work__meta">
+                 <a href="#article-1">ベスト16</a>
+                 <a href="#article-1">武蔵境</a>
+                 <a href="#article-1">2024.10</a>
+             </div>
+             <a class="work__thumb" href="#article-1">
+                 <img src="assets/images/38559702-759D-49DD-9888-5565350877A9.jpg" alt="選手権の写真" loading="lazy">
+             </a>
+             </article>
+
+                         <!-- 2：中央（標準サイズ・縦長・動画） -->
+             <article class="work col-4" data-scroll-animation>
+             <h3 class="work__title"><a href="#article-2">遠征</a></h3>
+             <div class="work__meta">
+                 <a href="#article-2">久保友希</a>
+                 <a href="#article-2">波崎</a>
+                 <a href="#article-2">2024.08</a>
+             </div>
+             <a class="work__thumb" href="#article-2">
+                 <video src="assets/videos/IMG_3887.mov" alt="実績の動画" loading="lazy" muted loop>
+                     お使いのブラウザは動画をサポートしていません。
+                 </video>
+                <img class="mobile-fallback" src="assets/images/S__23306278.jpg" alt="遠征の写真（モバイル）" loading="lazy">
+             </a>
+             </article>
+
+            <!-- 3：右列（やや小さめ） -->
+            <article class="work col-4" data-scroll-animation>
+            <h3 class="work__title"><a href="#article-3">部内紅白戦</a></h3>
+            <div class="work__meta">
+                <a href="#article-3">部活動</a>
+                <a href="#article-3">稲城ヴェルディフィールド</a>
+                <a href="#article-3">2023.03</a>
+            </div>
+            <a class="work__thumb" href="#article-3">
+                <img src="assets/images/55831B31-0733-43AD-BE72-B0952DF21654.jpg" alt="InnoValley の写真" loading="lazy">
+            </a>
+            </article>
+
+            <!-- 以降のカード（例） -->
+            <!-- <article class="work col-4">
+            <h3 class="work__title"><a href="#article-4">BKTS Studio</a></h3>
+            <div class="work__meta">
+                <a href="#article-4">Interior</a>
+                <a href="#article-4">Osaka</a>
+                <a href="#article-4">2023.12</a>
+            </div>
+            <a class="work__thumb" href="#article-4">
+                <img src="https://placehold.co/900x1100" alt="BKTS Studio の写真" loading="lazy">
+            </a>
+            </article>
+
+            <article class="work col-5">
+            <h3 class="work__title"><a href="#article-5">Atrium Commons</a></h3>
+            <div class="work__meta">
+                <a href="#article-5">Public</a>
+                <a href="#article-5">Nagoya</a>
+                <a href="#article-5">2023.10</a>
+            </div>
+            <a class="work__thumb" href="#article-5">
+                <img src="https://placehold.co/1200x900" alt="Atrium Commons の写真" loading="lazy">
+            </a>
+            </article>
+
+            <article class="work col-3">
+            <h3 class="work__title"><a href="#article-6">Green Court</a></h3>
+            <div class="work__meta">
+                <a href="#article-6">Landscape</a>
+                <a href="#article-6">Kobe</a>
+                <a href="#article-6">2023.06</a>
+            </div>
+            <a class="work__thumb" href="#article-6">
+                <img src="https://placehold.co/800x1000" alt="Green Court の写真" loading="lazy">
+            </a>
+            </article> -->
+
+                 </div>
+     </section>
+ 
+     <!-- ▼ 思い出実績②セクション（横一ページ分の大きな画像） -->
+    <section class="works works--fullwidth" id="works-memories">
+        <div class="container">
+            <!-- Blog セクション見出し -->
+            <div class="blog-section-header">
+                <h2 class="blog-section-title">Blog</h2>
+                <p class="blog-section-subtitle">思い出の記録</p>
+            </div>
+            
+            <!-- 思い出実績②のヘッダー情報 -->
+            <div class="work-header work-header--fullwidth">
+                <h3 class="work__title"><a href="post.html?id=2024-09-exchange">交流試合</a></h3>
+                <div class="work__meta">
+                    <a href="post.html?id=2024-09-exchange">社会人サッカー</a>
+                    <a href="post.html?id=2024-09-exchange">天王洲</a>
+                    <a href="post.html?id=2024-09-exchange">2024.09</a>
+                </div>
+            </div>
+            
+            <!-- 横一ページ分の大きな画像 -->
+            <article class="work work--fullwidth" data-scroll-animation>
+                <a class="work__thumb work__thumb--fullwidth" href="post.html?id=2024-09-exchange">
+                    <img src="assets/images/blog-images/C5C2533F-68D4-40A9-85C8-6E6C351CC3BA.jpg" alt="思い出実績②の写真" loading="lazy">
+                </a>
+                         </article>
+         </div>
+         
+         <!-- ▼ Go Blog ボタン -->
+         <div class="works__blog-button">
+            <a href="blog.html" class="blog-button">
+                <span class="blog-button__text">Go Blog</span>
+                <span class="blog-button__icon">→</span>
+                <div class="blog-button__glow"></div>
+            </a>
+         </div>
+     </section>
+ 
+    <!-- ▼ メインスポンサーセクション（Go Blog直後に移動） -->
+    <section class="main-sponsor" data-scroll-animation data-scroll-direction="up">
+        <div class="bg-pattern"></div>
+        <div class="floating-light"></div>
+        <div class="floating-light"></div>
+        <div class="floating-light"></div>
+        <div class="floating-light"></div>
+        <div class="container">
+            <div class="sponsor-header" data-scroll-animation data-scroll-direction="down">
+                <div class="sponsor-badge">Main Sponsor</div>
+                <h2 class="sponsor-title">メインスポンサー</h2>
+                <p class="sponsor-subtitle">BKTSの活動を支えてくださる企業様</p>
+            </div>
+            <div class="sponsor-content" data-scroll-animation data-scroll-direction="up">
+                <div class="sponsor-card">
+                    <div class="sponsor-logo-container">
+                        <div class="sponsor-logo" data-scroll-animation data-scroll-direction="left">
+                            <span class="logo-placeholder">LOGO</span>
+                        </div>
+                        <div class="sponsor-company-info" data-scroll-animation data-scroll-direction="right">
+                            <h3 class="company-name">株式会社サンプル</h3>
+                            <p class="company-description">サッカーを通じて社会に貢献するBKTSの理念に共感し、スポーツ振興と地域社会の発展を支援しています。</p>
+                        </div>
+                    </div>
+                    <div class="sponsor-message">
+                        <div class="message-icon">💬</div>
+                        <blockquote>
+                            "スポーツは人々を繋ぎ、社会を豊かにします。BKTSの活動を通じて、より多くの人々がサッカーの楽しさと価値を感じられることを願っています。"
+                        </blockquote>
+                        <cite>代表取締役 山田太郎</cite>
+                    </div>
+                    <div class="sponsor-cta">
+                        <a href="#" class="sponsor-link">
+                            <span>企業サイトを見る</span>
+                            <span class="arrow">→</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+     <!-- ▼ 協賛企業セクション -->
+    <section class="sponsors" id="sponsors">
+        <div class="container">
+            <div class="sponsors__header">
+                <h2 class="sponsors__title">協賛企業</h2>
+                <p class="sponsors__subtitle">このプロジェクトを支えてくださる企業様</p>
+            </div>
+            
+            <div class="sponsors__grid">
+                <!-- 協賛企業1 -->
+                <div class="sponsor">
+                    <div class="sponsor__logo">
+                        <img src="https://dummyimage.com/200x100/4a90e2/ffffff&text=Company+A" alt="協賛企業A" loading="lazy">
+                    </div>
+                    <h3 class="sponsor__name">協賛企業A</h3>
+                    <p class="sponsor__category">テクノロジー</p>
+                </div>
+
+                <!-- 協賛企業2 -->
+                <div class="sponsor">
+                    <div class="sponsor__logo">
+                        <img src="https://dummyimage.com/200x100/50c878/ffffff&text=Company+B" alt="協賛企業B" loading="lazy">
+                    </div>
+                    <h3 class="sponsor__name">協賛企業B</h3>
+                    <p class="sponsor__category">製造業</p>
+                </div>
+
+                <!-- 協賛企業3 -->
+                <div class="sponsor">
+                    <div class="sponsor__logo">
+                        <img src="https://dummyimage.com/200x100/f39c12/ffffff&text=Company+C" alt="協賛企業C" loading="lazy">
+                    </div>
+                    <h3 class="sponsor__name">協賛企業C</h3>
+                    <p class="sponsor__category">サービス業</p>
+                </div>
+
+                <!-- 協賛企業4 -->
+                <div class="sponsor">
+                    <div class="sponsor__logo">
+                        <img src="https://dummyimage.com/200x100/e74c3c/ffffff&text=Company+D" alt="協賛企業D" loading="lazy">
+                    </div>
+                    <h3 class="sponsor__name">協賛企業D</h3>
+                    <p class="sponsor__category">金融業</p>
+                </div>
+
+                <!-- 協賛企業5 -->
+                <div class="sponsor">
+                    <div class="sponsor__logo">
+                        <img src="https://dummyimage.com/200x100/9b59b6/ffffff&text=Company+E" alt="協賛企業E" loading="lazy">
+                    </div>
+                    <h3 class="sponsor__name">協賛企業E</h3>
+                    <p class="sponsor__category">小売業</p>
+                </div>
+
+                <!-- 協賛企業6 -->
+                <div class="sponsor">
+                    <div class="sponsor__logo">
+                        <img src="https://dummyimage.com/200x100/1abc9c/ffffff&text=Company+F" alt="協賛企業F" loading="lazy">
+                    </div>
+                    <h3 class="sponsor__name">協賛企業F</h3>
+                    <p class="sponsor__category">建設業</p>
+                </div>
+            </div>
+        </div>
+    </section>
+  
+
+
+
+
+
+
+
+
+           
+      <script src="js/app.js"></script>
+      <script src="js/sponsor-interactions.js"></script>
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 BKTYS. All rights reserved.</p>
+    </div>
+  </footer>
+   </body>
+ </html>

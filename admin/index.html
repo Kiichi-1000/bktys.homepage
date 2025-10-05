@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BKTYSSHOP 管理画面</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- ログイン画面 -->
+        <div id="login-screen" class="login-screen">
+            <div class="login-form">
+                <h1>BKTYSSHOP 管理画面</h1>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="username">ユーザー名</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">パスワード</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="login-btn">ログイン</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- 管理画面メイン -->
+        <div id="admin-main" class="admin-main" style="display: none;">
+            <!-- ヘッダー -->
+            <header class="admin-header">
+                <h1>BKTYSSHOP 管理画面</h1>
+                <div class="header-actions">
+                    <span id="admin-user">管理者</span>
+                    <button id="logout-btn" class="logout-btn">ログアウト</button>
+                </div>
+            </header>
+
+            <!-- サイドバー -->
+            <nav class="admin-sidebar">
+                <ul>
+                    <li><a href="#dashboard" class="nav-link active" data-section="dashboard">ダッシュボード</a></li>
+                    <li><a href="#products" class="nav-link" data-section="products">商品管理</a></li>
+                    <li><a href="#orders" class="nav-link" data-section="orders">注文管理</a></li>
+                    <li><a href="#printful" class="nav-link" data-section="printful">Printful発注</a></li>
+                    <li><a href="#settings" class="nav-link" data-section="settings">設定</a></li>
+                </ul>
+            </nav>
+
+            <!-- メインコンテンツ -->
+            <main class="admin-content">
+                <!-- ダッシュボード -->
+                <section id="dashboard-section" class="content-section active">
+                    <h2>ダッシュボード</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h3>今日の注文</h3>
+                            <div class="stat-number" id="today-orders">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <h3>今月の売上</h3>
+                            <div class="stat-number" id="monthly-sales">¥0</div>
+                        </div>
+                        <div class="stat-card">
+                            <h3>未発送注文</h3>
+                            <div class="stat-number" id="pending-orders">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <h3>商品数</h3>
+                            <div class="stat-number" id="total-products">0</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 商品管理 -->
+                <section id="products-section" class="content-section">
+                    <div class="section-header">
+                        <h2>商品管理</h2>
+                        <button id="add-product-btn" class="btn btn-primary">商品を追加</button>
+                    </div>
+                    <div class="products-grid" id="products-grid">
+                        <!-- 商品カードがここに動的に追加される -->
+                    </div>
+                </section>
+
+                <!-- 注文管理 -->
+                <section id="orders-section" class="content-section">
+                    <div class="section-header">
+                        <h2>注文管理</h2>
+                        <div class="filter-controls">
+                            <select id="order-status-filter">
+                                <option value="all">すべて</option>
+                                <option value="pending">未発送</option>
+                                <option value="shipped">発送済み</option>
+                                <option value="delivered">配送完了</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="orders-table-container">
+                        <table class="orders-table" id="orders-table">
+                            <thead>
+                                <tr>
+                                    <th>注文ID</th>
+                                    <th>顧客名</th>
+                                    <th>商品</th>
+                                    <th>金額</th>
+                                    <th>ステータス</th>
+                                    <th>発注日</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="orders-tbody">
+                                <!-- 注文データがここに動的に追加される -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Printful発注 -->
+                <section id="printful-section" class="content-section">
+                    <div class="section-header">
+                        <h2>Printful発注</h2>
+                        <button id="sync-printful-btn" class="btn btn-secondary">Printful商品を同期</button>
+                    </div>
+                    <div class="printful-products" id="printful-products">
+                        <!-- Printful商品がここに表示される -->
+                    </div>
+                </section>
+
+                <!-- 設定 -->
+                <section id="settings-section" class="content-section">
+                    <h2>設定</h2>
+                    <div class="settings-form">
+                        <div class="form-group">
+                            <label for="printful-token">Printful Access Token</label>
+                            <input type="password" id="printful-token" placeholder="Printful Access Token">
+                            <button id="save-printful-token" class="btn btn-primary">保存</button>
+                        </div>
+                        <div class="form-group">
+                            <label for="base-webhook-secret">BASE Webhook Secret</label>
+                            <input type="password" id="base-webhook-secret" placeholder="BASE Webhook Secret">
+                            <button id="save-base-secret" class="btn btn-primary">保存</button>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- 商品追加モーダル -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>商品を追加</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="product-form">
+                    <div class="form-group">
+                        <label for="product-title">商品名</label>
+                        <input type="text" id="product-title" name="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-price">価格</label>
+                        <input type="number" id="product-price" name="price" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-description">説明</label>
+                        <textarea id="product-description" name="description"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-provider">発注先</label>
+                        <select id="product-provider" name="provider">
+                            <option value="printful">Printful</option>
+                            <option value="paintry">Paintry (BASE連携)</option>
+                            <option value="manual">手動発注</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="printful-variant-group" style="display: none;">
+                        <label for="printful-variant">Printful Variant ID</label>
+                        <input type="text" id="printful-variant" name="printful_variant">
+                    </div>
+                    <div class="form-group">
+                        <label for="product-images">商品画像</label>
+                        <input type="file" id="product-images" name="images" multiple accept="image/*">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">保存</button>
+                        <button type="button" class="btn btn-secondary" id="cancel-product">キャンセル</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>
+
+
+
+

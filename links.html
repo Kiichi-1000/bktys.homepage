@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Links - 開発中</title>
+    <link rel="stylesheet" href="css/sanitize.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@600;700;900&display=swap" rel="stylesheet">
+    <style>
+      body{ background:#0b1022; color:#e7ecff }
+      .uc-wrap{ min-height:60vh; display:flex; align-items:center; justify-content:center; padding:40px 16px }
+      .uc-card{ position:relative; width:100%; max-width:920px; border-radius:16px; padding:28px; border:1px solid rgba(255,255,255,.08); background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02)); box-shadow:0 10px 30px rgba(0,0,0,.25) }
+      .uc-title{ font-family:'Noto Serif JP', serif; font-weight:900; font-size: clamp(28px, 4vw, 40px); letter-spacing:.02em; margin:0 0 8px }
+      .uc-sub{ opacity:.85; margin:0 0 18px }
+      .bar{ --c1:#60a5fa; --c2:#111827; position:relative; overflow:hidden; border-radius:12px; border:1px solid rgba(255,255,255,.08); margin:16px 0 }
+      .bar::before{ content:""; position:absolute; inset:-20px; background:repeating-linear-gradient(90deg,var(--c1) 0 16px,transparent 16px 32px); opacity:.9; filter:contrast(1.1) saturate(1.1); animation:scan 3s linear infinite }
+      .bar-inner{ position:relative; padding:14px 18px; display:flex; gap:10px; align-items:center; justify-content:center }
+      @keyframes scan{ 0%{ transform:translateX(-80px) } 100%{ transform:translateX(0) } }
+      .cta{ margin-top:18px; display:flex; gap:12px; flex-wrap:wrap }
+      .cta a{ display:inline-block; padding:10px 14px; border-radius:10px; border:1px solid rgba(255,255,255,.12); text-decoration:none; color:#e7ecff; background:linear-gradient(135deg,rgba(96,165,250,.35),rgba(20,184,166,.35)) }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <label for="nav-toggle" class="hamburger" aria-label="メニューを開閉">
+                <span></span><span></span><span></span>
+            </label>
+            <a class="brand" href="index.html" aria-label="BKTS Home">BKTYS.</a>
+            <input id="nav-toggle" class="nav-toggle" type="checkbox" aria-hidden="true">
+            <nav class="nav" aria-label="ナビゲーション">
+                <ul>
+                    <li><a href="index.html">Top</a></li>
+                    <li><a href="introduction.html">Introduction</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li><a href="staff.html">Staffs</a></li>
+                    <li><a href="blog.html">Blogs</a></li>
+                    <li><a href="brand.html">BKTYS for Brand</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <label class="menu-overlay" for="nav-toggle" aria-hidden="true"></label>
+            <aside class="menu-drawer" aria-label="メニュー">
+                <header class="drawer-head">
+                    <span class="drawer-title">BKTYS.</span>
+                    <label for="nav-toggle" class="drawer-close" aria-label="閉じる">×</label>
+                </header>
+                <ul class="drawer-nav">
+                    <li><a href="index.html">Top</a></li>
+                    <li><a href="introduction.html">Introduction</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li><a href="staff.html">Staffs</a></li>
+                    <li><a href="blog.html">Blogs</a></li>
+                    <li><a href="brand.html">BKTYS for Brand</a></li>
+                    <li><a href="links.html">Links</a></li>
+                </ul>
+            </aside>
+        </div>
+    </header>
+
+    <main>
+      <section class="uc-wrap">
+        <div class="uc-card" data-scroll-animation data-scroll-direction="up">
+          <h1 class="uc-title">Links <span class="blink">— 開発中</span></h1>
+          <p class="uc-sub">各種リンクページは現在準備中です。公開まで少々お待ちください。</p>
+          <div class="bar" aria-hidden="true"><div class="bar-inner">アクセス導線を最適化中…</div></div>
+          <div class="cta">
+            <a href="index.html">トップへ戻る</a>
+            <a href="blog.html">Blogsを見る</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 BKTYS. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

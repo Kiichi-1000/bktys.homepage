@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout - BKTYSSHOP</title>
+  <link rel="stylesheet" href="css/sanitize.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <style>
+    :root{ --gap: clamp(16px, 2vw, 24px) }
+    .page{ padding-top:64px; background: #000; color: #fff; }
+    .container{ padding:20px 16px; max-width:900px; margin:0 auto }
+    .steps{ display:grid; grid-template-columns: repeat(4,1fr); gap:8px; margin-bottom:16px }
+    .step{ text-align:center; padding:8px; border:1px solid rgba(0,200,83,0.3); border-radius:10px; background: rgba(0,0,0,0.6); color: #00C853; transition: all 0.3s ease; backdrop-filter: blur(10px); }
+    .step:hover{ background: rgba(0,200,83,0.1); border-color: rgba(0,200,83,0.6); }
+    .step.is-active{ background: linear-gradient(45deg, #00C853, #4CAF50); color: white; border-color: #00C853; box-shadow: 0 0 20px rgba(0,200,83,0.4); }
+    .badge{ display:inline-block; margin-left:8px; padding:2px 8px; border-radius:999px; background: linear-gradient(45deg, #00C853, #4CAF50); color:#fff; font-size:12px; animation: popularityWave 2s ease-in-out infinite; }
+    .card{ background: rgba(0,0,0,0.8); border:1px solid rgba(0,200,83,0.3); border-radius:16px; padding:16px; margin-bottom:12px; backdrop-filter: blur(10px); }
+    .card h2{ color: #fff; animation: neonGlow 3s ease-in-out infinite; }
+    .row{ display:grid; gap:8px }
+    .cta{ text-align:right }
+    .cta button{ background: linear-gradient(45deg, #00C853, #4CAF50); color:#fff; border:none; border-radius:12px; padding:12px 16px; font-weight:700; cursor:pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,200,83,0.3); position: relative; overflow: hidden; }
+    .cta button::before{ content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); transition: left 0.5s ease; }
+    .cta button:hover::before{ left: 100%; }
+    .cta button:hover{ transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,200,83,0.4); }
+    .cta button:disabled{ background:#cbd5e1; cursor:not-allowed; transform: none; box-shadow: none; }
+    .form-group{ margin-bottom:16px }
+    .form-group label{ display:block; margin-bottom:4px; font-weight:600; color: #fff; }
+    .form-group input, .form-group select, .form-group textarea{ width:100%; padding:8px 12px; border:1px solid rgba(0,200,83,0.3); border-radius:6px; font-size:14px; background: rgba(0,0,0,0.6); color: #fff; backdrop-filter: blur(10px); }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus{ outline:none; border-color: #00C853; box-shadow:0 0 0 3px rgba(0,200,83,0.2); }
+    .form-group input[type="radio"]{ width: auto; margin-right: 8px; }
+    .order-summary{ background: rgba(0,0,0,0.6); border: 1px solid rgba(0,200,83,0.3); border-radius:8px; padding:16px; margin:16px 0; backdrop-filter: blur(10px); }
+    .order-summary h3{ color: #fff; }
+    .order-item{ display:flex; justify-content:space-between; margin-bottom:8px; padding-bottom:8px; border-bottom:1px solid rgba(0,200,83,0.3); color: #fff; }
+    .order-item:last-child{ border-bottom:none; margin-bottom:0 }
+    .order-total{ font-weight:700; font-size:18px; border-top:2px solid rgba(0,200,83,0.3); padding-top:16px; margin-top:16px; color: #00C853; }
+    .error{ color:#ff6b6b; font-size:14px; margin-top:4px }
+    .success{ color:#00C853; font-size:14px; margin-top:4px; animation: neonGlow 2s ease-in-out infinite; }
+  </style>
+</head>
+<body>
+  <header class="site-header future-header">
+    <div class="header-inner">
+      <label for="nav-toggle" class="hamburger" aria-label="メニューを開閉"><span></span><span></span><span></span></label>
+      <a class="brand" href="brand.html" aria-label="BKTYSSHOP Home">BKTYSSHOP</a>
+      <input id="nav-toggle" class="nav-toggle" type="checkbox" aria-hidden="true">
+      <nav class="nav" aria-label="ナビゲーション">
+        <ul>
+          <li><a href="brand.html">Home</a></li>
+          <li><a href="https://velara.official.ec/" target="_blank">Official</a></li>
+          <li><a href="members.html">Members</a></li>
+          <li><a href="cart.html" class="shop-cart future-cart-icon" aria-label="Cart">🛒<span id="cart-badge" class="badge" aria-live="polite">0</span></a></li>
+        </ul>
+      </nav>
+      <label class="menu-overlay" for="nav-toggle" aria-hidden="true"></label>
+      <aside class="menu-drawer" aria-label="メニュー">
+        <header class="drawer-head"><span class="drawer-title">BKTYSSHOP</span><label for="nav-toggle" class="drawer-close" aria-label="閉じる">×</label></header>
+        <ul class="drawer-nav">
+          <li><a href="brand.html">Home</a></li>
+          <li><a href="https://velara.official.ec/" target="_blank">Official</a></li>
+          <li><a href="members.html">Members</a></li>
+          <li><a href="cart.html">Cart</a></li>
+        </ul>
+      </aside>
+    </div>
+  </header>
+  <main class="page">
+    <div class="container">
+      <div class="steps">
+        <div id="s1" class="step is-active">配送先</div>
+        <div id="s2" class="step">配送方法</div>
+        <div id="s3" class="step">支払い</div>
+        <div id="s4" class="step">確認</div>
+      </div>
+
+      <div id="free-badge"></div>
+
+      <!-- Step 1: 配送先 -->
+      <section id="panel1" class="card">
+        <h2>配送先情報</h2>
+        <form id="shipping-form">
+          <div class="form-group">
+            <label for="name">氏名 *</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="email">メールアドレス *</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">電話番号 *</label>
+            <input type="tel" id="phone" name="phone" required>
+          </div>
+          <div class="form-group">
+            <label for="postal">郵便番号 *</label>
+            <input type="text" id="postal" name="postal" required>
+          </div>
+          <div class="form-group">
+            <label for="address">住所 *</label>
+            <textarea id="address" name="address" rows="3" required></textarea>
+          </div>
+          <div class="cta">
+            <button type="button" id="to2">次へ</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Step 2: 配送方法 -->
+      <section id="panel2" class="card" hidden>
+        <h2>配送方法</h2>
+        <div class="form-group">
+          <label>
+            <input type="radio" name="shipping" value="standard" checked> 
+            通常便（¥800、¥10,000以上で無料）
+          </label>
+        </div>
+        <div class="form-group">
+          <label>
+            <input type="radio" name="shipping" value="express"> 
+            速達便（¥1,200、¥10,000以上で無料）
+          </label>
+        </div>
+        <div class="cta">
+          <button type="button" id="back1">戻る</button>
+          <button type="button" id="to3">次へ</button>
+        </div>
+      </section>
+
+      <!-- Step 3: 支払い -->
+      <section id="panel3" class="card" hidden>
+        <h2>支払い方法</h2>
+        <div class="form-group">
+          <label>
+            <input type="radio" name="payment" value="credit" checked> 
+            クレジットカード
+          </label>
+        </div>
+        <div class="form-group">
+          <label>
+            <input type="radio" name="payment" value="convenience"> 
+            コンビニ決済
+          </label>
+        </div>
+        <div class="form-group">
+          <label>
+            <input type="radio" name="payment" value="bank"> 
+            銀行振込
+          </label>
+        </div>
+        <div class="cta">
+          <button type="button" id="back2">戻る</button>
+          <button type="button" id="to4">次へ</button>
+        </div>
+      </section>
+
+      <!-- Step 4: 確認 -->
+      <section id="panel4" class="card" hidden>
+        <h2>注文確認</h2>
+        <div id="order-summary" class="order-summary">
+          <!-- 注文内容がここに動的に表示される -->
+        </div>
+        <div class="cta">
+          <button type="button" id="back3">戻る</button>
+          <button type="button" id="place-order">注文を確定する</button>
+        </div>
+      </section>
+
+      <!-- 注文完了 -->
+      <section id="panel5" class="card" hidden>
+        <h2>注文完了</h2>
+        <div class="success">
+          <p>🎉 ご注文ありがとうございます！</p>
+          <p>注文番号: <strong id="order-number"></strong></p>
+          <p>確認メールをお送りしました。</p>
+        </div>
+        <div class="cta">
+          <a href="brand.html" class="cta button">ショップに戻る</a>
+        </div>
+      </section>
+    </div>
+  </main>
+  <footer class="footer"><div class="container"><p>&copy; 2025 BKTYS. All rights reserved.</p></div></footer>
+  <script src="js/cart.js"></script>
+  <script>
+    // ステップ管理
+    function step(n) { 
+      ['s1','s2','s3','s4'].forEach((id,i)=>{ 
+        document.getElementById(id).classList.toggle('is-active', i===n-1); 
+      }); 
+      ['panel1','panel2','panel3','panel4','panel5'].forEach((id,i)=>{ 
+        document.getElementById(id).hidden = i!==n-1; 
+      }); 
+    }
+
+    // フォームバリデーション
+    function validateShippingForm() {
+      const form = document.getElementById('shipping-form');
+      const required = form.querySelectorAll('[required]');
+      let isValid = true;
+      
+      required.forEach(field => {
+        if (!field.value.trim()) {
+          field.classList.add('error');
+          isValid = false;
+        } else {
+          field.classList.remove('error');
+        }
+      });
+      
+      return isValid;
+    }
+
+    // 注文サマリーの表示
+    function showOrderSummary() {
+      const cart = BKTYSCart.load();
+      const { subtotal, shipping, total } = BKTYSCart.calc();
+      const shippingMethod = document.querySelector('input[name="shipping"]:checked').value;
+      const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+      
+      const shippingText = shippingMethod === 'standard' ? '通常便' : '速達便';
+      const paymentText = {
+        credit: 'クレジットカード',
+        convenience: 'コンビニ決済',
+        bank: '銀行振込'
+      }[paymentMethod];
+      
+      document.getElementById('order-summary').innerHTML = `
+        <h3>注文内容</h3>
+        ${cart.items.map(item => `
+          <div class="order-item">
+            <span>${item.name} (${item.size}) × ${item.qty}</span>
+            <span>¥${(item.price * item.qty).toLocaleString()}</span>
+          </div>
+        `).join('')}
+        <div class="order-item">
+          <span>小計</span>
+          <span>¥${subtotal.toLocaleString()}</span>
+        </div>
+        <div class="order-item">
+          <span>送料 (${shippingText})</span>
+          <span>${shipping === 0 ? '無料' : `¥${shipping.toLocaleString()}`}</span>
+        </div>
+        <div class="order-item order-total">
+          <span>合計</span>
+          <span>¥${total.toLocaleString()}</span>
+        </div>
+        <h3>配送先</h3>
+        <p>${document.getElementById('name').value}<br>
+        ${document.getElementById('email').value}<br>
+        ${document.getElementById('phone').value}<br>
+        〒${document.getElementById('postal').value}<br>
+        ${document.getElementById('address').value}</p>
+        <h3>支払い方法</h3>
+        <p>${paymentText}</p>
+      `;
+    }
+
+    // 注文確定処理
+    function placeOrder() {
+      const orderNumber = 'ORD-' + Date.now().toString().slice(-8);
+      document.getElementById('order-number').textContent = orderNumber;
+      
+      // 注文データを保存（実際の実装ではサーバーに送信）
+      const orderData = {
+        orderNumber,
+        items: BKTYSCart.load().items,
+        shipping: {
+          name: document.getElementById('name').value,
+          email: document.getElementById('email').value,
+          phone: document.getElementById('phone').value,
+          postal: document.getElementById('postal').value,
+          address: document.getElementById('address').value
+        },
+        shippingMethod: document.querySelector('input[name="shipping"]:checked').value,
+        paymentMethod: document.querySelector('input[name="payment"]:checked').value,
+        total: BKTYSCart.calc().total,
+        date: new Date().toISOString()
+      };
+      
+      // ローカルストレージに注文履歴を保存
+      const orders = JSON.parse(localStorage.getItem('bktys_orders') || '[]');
+      orders.push(orderData);
+      localStorage.setItem('bktys_orders', JSON.stringify(orders));
+      
+      // カートをクリア
+      BKTYSCart.clear();
+      BKTYSCart.updateBadge();
+      
+      // ドーパミン刺激：購入完了エフェクト
+      if (window.BKTYSCart && window.BKTYSCart.triggerDopamineEffect) {
+        window.BKTYSCart.triggerDopamineEffect('purchase-success');
+      }
+      
+      // 完了画面を表示
+      step(5);
+    }
+
+    // 規約同意チェック
+    function checkTermsAgreement() {
+      const agreed = localStorage.getItem('bktys_terms_agreed');
+      if (!agreed) {
+        // 規約未同意の場合は規約ページへリダイレクト
+        window.location.href = 'terms.html';
+        return false;
+      }
+      
+      try {
+        const agreementData = JSON.parse(agreed);
+        if (!agreementData.agreed) {
+          // 規約未同意の場合は規約ページへリダイレクト
+          window.location.href = 'terms.html';
+          return false;
+        }
+      } catch (e) {
+        // エラーの場合は規約ページへリダイレクト
+        window.location.href = 'terms.html';
+        return false;
+      }
+      
+      return true;
+    }
+
+    // イベントリスナー
+    document.addEventListener('DOMContentLoaded', function() {
+      // 規約同意チェック
+      if (!checkTermsAgreement()) {
+        return;
+      }
+      // ステップ移動
+      document.getElementById('to2').addEventListener('click', () => {
+        if (validateShippingForm()) {
+          step(2);
+        }
+      });
+      
+      document.getElementById('to3').addEventListener('click', () => {
+        step(3);
+      });
+      
+      document.getElementById('to4').addEventListener('click', () => {
+        showOrderSummary();
+        step(4);
+      });
+      
+      // 戻るボタン
+      document.getElementById('back1').addEventListener('click', () => step(1));
+      document.getElementById('back2').addEventListener('click', () => step(2));
+      document.getElementById('back3').addEventListener('click', () => step(3));
+      
+      // 注文確定
+      document.getElementById('place-order').addEventListener('click', placeOrder);
+      
+      // 送料無料バッジの表示
+      const cart = BKTYSCart.load();
+      const { subtotal } = BKTYSCart.calc();
+      const prog = BKTYSCart.progress(subtotal);
+      if (prog.isFree) {
+        document.getElementById('free-badge').innerHTML = '<div class="badge">🎉 送料無料</div>';
+      }
+      
+      // カートバッジの更新
+      BKTYSCart.updateBadge();
+    });
+  </script>
+</body>
+</html>

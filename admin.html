@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>管理画面 - BKTYSSHOP</title>
+  <link rel="stylesheet" href="css/sanitize.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <style>
+    .admin-container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+    .admin-header { margin-bottom: 30px; text-align: center; }
+    .admin-tabs { display: flex; gap: 8px; margin-bottom: 20px; border-bottom: 2px solid #e5e7eb; }
+    .admin-tab { padding: 12px 20px; background: none; border: none; cursor: pointer; font-size: 16px; }
+    .admin-tab.active { background: #3b82f6; color: white; border-radius: 8px 8px 0 0; }
+    .admin-panel { display: none; }
+    .admin-panel.active { display: block; }
+    .config-section { background: white; border: 1px solid #e5e7eb; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+    .config-section h3 { margin: 0 0 16px 0; color: #1f2937; border-bottom: 2px solid #f3f4f6; padding-bottom: 8px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; margin-bottom: 4px; font-weight: 600; color: #374151; }
+    .form-group input, .form-group select, .form-group textarea { 
+      width: 100%; padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; 
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { 
+      outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); 
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .btn { 
+      padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 600; 
+    }
+    .btn-primary { background: #3b82f6; color: white; }
+    .btn-secondary { background: #6b7280; color: white; }
+    .btn-danger { background: #ef4444; color: white; }
+    .btn-success { background: #10b981; color: white; }
+    .btn-group { display: flex; gap: 8px; margin-top: 16px; }
+    .status-indicator { 
+      display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; 
+    }
+    .status-active { background: #10b981; }
+    .status-inactive { background: #ef4444; }
+    .status-warning { background: #f59e0b; }
+    .config-preview { 
+      background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 6px; padding: 16px; margin-top: 12px; 
+    }
+    .config-preview pre { margin: 0; font-size: 12px; color: #6b7280; }
+    .alert { 
+      padding: 12px 16px; border-radius: 6px; margin-bottom: 16px; 
+    }
+    .alert-info { background: #dbeafe; color: #1e40af; border: 1px solid #93c5fd; }
+    .alert-success { background: #d1fae5; color: #065f46; border: 1px solid #6ee7b7; }
+    .alert-warning { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+    .alert-error { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="brand.html" aria-label="BKTYSSHOP Home">BKTYSSHOP</a>
+      <nav class="nav" aria-label="ナビゲーション">
+        <ul>
+          <li><a href="brand.html">Home</a></li>
+          <li><a href="admin.html" class="active">管理画面</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="admin-container">
+    <div class="admin-header">
+      <h1>BKTYSSHOP 管理画面</h1>
+      <p>サイト設定、注文管理、商品管理を行えます</p>
+    </div>
+
+    <div class="admin-tabs">
+      <button class="admin-tab active" data-tab="general">基本設定</button>
+      <button class="admin-tab" data-tab="payment">決済設定</button>
+      <button class="admin-tab" data-tab="shipping">配送設定</button>
+      <button class="admin-tab" data-tab="orders">注文管理</button>
+      <button class="admin-tab" data-tab="products">商品管理</button>
+      <button class="admin-tab" data-tab="analytics">分析・トラッキング</button>
+    </div>
+
+    <!-- 基本設定 -->
+    <div id="general" class="admin-panel active">
+      <div class="config-section">
+        <h3>サイト基本情報</h3>
+        <div class="form-group">
+          <label for="site-name">サイト名</label>
+          <input type="text" id="site-name" value="BKTYSSHOP">
+        </div>
+        <div class="form-group">
+          <label for="site-description">サイト説明</label>
+          <textarea id="site-description" rows="3">BKTYS公式オンラインショップ</textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="site-currency">通貨</label>
+            <select id="site-currency">
+              <option value="JPY" selected>日本円 (¥)</option>
+              <option value="USD">米ドル ($)</option>
+              <option value="EUR">ユーロ (€)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="site-language">言語</label>
+            <select id="site-language">
+              <option value="ja" selected>日本語</option>
+              <option value="en">English</option>
+            </select>
+          </div>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-primary" onclick="saveGeneralConfig()">保存</button>
+          <button class="btn btn-secondary" onclick="resetGeneralConfig()">リセット</button>
+        </div>
+      </div>
+
+      <div class="config-section">
+        <h3>開発・テスト設定</h3>
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="test-mode" checked> テストモードを有効にする
+          </label>
+        </div>
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="debug-log" checked> デバッグログを有効にする
+          </label>
+        </div>
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="use-mock-data" checked> モックデータを使用する
+          </label>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-primary" onclick="saveDevConfig()">保存</button>
+          <button class="btn btn-danger" onclick="clearAllData()">全データクリア</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 決済設定 -->
+    <div id="payment" class="admin-panel">
+      <div class="config-section">
+        <h3>決済プロバイダー</h3>
+        <div class="form-group">
+          <label for="payment-provider">決済方法</label>
+          <select id="payment-provider">
+            <option value="stripe" selected>Stripe</option>
+            <option value="paypal">PayPal</option>
+            <option value="convenience">コンビニ決済</option>
+            <option value="bank">銀行振込</option>
+          </select>
+        </div>
+        
+        <div id="stripe-config" class="payment-config">
+          <h4>Stripe設定</h4>
+          <div class="form-group">
+            <label for="stripe-public-key">公開キー</label>
+            <input type="text" id="stripe-public-key" placeholder="pk_test_...">
+          </div>
+          <div class="form-group">
+            <label for="stripe-currency">通貨</label>
+            <select id="stripe-currency">
+              <option value="jpy" selected>JPY</option>
+              <option value="usd">USD</option>
+              <option value="eur">EUR</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="paypal-config" class="payment-config" style="display: none;">
+          <h4>PayPal設定</h4>
+          <div class="form-group">
+            <label for="paypal-client-id">クライアントID</label>
+            <input type="text" id="paypal-client-id" placeholder="client_id...">
+          </div>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn btn-primary" onclick="savePaymentConfig()">保存</button>
+          <button class="btn btn-secondary" onclick="testPaymentConnection()">接続テスト</button>
+        </div>
+      </div>
+
+      <div class="config-section">
+        <h3>利用可能な決済方法</h3>
+        <div class="form-group">
+          <label><input type="checkbox" id="credit-enabled" checked> クレジットカード</label>
+        </div>
+        <div class="form-group">
+          <label><input type="checkbox" id="convenience-enabled" checked> コンビニ決済</label>
+        </div>
+        <div class="form-group">
+          <label><input type="checkbox" id="bank-enabled" checked> 銀行振込</label>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-primary" onclick="savePaymentMethods()">保存</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 配送設定 -->
+    <div id="shipping" class="admin-panel">
+      <div class="config-section">
+        <h3>配送料金設定</h3>
+        <div class="form-group">
+          <label for="base-shipping">基本送料 (円)</label>
+          <input type="number" id="base-shipping" value="800" min="0">
+        </div>
+        <div class="form-group">
+          <label for="free-threshold">送料無料の閾値 (円)</label>
+          <input type="number" id="free-threshold" value="10000" min="0">
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-primary" onclick="saveShippingConfig()">保存</button>
+        </div>
+      </div>
+
+      <div class="config-section">
+        <h3>配送方法</h3>
+        <div id="shipping-methods">
+          <div class="shipping-method-item">
+            <div class="form-row">
+              <div class="form-group">
+                <label>配送方法名</label>
+                <input type="text" value="通常便" class="method-name">
+              </div>
+              <div class="form-group">
+                <label>料金 (円)</label>
+                <input type="number" value="800" min="0" class="method-price">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>配送日数</label>
+              <input type="text" value="3-5日" class="method-days">
+            </div>
+            <div class="form-group">
+              <label>説明</label>
+              <input type="text" value="標準的な配送速度" class="method-description">
+            </div>
+            <div class="form-group">
+              <label><input type="checkbox" checked class="method-enabled"> 有効にする</label>
+            </div>
+          </div>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-success" onclick="addShippingMethod()">配送方法を追加</button>
+          <button class="btn btn-primary" onclick="saveShippingMethods()">保存</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 注文管理 -->
+    <div id="orders" class="admin-panel">
+      <div class="config-section">
+        <h3>注文統計</h3>
+        <div id="order-stats"></div>
+        <div class="btn-group">
+          <button class="btn btn-primary" onclick="refreshOrderStats()">更新</button>
+          <button class="btn btn-secondary" onclick="exportOrders()">エクスポート</button>
+        </div>
+      </div>
+
+      <div class="config-section">
+        <h3>注文履歴</h3>
+        <div id="order-history"></div>
+      </div>
+    </div>
+
+    <!-- 商品管理 -->
+    <div id="products" class="admin-panel">
+      <div class="config-section">
+        <h3>商品設定</h3>
+        <div class="form-group">
+          <label><input type="checkbox" id="stock-management" checked> 在庫管理を有効にする</label>
+        </div>
+        <div class="form-group">
+          <label for="low-stock-threshold">在庫不足の閾値</label>
+          <input type="number" id="low-stock-threshold" value="5" min="0">
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-primary" onclick="saveProductConfig()">保存</button>
+        </div>
+      </div>
+
+      <div class="config-section">
+        <h3>商品データ</h3>
+        <div class="btn-group">
+          <button class="btn btn-secondary" onclick="exportProducts()">商品データエクスポート</button>
+          <button class="btn btn-primary" onclick="importProducts()">商品データインポート</button>
+        </div>
+        <input type="file" id="product-import" accept=".json" style="display: none;">
+      </div>
+    </div>
+
+    <!-- 分析・トラッキング -->
+    <div id="analytics" class="admin-panel">
+      <div class="config-section">
+        <h3>Google Analytics</h3>
+        <div class="form-group">
+          <label><input type="checkbox" id="ga-enabled"> Google Analyticsを有効にする</label>
+        </div>
+        <div class="form-group">
+          <label for="ga-tracking-id">トラッキングID</label>
+          <input type="text" id="ga-tracking-id" placeholder="G-XXXXXXXXXX">
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-primary" onclick="saveAnalyticsConfig()">保存</button>
+        </div>
+      </div>
+
+      <div class="config-section">
+        <h3>その他の分析ツール</h3>
+        <div class="form-group">
+          <label><input type="checkbox" id="other-analytics-enabled"> その他の分析ツールを有効にする</label>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-primary" onclick="saveOtherAnalytics()">保存</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 設定エクスポート・インポート -->
+    <div class="config-section">
+      <h3>設定の管理</h3>
+      <div class="btn-group">
+        <button class="btn btn-secondary" onclick="exportConfig()">設定をエクスポート</button>
+        <button class="btn btn-primary" onclick="importConfig()">設定をインポート</button>
+      </div>
+      <input type="file" id="config-import" accept=".json" style="display: none;">
+    </div>
+  </main>
+
+  <script src="js/site-config.js"></script>
+  <script src="js/order-management.js"></script>
+  <script>
+    // タブ切り替え
+    document.querySelectorAll('.admin-tab').forEach(tab => {
+      tab.addEventListener('click', function() {
+        const targetTab = this.dataset.tab;
+        
+        // タブのアクティブ状態を更新
+        document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        
+        // パネルの表示を更新
+        document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active'));
+        document.getElementById(targetTab).classList.add('active');
+      });
+    });
+
+    // 決済プロバイダーの切り替え
+    document.getElementById('payment-provider').addEventListener('change', function() {
+      const provider = this.value;
+      document.querySelectorAll('.payment-config').forEach(config => {
+        config.style.display = 'none';
+      });
+      
+      if (provider === 'stripe') {
+        document.getElementById('stripe-config').style.display = 'block';
+      } else if (provider === 'paypal') {
+        document.getElementById('paypal-config').style.display = 'block';
+      }
+    });
+
+    // 基本設定の保存
+    function saveGeneralConfig() {
+      const config = {
+        site: {
+          name: document.getElementById('site-name').value,
+          description: document.getElementById('site-description').value,
+          currency: document.getElementById('site-currency').value,
+          language: document.getElementById('site-language').value
+        }
+      };
+      
+      Object.entries(config.site).forEach(([key, value]) => {
+        window.updateConfig(`site.${key}`, value);
+      });
+      
+      showAlert('基本設定を保存しました', 'success');
+    }
+
+    // 開発設定の保存
+    function saveDevConfig() {
+      const config = {
+        development: {
+          testMode: document.getElementById('test-mode').checked,
+          debugLog: document.getElementById('debug-log').checked,
+          useMockData: document.getElementById('use-mock-data').checked
+        }
+      };
+      
+      Object.entries(config.development).forEach(([key, value]) => {
+        window.updateConfig(`development.${key}`, value);
+      });
+      
+      showAlert('開発設定を保存しました', 'success');
+    }
+
+    // 決済設定の保存
+    function savePaymentConfig() {
+      const provider = document.getElementById('payment-provider').value;
+      const config = {
+        payment: {
+          provider: provider
+        }
+      };
+      
+      if (provider === 'stripe') {
+        config.payment.stripe = {
+          publicKey: document.getElementById('stripe-public-key').value,
+          currency: document.getElementById('stripe-currency').value
+        };
+      } else if (provider === 'paypal') {
+        config.payment.paypal = {
+          clientId: document.getElementById('paypal-client-id').value
+        };
+      }
+      
+      Object.entries(config.payment).forEach(([key, value]) => {
+        window.updateConfig(`payment.${key}`, value);
+      });
+      
+      showAlert('決済設定を保存しました', 'success');
+    }
+
+    // 配送設定の保存
+    function saveShippingConfig() {
+      const config = {
+        shipping: {
+          basePrice: parseInt(document.getElementById('base-shipping').value),
+          freeThreshold: parseInt(document.getElementById('free-threshold').value)
+        }
+      };
+      
+      Object.entries(config.shipping).forEach(([key, value]) => {
+        window.updateConfig(`shipping.${key}`, value);
+      });
+      
+      showAlert('配送設定を保存しました', 'success');
+    }
+
+    // 注文統計の表示
+    function refreshOrderStats() {
+      if (window.BKTYSOrders) {
+        window.BKTYSOrders.renderStats('order-stats');
+        window.BKTYSOrders.renderHistory('order-history');
+      }
+    }
+
+    // 設定のエクスポート
+    function exportConfig() {
+      window.exportConfig();
+    }
+
+    // 設定のインポート
+    function importConfig() {
+      document.getElementById('config-import').click();
+    }
+
+    // ファイルインポートの処理
+    document.getElementById('config-import').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        window.importConfig(file);
+      }
+    });
+
+    // アラート表示
+    function showAlert(message, type = 'info') {
+      const alertDiv = document.createElement('div');
+      alertDiv.className = `alert alert-${type}`;
+      alertDiv.textContent = message;
+      
+      const container = document.querySelector('.admin-container');
+      container.insertBefore(alertDiv, container.firstChild);
+      
+      setTimeout(() => {
+        alertDiv.remove();
+      }, 3000);
+    }
+
+    // 初期化
+    document.addEventListener('DOMContentLoaded', function() {
+      // 設定値をフォームに反映
+      if (window.SITE_CONFIG) {
+        // 基本設定
+        document.getElementById('site-name').value = window.SITE_CONFIG.site?.name || 'BKTYSSHOP';
+        document.getElementById('site-description').value = window.SITE_CONFIG.site?.description || '';
+        document.getElementById('site-currency').value = window.SITE_CONFIG.site?.currency || 'JPY';
+        document.getElementById('site-language').value = window.SITE_CONFIG.site?.language || 'ja';
+        
+        // 開発設定
+        document.getElementById('test-mode').checked = window.SITE_CONFIG.development?.testMode || false;
+        document.getElementById('debug-log').checked = window.SITE_CONFIG.development?.debugLog || false;
+        document.getElementById('use-mock-data').checked = window.SITE_CONFIG.development?.useMockData || false;
+        
+        // 決済設定
+        document.getElementById('payment-provider').value = window.SITE_CONFIG.payment?.provider || 'stripe';
+        if (window.SITE_CONFIG.payment?.stripe) {
+          document.getElementById('stripe-public-key').value = window.SITE_CONFIG.payment.stripe.publicKey || '';
+          document.getElementById('stripe-currency').value = window.SITE_CONFIG.payment.stripe.currency || 'jpy';
+        }
+        if (window.SITE_CONFIG.payment?.paypal) {
+          document.getElementById('paypal-client-id').value = window.SITE_CONFIG.payment.paypal.clientId || '';
+        }
+        
+        // 配送設定
+        document.getElementById('base-shipping').value = window.SITE_CONFIG.shipping?.basePrice || 800;
+        document.getElementById('free-threshold').value = window.SITE_CONFIG.shipping?.freeThreshold || 10000;
+        
+        // 商品設定
+        document.getElementById('stock-management').checked = window.SITE_CONFIG.products?.stockManagement || false;
+        document.getElementById('low-stock-threshold').value = window.SITE_CONFIG.products?.lowStockThreshold || 5;
+        
+        // 分析設定
+        document.getElementById('ga-enabled').checked = window.SITE_CONFIG.analytics?.googleAnalytics?.enabled || false;
+        document.getElementById('ga-tracking-id').value = window.SITE_CONFIG.analytics?.googleAnalytics?.trackingId || '';
+        document.getElementById('other-analytics-enabled').checked = window.SITE_CONFIG.analytics?.other?.enabled || false;
+      }
+      
+      // 決済プロバイダーの初期表示
+      const provider = document.getElementById('payment-provider').value;
+      if (provider === 'stripe') {
+        document.getElementById('stripe-config').style.display = 'block';
+      } else if (provider === 'paypal') {
+        document.getElementById('paypal-config').style.display = 'block';
+      }
+      
+      // 注文統計の初期表示
+      refreshOrderStats();
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
