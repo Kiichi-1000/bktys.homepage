@@ -1,0 +1,35 @@
+{
+  "name": "BKTYSSHOP Development",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "18"
+    },
+    "ghcr.io/devcontainers/features/php:1": {
+      "version": "8.1"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.vscode-typescript-next",
+        "bradlc.vscode-tailwindcss",
+        "esbenp.prettier-vscode",
+        "ms-vscode.vscode-json",
+        "formulahendry.auto-rename-tag",
+        "ritwickdey.liveserver",
+        "ms-vscode.live-server"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "files.associations": {
+          "*.html": "html"
+        }
+      }
+    }
+  },
+  "forwardPorts": [3000, 8080],
+  "postCreateCommand": "echo 'BKTYSSHOP Development Environment Ready!'",
+  "remoteUser": "vscode"
+}
