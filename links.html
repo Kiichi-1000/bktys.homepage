@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Links - 開発中</title>
+    <title>Links - BKTYS</title>
     <link rel="stylesheet" href="css/sanitize.css">
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/components.css">
@@ -12,20 +12,229 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@600;700;900&display=swap" rel="stylesheet">
     <style>
-      body{ background:#0b1022; color:#e7ecff }
-      .uc-wrap{ min-height:60vh; display:flex; align-items:center; justify-content:center; padding:40px 16px }
-      .uc-card{ position:relative; width:100%; max-width:920px; border-radius:16px; padding:28px; border:1px solid rgba(255,255,255,.08); background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02)); box-shadow:0 10px 30px rgba(0,0,0,.25) }
-      .uc-title{ font-family:'Noto Serif JP', serif; font-weight:900; font-size: clamp(28px, 4vw, 40px); letter-spacing:.02em; margin:0 0 8px }
-      .uc-sub{ opacity:.85; margin:0 0 18px }
-      .bar{ --c1:#60a5fa; --c2:#111827; position:relative; overflow:hidden; border-radius:12px; border:1px solid rgba(255,255,255,.08); margin:16px 0 }
-      .bar::before{ content:""; position:absolute; inset:-20px; background:repeating-linear-gradient(90deg,var(--c1) 0 16px,transparent 16px 32px); opacity:.9; filter:contrast(1.1) saturate(1.1); animation:scan 3s linear infinite }
-      .bar-inner{ position:relative; padding:14px 18px; display:flex; gap:10px; align-items:center; justify-content:center }
-      @keyframes scan{ 0%{ transform:translateX(-80px) } 100%{ transform:translateX(0) } }
-      .cta{ margin-top:18px; display:flex; gap:12px; flex-wrap:wrap }
-      .cta a{ display:inline-block; padding:10px 14px; border-radius:10px; border:1px solid rgba(255,255,255,.12); text-decoration:none; color:#e7ecff; background:linear-gradient(135deg,rgba(96,165,250,.35),rgba(20,184,166,.35)) }
+        /* Intro Scene (Collective Signature) */
+        .intro-scene{ position:fixed; inset:0; z-index:9999; display:grid; place-items:center; background:radial-gradient(1000px 400px at 10% -10%, rgba(255,255,255,.06), transparent 60%), linear-gradient(135deg,#0f0f23,#1a1a2e 50%,#16213e) ; opacity:1; transition: opacity 800ms ease }
+        .intro-scene.hidden{ opacity:0; pointer-events:none }
+        .intro-bg{ position:absolute; inset:0; background:
+          radial-gradient(circle at 20% 30%, rgba(102,126,234,.15), transparent 50%),
+          radial-gradient(circle at 80% 70%, rgba(118,75,162,.15), transparent 50%);
+          filter: blur(2px) }
+        .bars{ position:absolute; width:min(72vw,920px); height:160px; display:flex; gap:16px; align-items:center; justify-content:center }
+        .bar{ flex:1; height:8px; border-radius:999px; background:linear-gradient(90deg, rgba(255,255,255,.18), rgba(255,255,255,.05)); position:relative; overflow:hidden }
+        .bar::after{ content:""; position:absolute; inset:0; transform:translateX(-100%); background:linear-gradient(90deg, transparent, rgba(255,255,255,.5), transparent); animation: sweep 2.4s ease-in-out infinite }
+        .b2{ height:10px } .b3{ height:12px } .b4{ height:10px } .b5{ height:8px }
+        @keyframes sweep{ 0%{ transform:translateX(-120%) } 60%{ transform:translateX(40%) } 100%{ transform:translateX(120%) } }
+        .intro-wordmark{ position:absolute; font-family:'Noto Serif JP', serif; font-weight:900; letter-spacing:.1em; font-size: clamp(36px, 8vw, 84px); background:linear-gradient(45deg,#eaeffb,#c9d4ff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; filter: drop-shadow(0 6px 20px rgba(102,126,234,.35)); opacity:0; transform: translateY(8px); animation: wordIn 900ms ease forwards 900ms }
+        @keyframes wordIn{ to{ opacity:1; transform: translateY(0) } }
+        .particles{ position:absolute; inset:0; pointer-events:none }
+        .dot{ position:absolute; width:6px; height:6px; border-radius:50%; background: radial-gradient(circle, #fff, rgba(255,255,255,.4)); filter: blur(.2px); opacity:0; animation: floatUp 1600ms ease forwards }
+        @keyframes floatUp{ 0%{ transform: translateY(8px) scale(.8); opacity:0 } 40%{ opacity:1 } 100%{ transform: translateY(-40px) scale(1); opacity:0 } }
+
+        /* Links Page */
+        .links-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            color: #e7ecff;
+            padding-top: 80px;
+        }
+
+        .links-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity .6s ease, transform .6s ease;
+        }
+
+        .links-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .links-title {
+            font-family: 'Noto Serif JP', serif;
+            font-size: clamp(32px, 6vw, 56px);
+            font-weight: 900;
+            margin: 0 0 16px 0;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .links-subtitle {
+            font-size: 18px;
+            color: #b7bdc8;
+            margin: 0;
+        }
+
+        .sns-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        .sns-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 32px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sns-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .sns-card:hover::before {
+            left: 100%;
+        }
+
+        .sns-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .sns-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .sns-name {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0 0 12px 0;
+            color: #e7ecff;
+        }
+
+        .sns-description {
+            font-size: 14px;
+            color: #b7bdc8;
+            margin: 0 0 24px 0;
+            line-height: 1.6;
+        }
+
+        .sns-link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .sns-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Specific SNS Colors */
+        .sns-card.twitter {
+            border-color: rgba(29, 161, 242, 0.3);
+        }
+
+        .sns-card.twitter:hover {
+            border-color: rgba(29, 161, 242, 0.6);
+            box-shadow: 0 20px 40px rgba(29, 161, 242, 0.2);
+        }
+
+        .sns-card.instagram {
+            border-color: rgba(225, 48, 108, 0.3);
+        }
+
+        .sns-card.instagram:hover {
+            border-color: rgba(225, 48, 108, 0.6);
+            box-shadow: 0 20px 40px rgba(225, 48, 108, 0.2);
+        }
+
+        .sns-card.youtube {
+            border-color: rgba(255, 0, 0, 0.3);
+        }
+
+        .sns-card.youtube:hover {
+            border-color: rgba(255, 0, 0, 0.6);
+            box-shadow: 0 20px 40px rgba(255, 0, 0, 0.2);
+        }
+
+        .sns-card.tiktok {
+            border-color: rgba(0, 0, 0, 0.3);
+        }
+
+        .sns-card.tiktok:hover {
+            border-color: rgba(0, 0, 0, 0.6);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .sns-card.line {
+            border-color: rgba(0, 195, 0, 0.3);
+        }
+
+        .sns-card.line:hover {
+            border-color: rgba(0, 195, 0, 0.6);
+            box-shadow: 0 20px 40px rgba(0, 195, 0, 0.2);
+        }
+
+        .sns-card.discord {
+            border-color: rgba(88, 101, 242, 0.3);
+        }
+
+        .sns-card.discord:hover {
+            border-color: rgba(88, 101, 242, 0.6);
+            box-shadow: 0 20px 40px rgba(88, 101, 242, 0.2);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sns-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .sns-card {
+                padding: 24px;
+            }
+            
+            .links-container {
+                padding: 20px 16px;
+            }
+        }
+
+        /* Reveal state */
+        .links-page.reveal .links-container{ opacity:1; transform: translateY(0) }
     </style>
 </head>
 <body>
+    <!-- Intro Scene: Collective Signature Intro -->
+    <div class="intro-scene" id="introScene">
+        <div class="intro-bg"></div>
+        <div class="bars" id="bars">
+            <span class="bar b1"></span>
+            <span class="bar b2"></span>
+            <span class="bar b3"></span>
+            <span class="bar b4"></span>
+            <span class="bar b5"></span>
+        </div>
+        <div class="intro-wordmark" id="introWord">BKTYS</div>
+        <div class="particles" id="particles"></div>
+    </div>
+
     <header class="site-header">
         <div class="header-inner">
             <label for="nav-toggle" class="hamburger" aria-label="メニューを開閉">
@@ -41,7 +250,7 @@
                     <li><a href="staff.html">Staffs</a></li>
                     <li><a href="blog.html">Blogs</a></li>
                     <li><a href="brand.html">BKTYS for Brand</a></li>
-                    <li><a href="index.html#contact">Contact</a></li>
+                    <li><a href="links.html">Links</a></li>
                 </ul>
             </nav>
             <label class="menu-overlay" for="nav-toggle" aria-hidden="true"></label>
@@ -55,7 +264,6 @@
                     <li><a href="introduction.html">Introduction</a></li>
                     <li><a href="news.html">News</a></li>
                     <li><a href="staff.html">Staffs</a></li>
-                    <li><a href="blog.html">Blogs</a></li>
                     <li><a href="brand.html">BKTYS for Brand</a></li>
                     <li><a href="links.html">Links</a></li>
                 </ul>
@@ -63,18 +271,63 @@
         </div>
     </header>
 
-    <main>
-      <section class="uc-wrap">
-        <div class="uc-card" data-scroll-animation data-scroll-direction="up">
-          <h1 class="uc-title">Links <span class="blink">— 開発中</span></h1>
-          <p class="uc-sub">各種リンクページは現在準備中です。公開まで少々お待ちください。</p>
-          <div class="bar" aria-hidden="true"><div class="bar-inner">アクセス導線を最適化中…</div></div>
-          <div class="cta">
-            <a href="index.html">トップへ戻る</a>
-            <a href="blog.html">Blogsを見る</a>
-          </div>
+    <main class="links-page">
+        <div class="links-container">
+            <div class="links-header">
+                <h1 class="links-title">Links</h1>
+                <p class="links-subtitle">BKTYSの公式SNSアカウント</p>
+            </div>
+
+            <div class="sns-grid">
+                <!-- Twitter -->
+                <div class="sns-card twitter">
+                    <span class="sns-icon">🐦</span>
+                    <h3 class="sns-name">Twitter</h3>
+                    <p class="sns-description">最新の試合結果や活動報告をリアルタイムでお届け</p>
+                    <a href="#" class="sns-link">フォローする</a>
+                </div>
+
+                <!-- Instagram -->
+                <div class="sns-card instagram">
+                    <span class="sns-icon">📸</span>
+                    <h3 class="sns-name">Instagram</h3>
+                    <p class="sns-description">練習風景や試合の瞬間を美しい写真で共有</p>
+                    <a href="#" class="sns-link">フォローする</a>
+                </div>
+
+                <!-- YouTube -->
+                <div class="sns-card youtube">
+                    <span class="sns-icon">📺</span>
+                    <h3 class="sns-name">YouTube</h3>
+                    <p class="sns-description">試合ハイライトや練習動画を配信</p>
+                    <a href="#" class="sns-link">チャンネル登録</a>
+                </div>
+
+                <!-- TikTok -->
+                <div class="sns-card tiktok">
+                    <span class="sns-icon">🎵</span>
+                    <h3 class="sns-name">TikTok</h3>
+                    <p class="sns-description">短い動画でBKTYSの日常をお楽しみください</p>
+                    <a href="#" class="sns-link">フォローする</a>
+                </div>
+
+                <!-- LINE -->
+                <div class="sns-card line">
+                    <span class="sns-icon">💬</span>
+                    <h3 class="sns-name">LINE</h3>
+                    <p class="sns-description">公式アカウントで最新情報をお届け</p>
+                    <a href="#" class="sns-link">友だち追加</a>
+                </div>
+
+                <!-- Discord -->
+                <div class="sns-card discord">
+                    <span class="sns-icon">🎮</span>
+                    <h3 class="sns-name">Discord</h3>
+                    <p class="sns-description">ファン同士の交流コミュニティ</p>
+                    <a href="#" class="sns-link">参加する</a>
+                </div>
+            </div>
         </div>
-      </section>
     </main>
 
     <footer class="footer">
@@ -83,17 +336,29 @@
         </div>
     </footer>
 
+    <script>
+        // Intro: Bars sweep + wordmark + particles => reveal links
+        window.addEventListener('load', function(){
+          const intro = document.getElementById('introScene');
+          const particles = document.getElementById('particles');
+          const linksPage = document.querySelector('.links-page');
+
+          // spawn particles
+          for(let i=0;i<36;i++){
+            const d = document.createElement('span');
+            d.className = 'dot';
+            d.style.left = (15 + Math.random()*70) + '%';
+            d.style.top = (40 + Math.random()*20) + '%';
+            d.style.animationDelay = (Math.random()*0.9).toFixed(2)+'s';
+            d.style.opacity = 0;
+            particles.appendChild(d);
+          }
+
+          // reveal links and hide intro
+          setTimeout(()=>{ linksPage.classList.add('reveal'); }, 1400);
+          setTimeout(()=>{ intro.classList.add('hidden'); }, 2200);
+        });
+    </script>
     <script src="js/app.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-

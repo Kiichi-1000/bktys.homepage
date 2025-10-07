@@ -860,8 +860,28 @@ input[type="text"], input[type="email"], input[type="search"], input[type="tel"]
 .company-name {
   font-size: 24px;
   font-weight: 700;
-  margin: 0 0 12px 0;
+  margin: 0 0 8px 0;
   color: var(--text);
+}
+
+.recruitment-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
 }
 
 .company-description {
