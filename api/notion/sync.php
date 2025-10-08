@@ -26,8 +26,23 @@ if (empty(NOTION_API_KEY)) {
     sendError('NOTION_API_KEY が設定されていません。config.php を確認してください。', 400);
 }
 
-if (empty(NOTION_DATABASE_ID)) {
-    sendError('NOTION_DATABASE_ID が設定されていません。config.php を確認してください。', 400);
+// typeパラメータを取得（デフォルト: note）
+$type = $_GET['type'] ?? 'note';
+
+// typeに応じてデータベースIDとJSON出力先を決定
+if ($type === 'blog') {
+    $databaseId = NOTION_BLOG_DATABASE_ID;
+    $jsonPath = POSTS_JSON_PATH;
+} elseif ($type === 'news') {
+    $databaseId = NOTION_NEWS_DATABASE_ID;
+    $jsonPath = NEWS_JSON_PATH;
+} else {
+    $databaseId = NOTION_NOTE_DATABASE_ID;
+    $jsonPath = NOTES_JSON_PATH;
+}
+
+if (empty($databaseId)) {
+    sendError("データベースIDが設定されていません（type: $type）。config.php を確認してください。", 400);
 }
 
 // Notion APIリクエスト
@@ -156,6 +171,25 @@ function blockToHtml($block) {
         case 'table_of_contents':
             // Notionの目次ブロック - プレースホルダーとして扱う
             return '<!-- TOC_PLACEHOLDER -->';
+            
+        case 'image':
+            $imageUrl = '';
+            if (isset($content['file'])) {
+                $imageUrl = $content['file']['url'] ?? '';
+            } elseif (isset($content['external'])) {
+                $imageUrl = $content['external']['url'] ?? '';
+            }
+            
+            if ($imageUrl) {
+                $caption = richTextToHtml($content['caption'] ?? []);
+                $alt = $caption ?: '画像';
+                $html = "<img src=\"$imageUrl\" alt=\"$alt\" style=\"max-width:100%;height:auto;border-radius:8px;margin:20px 0;\">";
+                if ($caption) {
+                    $html .= "<p style=\"text-align:center;color:#718096;font-size:14px;margin-top:8px;\">$caption</p>";
+                }
+                return $html;
+            }
+            return '';
             
         default:
             return '';
@@ -287,29 +321,34 @@ function getPropertyValue($property) {
 
 // Notionからデータを取得
 try {
-    // データベースをクエリ（公開済みのみ）
+    // データベースをクエリ
     $query = [
-        'filter' => [
-            'property' => '公開',
-            'checkbox' => [
-                'equals' => true
-            ]
-        ],
         'sorts' => [
             [
-                'property' => '日付',
+                'property' => '公開日',
                 'direction' => 'descending'
             ]
         ]
     ];
     
-    $response = notionRequest('/databases/' . NOTION_DATABASE_ID . '/query', 'POST', $query);
+    // Note用には「公開」フィルターを追加（互換性維持）
+    if ($type === 'note') {
+        $query['filter'] = [
+            'property' => '公開',
+            'checkbox' => [
+                'equals' => true
+            ]
+        ];
+        $query['sorts'][0]['property'] = '日付';
+    }
+    
+    $response = notionRequest('/databases/' . $databaseId . '/query', 'POST', $query);
     $pages = $response['results'] ?? [];
     
-    // 既存のnotes.jsonを読み込み（手動記事を保持）
+    // 既存のJSONを読み込み（手動記事を保持）
     $existingData = ['items' => []];
-    if (file_exists(NOTES_JSON_PATH)) {
-        $existingJson = file_get_contents(NOTES_JSON_PATH);
+    if (file_exists($jsonPath)) {
+        $existingJson = file_get_contents($jsonPath);
         $existingData = json_decode($existingJson, true) ?? ['items' => []];
     }
     
@@ -326,12 +365,12 @@ try {
         // IDを生成（Notion Page IDから - ハイフンを除いた完全なID）
         $notionId = 'notion-' . str_replace('-', '', $page['id']);
         
-        // プロパティを取得
+        // プロパティを取得（複数の名前に対応）
         $title = getPropertyValue($properties['タイトル'] ?? $properties['Title'] ?? []);
-        $date = getPropertyValue($properties['日付'] ?? $properties['Date'] ?? []);
+        $date = getPropertyValue($properties['公開日'] ?? $properties['日付'] ?? $properties['Date'] ?? []);
         $category = getPropertyValue($properties['カテゴリ'] ?? $properties['Category'] ?? []);
         $tags = getPropertyValue($properties['タグ'] ?? $properties['Tags'] ?? []);
-        $coverUrl = getPropertyValue($properties['カバー画像'] ?? $properties['Cover'] ?? []);
+        $coverUrl = getPropertyValue($properties['カバー画像URL'] ?? $properties['カバー画像'] ?? $properties['Cover'] ?? []);
         $author = getPropertyValue($properties['著者'] ?? $properties['Author'] ?? []);
         
         // デフォルト値
@@ -344,7 +383,19 @@ try {
         // ページの本文を取得
         $body = getPageContent($page['id']);
         
-        $notionArticles[] = [
+        // Blog/News用に抜粋を自動生成（HTMLタグを除去して最初の150文字）
+        $excerpt = '';
+        if ($type === 'blog' || $type === 'news') {
+            $plainBody = strip_tags($body);
+            $plainBody = preg_replace('/\s+/', ' ', $plainBody); // 改行を空白に
+            $plainBody = trim($plainBody);
+            $excerpt = mb_substr($plainBody, 0, 150);
+            if (mb_strlen($plainBody) > 150) {
+                $excerpt .= '...';
+            }
+        }
+        
+        $article = [
             'id' => $notionId,
             'title' => $title,
             'date' => $date,
@@ -354,6 +405,18 @@ try {
             'tags' => $tags,
             'body' => $body
         ];
+        
+        // Blog/Newsの場合は excerpt を追加
+        if (($type === 'blog' || $type === 'news') && $excerpt) {
+            $article['excerpt'] = $excerpt;
+        }
+        
+        // Blog/News用に location を追加（カテゴリから）
+        if ($type === 'blog' || $type === 'news') {
+            $article['location'] = $category;
+        }
+        
+        $notionArticles[] = $article;
     }
     
     // 手動記事とNotion記事をマージ
@@ -364,12 +427,12 @@ try {
         return strtotime($b['date']) - strtotime($a['date']);
     });
     
-    // notes.jsonに書き込み
+    // JSONに書き込み
     $newData = ['items' => $allArticles];
     $json = json_encode($newData, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
     
-    if (file_put_contents(NOTES_JSON_PATH, $json) === false) {
-        sendError('notes.json の書き込みに失敗しました。', 500);
+    if (file_put_contents($jsonPath, $json) === false) {
+        sendError('JSON ファイルの書き込みに失敗しました。', 500);
     }
     
     // 成功レスポンス

@@ -162,31 +162,88 @@
 <body>
     <div class="container">
         <h1>📝 Notion同期管理</h1>
-        <p class="subtitle">NotionからNote記事を同期します</p>
+        <p class="subtitle">NotionからNote・Blog記事を同期します</p>
         
+        <h2 style="font-size:20px;font-weight:900;color:#1a202c;margin:30px 0 15px 0;">📰 Note管理</h2>
         <div class="status-box">
             <div class="status-item">
                 <span class="status-label">Notion記事</span>
-                <span class="status-value" id="notion-count">-</span>
+                <span class="status-value" id="note-notion-count">-</span>
             </div>
             <div class="status-item">
                 <span class="status-label">手動記事</span>
-                <span class="status-value" id="manual-count">-</span>
+                <span class="status-value" id="note-manual-count">-</span>
             </div>
             <div class="status-item">
                 <span class="status-label">合計記事</span>
-                <span class="status-value" id="total-count">-</span>
+                <span class="status-value" id="note-total-count">-</span>
             </div>
         </div>
         
-        <button class="sync-button" id="sync-btn" onclick="syncNotion()">
-            <span id="btn-text">🔄 同期を実行</span>
+        <button class="sync-button" id="note-sync-btn" onclick="syncNotion('note')">
+            <span id="note-btn-text">🔄 Note同期を実行</span>
         </button>
         
-        <div class="message" id="message"></div>
+        <div class="message" id="note-message"></div>
         
         <div class="note-link">
             <a href="note.html" target="_blank">📄 Noteページを開く</a>
+        </div>
+        
+        <hr style="margin:40px 0;border:none;border-top:2px solid #e2e8f0;">
+        
+        <h2 style="font-size:20px;font-weight:900;color:#1a202c;margin:0 0 15px 0;">📝 Blog管理</h2>
+        <div class="status-box">
+            <div class="status-item">
+                <span class="status-label">Notion記事</span>
+                <span class="status-value" id="blog-notion-count">-</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">手動記事</span>
+                <span class="status-value" id="blog-manual-count">-</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">合計記事</span>
+                <span class="status-value" id="blog-total-count">-</span>
+            </div>
+        </div>
+        
+        <button class="sync-button" id="blog-sync-btn" onclick="syncNotion('blog')">
+            <span id="blog-btn-text">🔄 Blog同期を実行</span>
+        </button>
+        
+        <div class="message" id="blog-message"></div>
+        
+        <div class="note-link">
+            <a href="blog.html" target="_blank">📝 Blogページを開く</a>
+        </div>
+        
+        <hr style="margin:40px 0;border:none;border-top:2px solid #e2e8f0;">
+        
+        <h2 style="font-size:20px;font-weight:900;color:#1a202c;margin:0 0 15px 0;">📰 News管理</h2>
+        <div class="status-box">
+            <div class="status-item">
+                <span class="status-label">Notion記事</span>
+                <span class="status-value" id="news-notion-count">-</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">手動記事</span>
+                <span class="status-value" id="news-manual-count">-</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">合計記事</span>
+                <span class="status-value" id="news-total-count">-</span>
+            </div>
+        </div>
+        
+        <button class="sync-button" id="news-sync-btn" onclick="syncNotion('news')">
+            <span id="news-btn-text">🔄 News同期を実行</span>
+        </button>
+        
+        <div class="message" id="news-message"></div>
+        
+        <div class="note-link">
+            <a href="news.html" target="_blank">📰 Newsページを開く</a>
         </div>
         
         <div class="setup-link">
@@ -195,10 +252,10 @@
     </div>
     
     <script>
-        async function syncNotion() {
-            const btn = document.getElementById('sync-btn');
-            const btnText = document.getElementById('btn-text');
-            const message = document.getElementById('message');
+        async function syncNotion(type = 'note') {
+            const btn = document.getElementById(`${type}-sync-btn`);
+            const btnText = document.getElementById(`${type}-btn-text`);
+            const message = document.getElementById(`${type}-message`);
             
             // ボタンを無効化
             btn.disabled = true;
@@ -206,7 +263,7 @@
             message.style.display = 'none';
             
             try {
-                const response = await fetch('api/notion/sync.php', {
+                const response = await fetch(`api/notion/sync.php?type=${type}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -223,9 +280,9 @@
                     
                     // 統計を更新
                     if (data.stats) {
-                        document.getElementById('notion-count').textContent = data.stats.notion_articles + '件';
-                        document.getElementById('manual-count').textContent = data.stats.manual_articles + '件';
-                        document.getElementById('total-count').textContent = data.stats.total_articles + '件';
+                        document.getElementById(`${type}-notion-count`).textContent = data.stats.notion_articles + '件';
+                        document.getElementById(`${type}-manual-count`).textContent = data.stats.manual_articles + '件';
+                        document.getElementById(`${type}-total-count`).textContent = data.stats.total_articles + '件';
                     }
                 } else {
                     // エラー
@@ -240,7 +297,7 @@
             } finally {
                 // ボタンを有効化
                 btn.disabled = false;
-                btnText.textContent = '🔄 同期を実行';
+                btnText.textContent = type === 'blog' ? '🔄 Blog同期を実行' : '🔄 Note同期を実行';
             }
         }
         
@@ -261,6 +318,7 @@
         
         // ページ読み込み時に現在の記事数を取得
         window.addEventListener('DOMContentLoaded', async () => {
+            // Note記事の統計
             try {
                 const response = await fetch('assets/data/notes.json');
                 const data = await response.json();
@@ -269,11 +327,43 @@
                 const notionArticles = items.filter(item => item.id.startsWith('notion-'));
                 const manualArticles = items.filter(item => !item.id.startsWith('notion-'));
                 
-                document.getElementById('notion-count').textContent = notionArticles.length + '件';
-                document.getElementById('manual-count').textContent = manualArticles.length + '件';
-                document.getElementById('total-count').textContent = items.length + '件';
+                document.getElementById('note-notion-count').textContent = notionArticles.length + '件';
+                document.getElementById('note-manual-count').textContent = manualArticles.length + '件';
+                document.getElementById('note-total-count').textContent = items.length + '件';
             } catch (error) {
-                console.error('記事数の取得に失敗:', error);
+                console.error('Note記事数の取得に失敗:', error);
+            }
+            
+            // Blog記事の統計
+            try {
+                const response = await fetch('assets/data/posts.json');
+                const data = await response.json();
+                const items = data.items || [];
+                
+                const notionArticles = items.filter(item => item.id.startsWith('notion-'));
+                const manualArticles = items.filter(item => !item.id.startsWith('notion-'));
+                
+                document.getElementById('blog-notion-count').textContent = notionArticles.length + '件';
+                document.getElementById('blog-manual-count').textContent = manualArticles.length + '件';
+                document.getElementById('blog-total-count').textContent = items.length + '件';
+            } catch (error) {
+                console.error('Blog記事数の取得に失敗:', error);
+            }
+            
+            // News記事の統計
+            try {
+                const response = await fetch('assets/data/news.json');
+                const data = await response.json();
+                const items = data.items || [];
+                
+                const notionArticles = items.filter(item => item.id.startsWith('notion-'));
+                const manualArticles = items.filter(item => !item.id.startsWith('notion-'));
+                
+                document.getElementById('news-notion-count').textContent = notionArticles.length + '件';
+                document.getElementById('news-manual-count').textContent = manualArticles.length + '件';
+                document.getElementById('news-total-count').textContent = items.length + '件';
+            } catch (error) {
+                console.error('News記事数の取得に失敗:', error);
             }
         });
     </script>

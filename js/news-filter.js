@@ -1,8 +1,6 @@
-// News Filter and Pagination Functionality
+// News Filter Functionality
 document.addEventListener('DOMContentLoaded', function() {
   const filterBtns = document.querySelectorAll('.filter-btn');
-  const newsItems = document.querySelectorAll('.news-item');
-  const pageBtns = document.querySelectorAll('.page-btn');
   
   // ニュースフィルタリング機能
   filterBtns.forEach(btn => {
@@ -14,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
       this.classList.add('active');
       
       // ニュースアイテムのフィルタリング
+      const newsItems = document.querySelectorAll('.news-item');
       newsItems.forEach(item => {
         const category = item.getAttribute('data-category');
         
@@ -23,22 +22,6 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
           item.style.display = 'none';
         }
-      });
-    });
-  });
-  
-  // ページネーション機能
-  pageBtns.forEach(btn => {
-    btn.addEventListener('click', function() {
-      if (this.classList.contains('active')) return;
-      
-      // アクティブページの切り替え
-      pageBtns.forEach(b => b.classList.remove('active'));
-      this.classList.add('active');
-      
-      // ページトップにスムーズスクロール
-      document.querySelector('.news-content').scrollIntoView({
-        behavior: 'smooth'
       });
     });
   });
