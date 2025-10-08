@@ -24,7 +24,7 @@
         .bar::after{ content:""; position:absolute; inset:0; transform:translateX(-100%); background:linear-gradient(90deg, transparent, rgba(255,255,255,.5), transparent); animation: sweep 2.4s ease-in-out infinite }
         .b2{ height:10px } .b3{ height:12px } .b4{ height:10px } .b5{ height:8px }
         @keyframes sweep{ 0%{ transform:translateX(-120%) } 60%{ transform:translateX(40%) } 100%{ transform:translateX(120%) } }
-        .intro-wordmark{ position:absolute; font-family:'Noto Serif JP', serif; font-weight:900; letter-spacing:.1em; font-size: clamp(36px, 8vw, 84px); background:linear-gradient(45deg,#eaeffb,#c9d4ff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; filter: drop-shadow(0 6px 20px rgba(102,126,234,.35)); opacity:0; transform: translateY(8px); animation: wordIn 900ms ease forwards 900ms }
+        .intro-wordmark{ position:absolute; font-family:'Noto Serif JP', serif; font-weight:900; letter-spacing:.1em; font-size: clamp(36px, 8vw, 84px); background:linear-gradient(45deg,#eaeffb,#c9d4ff); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; filter: drop-shadow(0 6px 20px rgba(102,126,234,.35)); opacity:0; transform: translateY(8px); animation: wordIn 900ms ease forwards 900ms }
         @keyframes wordIn{ to{ opacity:1; transform: translateY(0) } }
         .particles{ position:absolute; inset:0; pointer-events:none }
         .dot{ position:absolute; width:6px; height:6px; border-radius:50%; background: radial-gradient(circle, #fff, rgba(255,255,255,.4)); filter: blur(.2px); opacity:0; animation: floatUp 1600ms ease forwards }
@@ -250,6 +250,7 @@
                     <li><a href="staff.html">Staffs</a></li>
                     <li><a href="blog.html">Blogs</a></li>
                     <li><a href="brand.html">BKTYS for Brand</a></li>
+                    <li><a href="note.html">Note</a></li>
                     <li><a href="links.html">Links</a></li>
                 </ul>
             </nav>
@@ -265,6 +266,7 @@
                     <li><a href="news.html">News</a></li>
                     <li><a href="staff.html">Staffs</a></li>
                     <li><a href="brand.html">BKTYS for Brand</a></li>
+                    <li><a href="note.html">Note</a></li>
                     <li><a href="links.html">Links</a></li>
                 </ul>
             </aside>
@@ -326,7 +328,7 @@
                     <p class="sns-description">ファン同士の交流コミュニティ</p>
                     <a href="#" class="sns-link">参加する</a>
                 </div>
-            </div>
+          </div>
         </div>
     </main>
 

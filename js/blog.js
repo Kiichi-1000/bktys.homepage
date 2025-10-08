@@ -5,10 +5,7 @@
   const DATA_URLS = ['assets/data/posts.json','./assets/data/posts.json','/assets/data/posts.json'];
   const CONFIG_URL = 'assets/config/blog.json';
   const FALLBACK = { items: [
-    { id:'2024-10-senshuken', title:'選手権', date:'2024-10-01', location:'武蔵境', category:'大会', coverImageUrl:'assets/images/38559702-759D-49DD-9888-5565350877A9.jpg', excerpt:'ベスト16進出。濃密なトーナメントを経て積み上げた経験の断片。', tags:['選手権','大会','成長'] },
-    { id:'2024-08-ensei', title:'遠征', date:'2024-08-10', location:'波崎', category:'合宿', coverImageUrl:'assets/images/S__23273486.jpg', excerpt:'熱と潮の匂いに満ちた数日間の記録。', tags:['遠征','合宿','夏'] },
-    { id:'2023-03-kohaku', title:'部内紅白戦', date:'2023-03-20', location:'稲城ヴェルディフィールド', category:'部活動', coverImageUrl:'assets/images/55831B31-0733-43AD-BE72-B0952DF21654.jpg', excerpt:'競い合い、笑い合い、チームがチームになる瞬間。', tags:['紅白戦','チーム'] },
-    { id:'2024-09-exchange', title:'交流試合', date:'2024-09-05', location:'天王洲', category:'交流戦', coverImageUrl:'assets/images/blog-images/C5C2533F-68D4-40A9-85C8-6E6C351CC3BA.jpg', excerpt:'夜風と街の灯りが交差するピッチで見た景色。', tags:['交流戦','社会人','ナイトゲーム'] }
+    { id:'2024-09-exchange', title:'交流試合', date:'2024-09-05', location:'天王洲', category:'交流戦', coverImageUrl:'assets/images/blog-images/C5C2533F-68D4-40A9-85C8-6E6C351CC3BA.jpg', excerpt:'高校の仲間たちとの初めての部外活動。選手権への練習の一途だとしても一生の思い出になった。選手権に向け、日常は戻るが私はこの異世界を忘れない。', tags:['交流戦','社会人','ナイトゲーム'] }
   ]};
 
   async function loadConfig(){

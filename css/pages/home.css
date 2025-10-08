@@ -205,6 +205,17 @@
 .bg-pattern::before, .bg-pattern::after{ content:""; position:absolute; inset:0; background-image: radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,.7), transparent 60%), radial-gradient(1px 1px at 25% 40%, rgba(255,255,255,.6), transparent 60%), radial-gradient(1px 1px at 60% 15%, rgba(255,255,255,.7), transparent 60%), radial-gradient(1px 1px at 80% 35%, rgba(255,255,255,.6), transparent 60%), radial-gradient(1px 1px at 45% 75%, rgba(255,255,255,.7), transparent 60%); animation: twinkle 6s ease-in-out infinite }
 .bg-pattern::after{ animation-duration:8s; opacity:.6 }
 
+/* main sponsor recruitment note */
+.sponsor-recruitment-note{ 
+  margin-top:8px; 
+  font-size:14px; 
+  color:#334155; 
+  background:rgba(15,52,96,.06); 
+  border:1px dashed rgba(15,52,96,.18); 
+  padding:8px 12px; 
+  border-radius:8px; 
+}
+
 
 
 
