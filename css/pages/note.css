@@ -1,0 +1,46 @@
+.note{ background:#ffffff; color:#111827; min-height:100vh; padding-top:80px }
+.note-hero{ padding: clamp(56px,8vw,84px) 0; border-bottom:1px solid #eef2f7; background:#ffffff }
+.note-hero .container{ max-width:1200px; margin:0 auto; padding: 0 24px }
+.note-hero__title{ font-family: 'Noto Serif JP', serif; font-size: clamp(32px,6vw,56px); font-weight:900; margin:0 0 8px; color:#0f172a }
+.note-hero__subtitle{ color:#475569; font-size:16px; margin:0 0 16px; max-width:760px }
+.note-hero__actions{ display:flex; gap:12px }
+.note-hero__btn{ display:inline-block; padding:12px 18px; background:#0f172a; color:#fff; text-decoration:none; border-radius:10px; font-weight:700; letter-spacing:.02em; border:1px solid #0f172a }
+.note-hero__btn:hover{ filter: brightness(1.04) }
+.note-listing{ padding: 40px 0 24px 0; border-bottom: 1px solid #eef2f7 }
+.note-listing .container{ max-width:1200px; margin:0 auto; padding: 0 24px }
+.note-listing__title{ font-family: 'Noto Serif JP', serif; letter-spacing:.02em; font-size: clamp(28px,5vw,42px); font-weight:900; margin:0 0 8px; color:#0f172a }
+.note-listing__subtitle{ color:#64748b; margin:0 0 20px }
+.note-grid{ display:grid; gap:20px; grid-template-columns: repeat(3, 1fr) }
+.note-card{ background:#ffffff; border:1px solid #e5e7eb; border-radius:16px; overflow:hidden; transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease; cursor:pointer; box-shadow: 0 4px 10px rgba(15,23,42,.04) }
+.note-card:hover{ transform: translateY(-3px); box-shadow: 0 14px 30px rgba(15,23,42,.10); border-color:#d1d5db }
+.note-card__thumb{ aspect-ratio: 16/9; background:#f8fafc; display:block; overflow:hidden }
+.note-card__thumb img{ width:100%; height:100%; object-fit:cover; transition: transform .35s ease }
+.note-card:hover .note-card__thumb img{ transform: scale(1.03) }
+.note-card__body{ padding:16px 18px }
+.note-card__meta{ font-size:12px; color:#6b7280; margin-bottom:8px; display:flex; align-items:center; gap:8px }
+.note-card__title{ font-size:18px; font-weight:800; margin:0; color:#0f172a; line-height:1.4 }
+@media (max-width: 960px){ .note-grid{ grid-template-columns: 1fr 1fr } }
+@media (max-width: 560px){ .note-grid{ grid-template-columns: 1fr } }
+.note-layout{ display:grid; grid-template-columns: 320px 1fr; max-width:1200px; margin:0 auto; gap:20px; padding: 24px }
+.note-sidebar{ background:#ffffff; border:1px solid #e5e7eb; border-radius:16px; overflow:hidden }
+.note-sidebar__head{ padding:16px 18px; font-weight:800; letter-spacing:.04em; border-bottom:1px solid #eef2f7; color:#0f172a }
+.note-list{ list-style:none; margin:0; padding:0 }
+.note-list__item{ padding:14px 18px; border-bottom:1px solid #f1f5f9; cursor:pointer }
+.note-list__item:hover{ background:#f8fafc }
+.note-list__item.is-active{ background:#eef2ff }
+.note-list__title{ font-weight:700; margin-bottom:4px; color:#111827 }
+.note-list__meta{ font-size:12px; color:#6b7280 }
+
+.note-article{ background:#ffffff; border:1px solid #e5e7eb; border-radius:16px; padding:24px }
+.note-article__title{ font-size: clamp(22px, 3vw, 32px); font-weight:900; margin:0 0 8px 0; color:#111827 }
+.note-article__desc{ color:#374151; margin:0 0 12px 0 }
+.note-article__tags{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px }
+.note-article__tags span{ background:#f1f5f9; border:1px solid #e2e8f0; color:#0f172a; border-radius:999px; padding:6px 10px; font-size:12px }
+.note-article__body h2{ margin: 22px 0 10px 0; font-size:20px; color:#0f172a }
+.note-article__body p, .note-article__body li{ line-height:1.9; color:#111827 }
+.note-article__body ol{ padding-left:18px }
+
+@media (max-width: 960px){
+  .note-layout{ grid-template-columns: 1fr; }
+}
+

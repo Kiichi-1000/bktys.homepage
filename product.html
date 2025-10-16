@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>商品詳細 - BKTYSSHOP</title>
+  <link rel="stylesheet" href="css/sanitize.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <style>
+    .page { padding-top: 64px; background: #000; color: #fff; }
+    .container { padding: 20px 16px; max-width: 1200px; margin: 0 auto; }
+    .pdp-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin: 40px 0; }
+    .pdp-gallery { position: relative; background: rgba(0,0,0,0.8); border: 1px solid rgba(0,200,83,0.3); border-radius: 16px; overflow: hidden; backdrop-filter: blur(10px); }
+    .pdp-gallery img { width: 100%; height: auto; border-radius: 12px; transition: all 0.3s ease; }
+    .pdp-gallery:hover img { transform: scale(1.02); }
+    .pdp-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,200,83,0.8); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 18px; transition: all 0.3s ease; backdrop-filter: blur(10px); }
+    .pdp-nav:hover { background: rgba(0,200,83,1); transform: translateY(-50%) scale(1.1); box-shadow: 0 0 20px rgba(0,200,83,0.5); }
+    .pdp-nav.prev { left: 16px; }
+    .pdp-nav.next { right: 16px; }
+    .pdp-info h1 { font-size: 2rem; margin: 0 0 16px 0; font-weight: 700; color: #fff; animation: neonGlow 3s ease-in-out infinite; }
+    .pdp-brand { font-size: 1.1rem; color: #00C853; margin-bottom: 8px; }
+    .pdp-price { font-size: 1.5rem; font-weight: 700; color: #00C853; margin: 20px 0; animation: neonGlow 2s ease-in-out infinite; }
+    .pdp-price s { color: #9ca3af; margin-right: 12px; }
+    .pdp-delivery, .pdp-producer { color: #ccc; margin-bottom: 8px; }
+    .pdp-lowstock { color: #ff6b6b; font-weight: 600; margin: 16px 0; animation: scarcityBlink 1s infinite; }
+    .pdp-size { margin: 20px 0; }
+    .pdp-size label { display: inline-block; margin-right: 12px; margin-bottom: 8px; }
+    .pdp-size input[type="radio"] { display: none; }
+    .pdp-size span { display: inline-block; padding: 8px 16px; border: 2px solid rgba(0,200,83,0.3); border-radius: 8px; cursor: pointer; transition: all 0.3s ease; background: rgba(0,0,0,0.6); color: #00C853; backdrop-filter: blur(10px); }
+    .pdp-size span:hover { border-color: rgba(0,200,83,0.6); background: rgba(0,200,83,0.1); transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0,200,83,0.2); }
+    .pdp-size input[type="radio"]:checked + span { border-color: #00C853; background: linear-gradient(45deg, #00C853, #4CAF50); color: white; box-shadow: 0 0 20px rgba(0,200,83,0.4); }
+    .pdp-add { width: 100%; max-width: 220px; padding: 16px; background: linear-gradient(45deg, #00C853, #4CAF50); color: white; border: none; border-radius: 12px; font-size: 18px; font-weight: 600; cursor: pointer; margin: 20px 0; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,200,83,0.3); position: relative; overflow: hidden; }
+    .pdp-add::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); transition: left 0.5s ease; }
+    .pdp-add:hover::before { left: 100%; }
+    .pdp-add:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,200,83,0.4); }
+    .pdp-add:active { transform: scale(0.98); animation: buttonPress 0.2s ease-in-out; }
+    .pdp-add:disabled { background: #9ca3af; cursor: not-allowed; transform: none; box-shadow: none; }
+    .pdp-tabs { margin-top: 40px; }
+    .pdp-tabs .tab-buttons { display: flex; gap: 0; margin-bottom: 20px; }
+    .pdp-tabs .tab-button { flex: 1; padding: 12px 20px; border: none; background: rgba(0,0,0,0.6); color: #00C853; cursor: pointer; font-size: 16px; transition: all 0.3s ease; backdrop-filter: blur(10px); }
+    .pdp-tabs .tab-button:first-child { border-radius: 8px 0 0 8px; }
+    .pdp-tabs .tab-button:last-child { border-radius: 0 8px 8px 0; }
+    .pdp-tabs .tab-button:hover { background: rgba(0,200,83,0.1); border-color: rgba(0,200,83,0.6); }
+    .pdp-tabs .tab-button.is-active { background: linear-gradient(45deg, #00C853, #4CAF50); color: white; box-shadow: 0 0 20px rgba(0,200,83,0.4); }
+    .pdp-tabs .tab-panel { padding: 20px; background: rgba(0,0,0,0.8); border: 1px solid rgba(0,200,83,0.3); border-radius: 8px; line-height: 1.6; color: #fff; backdrop-filter: blur(10px); }
+    .pdp-reco { margin-top: 60px; }
+    .pdp-reco h2 { text-align: center; margin-bottom: 30px; font-size: 1.8rem; color: #fff; animation: neonGlow 3s ease-in-out infinite; }
+    .recommendations-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+    .recommendation-card { background: rgba(0,0,0,0.8); border: 1px solid rgba(0,200,83,0.3); border-radius: 16px; overflow: hidden; text-decoration: none; color: inherit; transition: all 0.3s ease; backdrop-filter: blur(10px); position: relative; }
+    .recommendation-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(45deg, rgba(0,200,83,0.05) 0%, transparent 50%, rgba(0,200,83,0.05) 100%); opacity: 0; transition: opacity 0.3s ease; }
+    .recommendation-card:hover::before { opacity: 1; }
+    .recommendation-card:hover { transform: translateY(-8px) scale(1.02); border-color: rgba(0,200,83,0.6); box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 30px rgba(0,200,83,0.2); }
+    .recommendation-card img { width: 100%; height: 200px; object-fit: cover; }
+    .recommendation-card .meta { padding: 16px; color: #fff; }
+    .recommendation-card .name { font-weight: 600; margin-bottom: 8px; color: #fff; }
+    .recommendation-card .price { color: #00C853; font-weight: 700; }
+    @media (max-width: 768px) {
+      .pdp-wrap { grid-template-columns: 1fr; gap: 24px; }
+      .pdp-info h1 { font-size: 1.5rem; }
+      .pdp-price { font-size: 1.3rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header future-header">
+    <div class="header-inner">
+      <label for="nav-toggle" class="hamburger" aria-label="メニューを開閉"><span></span><span></span><span></span></label>
+      <a class="brand" href="brand.html" aria-label="BKTYSSHOP Home">BKTYSSHOP</a>
+      <input id="nav-toggle" class="nav-toggle" type="checkbox" aria-hidden="true">
+      <nav class="nav" aria-label="ナビゲーション">
+        <ul>
+          <li><a href="brand.html">BKTYS SHOP</a></li>
+        </ul>
+      </nav>
+      <label class="menu-overlay" for="nav-toggle" aria-hidden="true"></label>
+      <aside class="menu-drawer" aria-label="メニュー">
+        <header class="drawer-head"><span class="drawer-title">BKTYSSHOP</span><label for="nav-toggle" class="drawer-close" aria-label="閉じる">×</label></header>
+        <ul class="drawer-nav">
+          <li><a href="brand.html">Home</a></li>
+          <li><a href="https://velara.official.ec/" target="_blank">Official</a></li>
+          <li><a href="members.html">Members</a></li>
+          <li><a href="#" id="cart-toggle-mobile">Cart</a></li>
+        </ul>
+      </aside>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="container">
+      <div id="pdp-root">
+        <!-- 商品詳細がここに動的に生成されます -->
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 BKTYS. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- カートドロワー -->
+  <div class="cart-overlay" id="cart-overlay"></div>
+  <aside class="cart-drawer" id="cart-drawer">
+    <header class="cart-drawer-header">
+      <h2>カート</h2>
+      <button class="cart-drawer-close" id="cart-close" aria-label="カートを閉じる">×</button>
+    </header>
+    <div class="cart-drawer-content" id="cart-content">
+      <!-- カートの内容がここに動的に挿入されます -->
+    </div>
+  </aside>
+
+  <script src="js/products-fallback.js"></script>
+  <script src="js/cart.js"></script>
+  <script>
+    // 商品データの取得
+    async function fetchProducts() {
+      try {
+        const res = await fetch('assets/data/products.json');
+        const json = await res.json();
+        return json.products || [];
+      } catch (_e) {
+        return window.BK_PRODUCTS || [];
+      }
+    }
+
+    // URLからスラッグを取得
+    function getSlug() {
+      const url = new URL(location.href);
+      return url.searchParams.get('slug');
+    }
+
+    // スラッグで商品を検索
+    function bySlug(list, slug) {
+      return list.find(p => p.slug === slug);
+    }
+
+    // 価格表示の生成
+    function priceHtml(p) {
+      const base = p.salePrice ? 
+        `<s>¥${p.price.toLocaleString()}</s> <strong>¥${p.salePrice.toLocaleString()}</strong>` : 
+        `<strong>¥${p.price.toLocaleString()}</strong>`;
+      return base;
+    }
+
+    // 送料無料の進捗を更新
+    function updateFreeShip(subtotal) {
+      const prog = window.BKTYSCart.progress(subtotal);
+      return prog;
+    }
+
+    // 商品詳細の表示
+    function render(product) {
+      const el = document.getElementById('pdp-root');
+      if (!el) return;
+
+      const lowStock = Object.values(product.stock || {}).some(n => n > 0 && n <= 5);
+      
+      el.innerHTML = `
+        <header class="pdp-brand">${product.brand}</header>
+        <div class="pdp-wrap">
+          <div class="pdp-gallery">
+            <img id="pdp-img" src="${product.images[0]?.url || ''}" alt="${product.images[0]?.alt || product.name}">
+            ${product.images.length > 1 ? `
+              <button class="pdp-nav prev" aria-label="前の画像">‹</button>
+              <button class="pdp-nav next" aria-label="次の画像">›</button>
+            ` : ''}
+          </div>
+          <div class="pdp-info">
+            <h1 class="pdp-name">${product.name}</h1>
+            <div class="pdp-maker">${product.studio || product.maker || ''}</div>
+            <div class="pdp-price">${priceHtml(product)}</div>
+            <div class="pdp-delivery">${product.deliveryEstimate || '2-3週間'}</div>
+            <div class="pdp-producer">${product.producer || 'Made in Japan'}</div>
+            ${lowStock ? '<div class="pdp-lowstock">残りわずか</div>' : ''}
+            <div class="pdp-size">
+              ${(product.sizes || ['S', 'M', 'L', 'XL']).map(s => `
+                <label>
+                  <input type="radio" name="size" value="${s}">
+                  <span>${s}</span>
+                </label>
+              `).join('')}
+            </div>
+            <button id="add-to-cart" class="pdp-add" disabled>カートに入れる</button>
+            <div class="pdp-base-shop" style="margin-top: 20px; text-align: center;">
+              <a href="https://your-base-shop.thebase.in/" target="_blank" class="btn btn-primary" style="display: inline-block; padding: 12px 24px; background: linear-gradient(45deg, #00C853, #4CAF50); color: white; text-decoration: none; border-radius: 8px; font-weight: 600;">
+                BASEショップで購入する
+              </a>
+            </div>
+            <section class="pdp-tabs">
+              <div class="tab-buttons">
+                <button class="tab-button is-active" data-tab="desc">商品詳細</button>
+                <button class="tab-button" data-tab="size">サイズ</button>
+              </div>
+              <div class="tab-panel" id="tab-desc">
+                ${product.description || '柔らかなコットンと丁寧な縫製で日常に寄り添う一枚。快適な着心地と洗濯耐性を両立。'}
+              </div>
+              <div class="tab-panel" id="tab-size" style="display: none;">
+                ${product.sizeGuide || 'S: 着丈65/身幅48, M: 69/52, L: 73/55, XL: 77/58 (cm) 目安。'}
+              </div>
+            </section>
+          </div>
+        </div>
+        <section class="pdp-reco" id="pdp-reco">
+          <h2>あなたにおすすめ</h2>
+          <div class="recommendations-grid" id="recommendations">
+            <!-- おすすめ商品がここに表示されます -->
+          </div>
+        </section>
+      `;
+
+      // サイズ選択の処理
+      const btn = document.getElementById('add-to-cart');
+      document.querySelectorAll('input[name="size"]').forEach(r => {
+        r.addEventListener('change', () => {
+          const size = document.querySelector('input[name="size"]:checked')?.value;
+          btn.disabled = !size;
+        });
+      });
+
+      // カートに追加の処理
+      btn.addEventListener('click', () => {
+        const size = document.querySelector('input[name="size"]:checked')?.value;
+        if (!size) {
+          alert('サイズを選んでください');
+          return;
+        }
+
+        const price = product.salePrice || product.price;
+        const cart = window.BKTYSCart.addItem({
+          sku: product.sku || product.id,
+          size,
+          price,
+          image: product.images[0]?.url || '',
+          name: product.name,
+          qty: 1
+        });
+
+        // カートインアニメーション
+        try {
+          window.BKTYSCart.flyToCartFrom(document.querySelector('.pdp-gallery img'));
+        } catch (_e) {}
+
+        // バッジ更新
+        window.BKTYSCart.updateBadge();
+
+        // 送料無料の進捗確認
+        const prog = window.BKTYSCart.progress(cart.subtotal);
+        const msg = prog.isFree ? 
+          '送料無料になりました！' : 
+          `カートに入りました 🎉 あと¥${prog.remain.toLocaleString()}で送料無料`;
+
+        // トースト表示
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.textContent = msg;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 2200);
+      });
+
+      // タブ切り替えの処理
+      document.querySelectorAll('.tab-button').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const tab = btn.dataset.tab;
+          
+          // ボタンのアクティブ状態を更新
+          document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('is-active'));
+          btn.classList.add('is-active');
+          
+          // パネルの表示を更新
+          document.querySelectorAll('.tab-panel').forEach(p => p.style.display = 'none');
+          document.getElementById(`tab-${tab}`).style.display = 'block';
+        });
+      });
+
+      // 画像ギャラリーの制御
+      if (product.images.length > 1) {
+        const imgEl = document.getElementById('pdp-img');
+        let idx = 0;
+        
+        const show = (n) => {
+          idx = (n + product.images.length) % product.images.length;
+          imgEl.src = product.images[idx].url;
+        };
+
+        document.querySelector('.pdp-nav.prev').addEventListener('click', () => show(idx - 1));
+        document.querySelector('.pdp-nav.next').addEventListener('click', () => show(idx + 1));
+      }
+
+      // おすすめ商品の表示
+      renderRecommendations(product);
+    }
+
+    // おすすめ商品の表示
+    function renderRecommendations(currentProduct) {
+      const container = document.getElementById('recommendations');
+      if (!container) return;
+
+      // 現在の商品と同じカテゴリの商品を3つ表示
+      const recommendations = window.BK_PRODUCTS
+        .filter(p => p.id !== currentProduct.id && p.category === currentProduct.category)
+        .slice(0, 3);
+
+      if (recommendations.length === 0) {
+        container.innerHTML = '<p style="text-align: center; color: #6b7280;">おすすめ商品はありません</p>';
+        return;
+      }
+
+      container.innerHTML = recommendations.map(p => `
+        <a class="recommendation-card" href="product.html?slug=${encodeURIComponent(p.slug)}">
+          <img src="${p.images[0]?.url || ''}" alt="${p.name}">
+          <div class="meta">
+            <div class="name">${p.name}</div>
+            <div class="price">¥${p.price.toLocaleString()}</div>
+          </div>
+        </a>
+      `).join('');
+    }
+
+    // メイン初期化処理
+    (async function init() {
+      const slug = getSlug();
+      if (!slug) {
+        document.getElementById('pdp-root').innerHTML = '<p>商品が見つかりません</p>';
+        return;
+      }
+
+      let all = [];
+      try {
+        all = await fetchProducts();
+      } catch (_e) {
+        all = window.BK_PRODUCTS || [];
+      }
+
+      if (!all || all.length === 0) {
+        all = window.BK_PRODUCTS || [];
+      }
+
+      const product = bySlug(all, slug);
+      if (!product) {
+        document.getElementById('pdp-root').innerHTML = '<p>商品が見つかりません</p>';
+        return;
+      }
+
+      render(product);
+    })();
+
+    // カートドロワーの制御
+    function openCart() {
+      document.getElementById('cart-drawer').classList.add('open');
+      document.getElementById('cart-overlay').classList.add('open');
+      renderCart();
+    }
+
+    function closeCart() {
+      document.getElementById('cart-drawer').classList.remove('open');
+      document.getElementById('cart-overlay').classList.remove('open');
+    }
+
+    function renderCart() {
+      const cart = window.BKTYSCart.load();
+      const cartContent = document.getElementById('cart-content');
+      
+      if (cart.items.length === 0) {
+        cartContent.innerHTML = '<p style="text-align: center; padding: 40px 20px; color: #ccc;">カートは空です</p>';
+        return;
+      }
+
+      const itemsHtml = cart.items.map(item => `
+        <div class="cart-item">
+          <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+          <div class="cart-item-details">
+            <div class="cart-item-name">${item.name}</div>
+            <div class="cart-item-size">${item.size}</div>
+            <div class="cart-item-controls">
+              <div class="cart-item-qty">
+                <button onclick="updateQty('${item.id}', ${item.qty - 1})">-</button>
+                <span>${item.qty}</span>
+                <button onclick="updateQty('${item.id}', ${item.qty + 1})">+</button>
+              </div>
+              <div class="cart-item-price">¥${item.price.toLocaleString()}</div>
+            </div>
+            <button class="cart-item-remove" onclick="removeItem('${item.id}')">削除</button>
+          </div>
+        </div>
+      `).join('');
+
+      const { subtotal, shipping, total } = window.BKTYSCart.calc();
+      const progress = Math.min((subtotal / 10000) * 100, 100);
+      const isFreeShipping = subtotal >= 10000;
+
+      cartContent.innerHTML = `
+        ${itemsHtml}
+        <div class="cart-shipping-progress">
+          <div class="cart-shipping-progress-text">
+            ${isFreeShipping ? 
+              '<span class="cart-shipping-free">🎉 送料無料</span>' : 
+              `あと ¥${(10000 - subtotal).toLocaleString()} で送料無料`
+            }
+          </div>
+          <div class="cart-shipping-progress-bar">
+            <div class="cart-shipping-progress-fill" style="width: ${progress}%"></div>
+          </div>
+        </div>
+        <div class="cart-summary">
+          <div class="cart-summary-row">
+            <span>小計</span>
+            <span>¥${subtotal.toLocaleString()}</span>
+          </div>
+          <div class="cart-summary-row">
+            <span>送料</span>
+            <span>${isFreeShipping ? '無料' : `¥${shipping.toLocaleString()}`}</span>
+          </div>
+        </div>
+        <div class="cart-summary-total">
+          <span>合計</span>
+          <span>¥${total.toLocaleString()}</span>
+        </div>
+        <button class="cart-checkout-btn" onclick="window.location.href='checkout.html'">
+          チェックアウト
+        </button>
+      `;
+    }
+
+    function updateQty(itemId, newQty) {
+      if (newQty <= 0) {
+        removeItem(itemId);
+        return;
+      }
+      
+      const cart = window.BKTYSCart.load();
+      const item = cart.items.find(i => i.id === itemId);
+      if (item) {
+        item.qty = newQty;
+        window.BKTYSCart.save(cart);
+        renderCart();
+        window.BKTYSCart.updateBadge();
+      }
+    }
+
+    function removeItem(itemId) {
+      const cart = window.BKTYSCart.load();
+      cart.items = cart.items.filter(i => i.id !== itemId);
+      window.BKTYSCart.save(cart);
+      renderCart();
+      window.BKTYSCart.updateBadge();
+    }
+
+    // 規約同意チェック
+    function checkTermsAgreement() {
+      const agreed = localStorage.getItem('bktys_terms_agreed');
+      if (!agreed) {
+        // 規約未同意の場合は規約ページへリダイレクト
+        window.location.href = 'terms.html';
+        return false;
+      }
+      
+      try {
+        const agreementData = JSON.parse(agreed);
+        if (!agreementData.agreed) {
+          // 規約未同意の場合は規約ページへリダイレクト
+          window.location.href = 'terms.html';
+          return false;
+        }
+      } catch (e) {
+        // エラーの場合は規約ページへリダイレクト
+        window.location.href = 'terms.html';
+        return false;
+      }
+      
+      return true;
+    }
+
+    // イベントリスナーの設定
+    document.addEventListener('DOMContentLoaded', function() {
+      // 規約同意チェック
+      if (!checkTermsAgreement()) {
+        return;
+      }
+      // カートアイコンのクリックイベント
+      document.querySelector('.shop-cart').addEventListener('click', function(e) {
+        e.preventDefault();
+        openCart();
+      });
+
+      // カートドロワーの閉じるボタン
+      document.getElementById('cart-close').addEventListener('click', closeCart);
+
+      // オーバーレイのクリックでカートを閉じる
+      document.getElementById('cart-overlay').addEventListener('click', closeCart);
+
+      // カートバッジの初期化
+      window.BKTYSCart.updateBadge();
+    });
+  </script>
+</body>
+</html>

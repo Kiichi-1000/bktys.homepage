@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>News - BKTYS</title>
+  <link rel="stylesheet" href="css/sanitize.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/pages/news.css">
+  <link rel="stylesheet" href="css/pages/news-post.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Noto+Serif+JP:wght@700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <label for="nav-toggle" class="hamburger" aria-label="メニューを開閉">
+        <span></span><span></span><span></span>
+      </label>
+      <a class="brand" href="index.html" aria-label="BKTS Home">BKTYS.</a>
+      <input id="nav-toggle" class="nav-toggle" type="checkbox" aria-hidden="true">
+      <nav class="nav" aria-label="ナビゲーション">
+        <ul>
+          <li><a href="brand.html">BKTYS SHOP</a></li>
+        </ul>
+      </nav>
+      <label class="menu-overlay" for="nav-toggle" aria-hidden="true"></label>
+      <aside class="menu-drawer" aria-label="メニュー">
+        <header class="drawer-head">
+          <span class="drawer-title">BKTYS.</span>
+          <label for="nav-toggle" class="drawer-close" aria-label="閉じる">×</label>
+        </header>
+        <ul class="drawer-nav">
+          <li><a href="index.html">Top</a></li>
+          <li><a href="introduction.html">Introduction</a></li>
+          <li><a href="news.html">News</a></li>
+          <li><a href="staff.html">Staffs</a></li>
+          <li><a href="blog.html">Blogs</a></li>
+          <li><a href="brand.html">BKTYS for Brand</a></li>
+          <li><a href="note.html">Note</a></li>
+          <li><a href="links.html">Links</a></li>
+        </ul>
+      </aside>
+    </div>
+  </header>
+
+  <!-- Progress bar -->
+  <div class="post-progress" id="post-progress"></div>
+
+  <!-- Hero Section -->
+  <section class="news-hero">
+    <div class="hero-content">
+      <h1 class="hero-title">News</h1>
+      <p class="hero-subtitle">BKTYSの最新情報</p>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="post">
+    <article class="post-article" id="post-article">
+      <div class="post-breadcrumb"><a href="news.html">News</a> / <span id="post-crumb">Loading...</span></div>
+      <header class="post-header">
+        <h1 class="post-title" id="post-title">Loading...</h1>
+        <div class="post-meta" id="post-meta"></div>
+      </header>
+      <div class="post-author">
+        <div class="avatar"></div>
+        <div>
+          <div class="name" id="post-author">BKTYS 編集部</div>
+          <div class="role">News</div>
+        </div>
+      </div>
+      <section class="post-body" id="post-body"></section>
+      <footer class="post-footer">
+        <div class="post-tags" id="post-tags"></div>
+        <a href="news.html" class="back-link">← Newsページに戻る</a>
+      </footer>
+    </article>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 BKTYS. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="js/news-post.js"></script>
+</body>
+</html>

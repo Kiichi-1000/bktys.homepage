@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blogs - BKTYS</title>
+    <link rel="stylesheet" href="css/sanitize.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/pages/blog.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@600;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <label for="nav-toggle" class="hamburger" aria-label="メニューを開閉">
+                <span></span><span></span><span></span>
+            </label>
+            <a class="brand" href="index.html" aria-label="BKTS Home">BKTYS.</a>
+            <input id="nav-toggle" class="nav-toggle" type="checkbox" aria-hidden="true">
+            <nav class="nav" aria-label="ナビゲーション">
+                <ul>
+                    <li><a href="brand.html">BKTYS SHOP</a></li>
+                </ul>
+            </nav>
+            <label class="menu-overlay" for="nav-toggle" aria-hidden="true"></label>
+            <aside class="menu-drawer" aria-label="メニュー">
+                <header class="drawer-head">
+                    <span class="drawer-title">BKTS.</span>
+                    <label for="nav-toggle" class="drawer-close" aria-label="閉じる">×</label>
+                </header>
+                <ul class="drawer-nav">
+                    <li><a href="index.html">Top</a></li>
+                    <li><a href="introduction.html">Introduction</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li><a href="staff.html">Staffs</a></li>
+                    <li><a href="blog.html">Blogs</a></li>
+                    <li><a href="brand.html">BKTYS for Brand</a></li>
+                    <li><a href="note.html">Note</a></li>
+                    <li><a href="links.html">Links</a></li>
+                </ul>
+            </aside>
+        </div>
+    </header>
+
+    <main>
+        <section class="blog-hero" data-scroll-animation data-scroll-direction="up">
+            <div class="container">
+                <h1 class="blog-title">Blogs</h1>
+                <p class="blog-subtitle">実績・思い出のアーカイブ</p>
+                <div class="blog-tools" style="margin-top:12px; display:flex; gap:10px; align-items:center; flex-wrap:wrap">
+                    <input id="blog-search" type="search" placeholder="検索（タイトル/抜粋/タグ）" style="padding:8px 12px; border-radius:8px; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.06); color:#e7ecff">
+                    <div id="blog-tags" style="display:flex; gap:8px; flex-wrap:wrap"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="blog-list" id="blog-list">
+            <div class="container blog-grid">
+                <!-- JSで動的に挿入 -->
+            </div>
+            <noscript><div class="container" style="color:#e7ecff;opacity:.85;padding:12px 16px">JavaScriptが無効のため記事を表示できません。</div></noscript>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 BKTYS. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script src="js/blog.js"></script>
+</body>
+</html>

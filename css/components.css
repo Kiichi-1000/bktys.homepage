@@ -1,0 +1,636 @@
+/* ===== Header / Navigation / Drawer ===== */
+.site-header{ position:fixed; inset:0 0 auto 0; z-index:10; background:linear-gradient(to bottom, rgba(0,0,0,.55), rgba(0,0,0,0)); backdrop-filter:saturate(130%) blur(var(--blur)); -webkit-backdrop-filter:saturate(130%) blur(var(--blur)); }
+.header-inner{ height:64px; display:flex; align-items:center; gap:1rem; padding:0 14px; border-bottom:1px solid rgba(255,255,255,.06); }
+.brand{ font-weight:800; letter-spacing:.12em; text-decoration:none; color:white; font-size:1.1rem; }
+.hamburger{ display:inline-grid; place-items:center; gap:5px; width:42px; height:42px; cursor:pointer }
+.hamburger span{ display:block; width:20px; height:2px; background:#fff; border-radius:1px }
+.nav-toggle{ display:none }
+.nav{ margin-left:auto }
+.nav ul{ display:flex; gap:1rem; list-style:none; margin:0; padding:0 }
+.nav a{ color:#fff; text-decoration:none; font-weight:600; transition: opacity .2s ease }
+.nav a:hover{ opacity:0.7 }
+@media (max-width:880px){ .nav ul{display:none} .nav-toggle:checked + .nav ul{ display:flex; position:absolute; right:12px; top:60px; flex-direction:column; gap:.5rem; background:var(--glass-bg); backdrop-filter:blur(var(--blur)); border:1px solid rgba(255,255,255,.08); padding:.6rem .8rem; border-radius:.6rem; } }
+
+/* Drawer */
+.menu-overlay{ position:fixed; inset:0; z-index:40; background:rgba(0,0,0,0.6); backdrop-filter:blur(8px); opacity:0; pointer-events:none; transition:opacity .25s ease; }
+.menu-drawer{ position:fixed; inset:0 auto 0 0; z-index:41; width:min(320px,85vw); background:rgba(0,0,0,0.75); backdrop-filter:saturate(130%) blur(12px); border-right:1px solid rgba(255,255,255,.12); transform: translateX(-100%); transition: transform .28s ease; display:grid; grid-template-rows:auto 1fr; box-shadow:0 20px 40px rgba(0,0,0,.45); }
+.drawer-head{ height:64px; display:flex; align-items:center; gap:.5rem; padding:0 16px; border-bottom:1px solid rgba(255,255,255,.12); background-color: rgba(0,0,0,0.3); backdrop-filter:saturate(130%) blur(8px); }
+.drawer-title{ font-weight:800; letter-spacing:.12em }
+.drawer-close{ margin-left:auto; cursor:pointer; width:40px; height:40px; display:grid; place-items:center; border-radius:.4rem; color:#fff; }
+.drawer-close:hover{ background:rgba(255,255,255,.12) }
+.drawer-nav{ list-style:none; margin:0; padding:8px 0; background-color: rgba(0,0,0,0.35); }
+.drawer-nav li{ border-bottom:1px solid rgba(255,255,255,.08) }
+.drawer-nav a{ display:block; padding:14px 18px; text-decoration:none; color:#e9eef5; }
+.drawer-nav a:hover{ background:rgba(255,255,255,.06) }
+#nav-toggle:checked ~ .menu-overlay{ opacity:1; pointer-events:auto }
+#nav-toggle:checked ~ .menu-drawer{ transform: translateX(0) }
+@media (max-width:880px){ .nav-toggle:checked ~ .nav ul{ display: none !important } }
+
+/* Utilities */
+label, button, input[type="checkbox"], input[type="radio"], select { cursor: pointer; }
+input[type="text"], input[type="email"], input[type="search"], input[type="tel"], textarea { cursor: text; }
+
+/* Grid helpers */
+.works__grid{ display:grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: clamp(14px, 2vw, 28px); align-items:start; }
+.work{ display:grid; gap:8px; align-content:left; }
+.work a{ color: inherit; text-decoration: none; }
+.work__title{ font-size:14px; font-weight:800; letter-spacing:.02em; margin:0 }
+.work__meta{ display:flex; flex-wrap:wrap; gap:10px 14px; font-size:12px; color:var(--muted) }
+.work__thumb{ position:relative; display:block; overflow:hidden; border-radius:10px; background:#111 }
+.work__thumb img, .work__thumb video{ width:100%; height:auto; display:block; transform:scale(1.0001); transition:transform .45s ease, opacity .45s ease; object-fit:cover; border-radius:10px }
+.work__thumb::after{ content:""; position:absolute; inset:0; background:linear-gradient(to bottom, rgba(0,0,0,.10), rgba(0,0,0,0)); opacity:0; transition:opacity .45s ease }
+.work__thumb:hover img, .work__thumb:hover video{ transform:scale(1.02) }
+.work__thumb:hover::after{ opacity:.25 }
+.col-3{ grid-column: span 3 }
+.col-4{ grid-column: span 4 }
+.col-5{ grid-column: span 5 }
+.col-6{ grid-column: span 6 }
+@media (max-width:1024px){ .works__grid{ grid-template-columns: repeat(8, 1fr) } .work{ grid-column: span 4 } }
+@media (max-width:640px){ .works__grid{ grid-template-columns: repeat(4, 1fr); gap:16px } .work{ grid-column: span 4 } .work__title{ font-size:13px } .work__meta{ font-size:11px } }
+
+/* カートドロワー */
+.cart-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.cart-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.cart-drawer {
+  position: fixed;
+  top: 0;
+  right: -380px;
+  width: 380px;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(20px);
+  border-left: 1px solid rgba(0, 200, 83, 0.3);
+  box-shadow: -4px 0 24px rgba(0,0,0,0.15), 0 0 30px rgba(0, 200, 83, 0.1);
+  transition: right 0.3s ease-out;
+  z-index: 10000;
+  overflow-y: auto;
+  color: #fff;
+  display: block !important;
+  visibility: visible !important;
+}
+
+.cart-drawer.open {
+  right: 0 !important;
+  display: block !important;
+  visibility: visible !important;
+}
+
+.cart-drawer-header {
+  padding: 24px;
+  border-bottom: 1px solid rgba(0, 200, 83, 0.3);
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.cart-drawer-header h2 {
+  color: #fff;
+  animation: neonGlow 3s ease-in-out infinite;
+}
+
+.cart-drawer-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  color: #fff !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.cart-drawer-content {
+  padding: 24px;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  color: #fff !important;
+  background: transparent !important;
+  min-height: 200px;
+}
+
+.cart-item {
+  display: flex;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(0, 200, 83, 0.3);
+  transition: all 0.3s ease;
+}
+
+.cart-item:hover {
+  background: rgba(0, 200, 83, 0.05);
+  border-radius: 8px;
+  padding: 16px;
+  margin: 0 -16px;
+}
+
+.cart-item-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.cart-item-details {
+  flex: 1;
+}
+
+.cart-item-name {
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: #fff;
+}
+
+.cart-item-size {
+  color: #ccc;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.cart-item-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cart-item-qty {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cart-item-qty button {
+  width: 24px;
+  height: 24px;
+  border: 1px solid rgba(0, 200, 83, 0.3);
+  background: rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #00C853;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.cart-item-qty button:hover {
+  background: rgba(0, 200, 83, 0.1);
+  border-color: rgba(0, 200, 83, 0.6);
+  transform: scale(1.1);
+}
+
+.cart-item-qty span {
+  min-width: 20px;
+  text-align: center;
+  color: #fff;
+}
+
+.cart-item-price {
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.cart-item-remove {
+  background: none;
+  border: none;
+  color: #ccc;
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: underline;
+}
+
+.cart-shipping-progress {
+  margin: 24px 0;
+  padding: 16px;
+  background: #111;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.cart-shipping-progress-bar {
+  width: 100%;
+  height: 4px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 2px;
+  overflow: hidden;
+  margin: 8px 0;
+}
+
+.cart-shipping-progress-fill {
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.3s ease;
+}
+
+.cart-shipping-progress-text {
+  font-size: 14px;
+  color: #ccc;
+}
+
+.cart-shipping-free {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.cart-summary {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255,255,255,0.2);
+}
+
+.cart-summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  color: #fff;
+}
+
+.cart-summary-total {
+  font-weight: 600;
+  font-size: 18px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+}
+
+.cart-checkout-btn {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(45deg, #00C853, #4CAF50);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 16px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 200, 83, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.cart-checkout-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  transition: left 0.5s ease;
+}
+
+.cart-checkout-btn:hover::before {
+  left: 100%;
+}
+
+.cart-checkout-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 200, 83, 0.4);
+}
+
+/* ===== 近未来的デザイン要素 ===== */
+
+/* 1. ホログラム効果 */
+.hologram-effect {
+  position: relative;
+  background: linear-gradient(45deg, 
+    rgba(0, 200, 83, 0.1) 0%, 
+    rgba(0, 200, 83, 0.3) 25%, 
+    rgba(0, 200, 83, 0.1) 50%, 
+    rgba(0, 200, 83, 0.3) 75%, 
+    rgba(0, 200, 83, 0.1) 100%);
+  background-size: 200% 200%;
+  animation: hologramFlicker 3s ease-in-out infinite;
+  border: 1px solid rgba(0, 200, 83, 0.3);
+  box-shadow: 
+    0 0 20px rgba(0, 200, 83, 0.2),
+    inset 0 0 20px rgba(0, 200, 83, 0.1);
+}
+
+/* 2. サイバーグリッド背景 */
+.cyber-background {
+  position: relative;
+  background: #000;
+  overflow: hidden;
+}
+
+.cyber-background::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(rgba(0, 200, 83, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 200, 83, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+  animation: cyberGrid 4s linear infinite;
+  pointer-events: none;
+}
+
+/* 3. ネオングロー効果 */
+.neon-text {
+  color: #00C853;
+  text-shadow: 
+    0 0 5px #00C853,
+    0 0 10px #00C853,
+    0 0 15px #00C853,
+    0 0 20px #00C853;
+  animation: neonGlow 2s ease-in-out infinite;
+}
+
+/* 4. ドーパミンボタン */
+.dopamine-button {
+  position: relative;
+  background: linear-gradient(45deg, #00C853, #4CAF50);
+  border: none;
+  border-radius: 12px;
+  padding: 16px 32px;
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 200, 83, 0.3);
+}
+
+.dopamine-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  transition: left 0.5s ease;
+}
+
+.dopamine-button:hover::before {
+  left: 100%;
+}
+
+.dopamine-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 200, 83, 0.4);
+}
+
+.dopamine-button:active {
+  transform: scale(0.98);
+  animation: buttonPress 0.2s ease-in-out;
+}
+
+/* 5. 進捗バー（ドーパミン刺激） */
+.dopamine-progress {
+  position: relative;
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.dopamine-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #00C853, #4CAF50, #00C853);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  transition: width 0.5s ease;
+  animation: anticipationShimmer 2s infinite;
+  box-shadow: 0 0 10px rgba(0, 200, 83, 0.5);
+}
+
+/* 6. 商品カード（近未来版） */
+.future-product-card {
+  position: relative;
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(0, 200, 83, 0.3);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.future-product-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, 
+    rgba(0, 200, 83, 0.05) 0%, 
+    transparent 50%, 
+    rgba(0, 200, 83, 0.05) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.future-product-card:hover::before {
+  opacity: 1;
+}
+
+.future-product-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: rgba(0, 200, 83, 0.6);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.3),
+    0 0 30px rgba(0, 200, 83, 0.2);
+}
+
+/* 7. 限定感演出 */
+.scarcity-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: linear-gradient(45deg, #ff6b6b, #ffa500);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  animation: scarcityBlink 1s infinite;
+  box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3);
+}
+
+/* 8. 社会的証明 */
+.social-proof-badge {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  background: rgba(0, 200, 83, 0.9);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  animation: popularityWave 2s ease-in-out infinite;
+}
+
+/* 9. 購入完了エフェクト */
+.purchase-success-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.purchase-success-overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.purchase-success-content {
+  background: linear-gradient(45deg, #00C853, #4CAF50);
+  color: white;
+  padding: 40px;
+  border-radius: 20px;
+  text-align: center;
+  transform: scale(0);
+  transition: transform 0.3s ease;
+  box-shadow: 0 20px 40px rgba(0, 200, 83, 0.3);
+}
+
+.purchase-success-overlay.show .purchase-success-content {
+  transform: scale(1);
+  animation: purchaseSuccess 1s ease-out;
+}
+
+/* 10. カテゴリチップ（近未来版） */
+.future-category-chip {
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(0, 200, 83, 0.3);
+  color: #00C853;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.future-category-chip:hover {
+  background: rgba(0, 200, 83, 0.1);
+  border-color: rgba(0, 200, 83, 0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 200, 83, 0.2);
+}
+
+.future-category-chip.is-active {
+  background: linear-gradient(45deg, #00C853, #4CAF50);
+  color: white;
+  border-color: #00C853;
+  box-shadow: 0 0 20px rgba(0, 200, 83, 0.4);
+}
+
+/* 11. ヘッダー（近未来版） */
+.future-header {
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0, 200, 83, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.future-header .brand {
+  background: linear-gradient(45deg, #00C853, #4CAF50);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: neonGlow 3s ease-in-out infinite;
+}
+
+/* 12. カートアイコン（近未来版） */
+.future-cart-icon {
+  position: relative;
+  background: rgba(0, 200, 83, 0.1);
+  border: 1px solid rgba(0, 200, 83, 0.3);
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.future-cart-icon:hover {
+  background: rgba(0, 200, 83, 0.2);
+  border-color: rgba(0, 200, 83, 0.6);
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(0, 200, 83, 0.3);
+}
+
+.future-cart-icon .cart-emoji {
+  font-size: 20px;
+  animation: heartBeat 2s ease-in-out infinite;
+}
+
+/* 13. レスポンシブ対応 */
+@media (max-width: 768px) {
+  .dopamine-button {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+  
+  .future-product-card:hover {
+    transform: translateY(-4px) scale(1.01);
+  }
+  
+  .future-category-chip {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+  
+  .cart-drawer {
+    width: 100vw;
+    right: -100vw;
+  }
+  
+  .cart-drawer.open {
+    right: 0;
+  }
+}
+
+

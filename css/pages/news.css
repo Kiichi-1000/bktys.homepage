@@ -1,0 +1,117 @@
+/* Page: News (news.html) */
+
+/* Hero */
+.news-hero{ padding-block: clamp(80px, 12vw, 140px); background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%); text-align: center; border-bottom: 1px solid rgba(0,0,0,.06) }
+.news-hero .hero-title{ font-size: clamp(28px, 4vw, 40px); font-weight: 800; margin: 0 0 12px 0; color: var(--text) }
+.news-hero .hero-subtitle{ font-size: 16px; color: var(--muted); margin: 0 }
+
+/* Filter */
+.news-filter{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin: 24px 0 }
+.filter-btn{ background:#fff; border:1px solid rgba(0,0,0,.08); border-radius:999px; padding:8px 14px; font-size:14px; color:var(--text); cursor:pointer; transition:all .2s ease }
+.filter-btn:hover{ transform:translateY(-1px); box-shadow:0 6px 16px rgba(0,0,0,.08) }
+.filter-btn.active{ background:linear-gradient(135deg,#667eea,#764ba2); color:#fff; border-color:transparent }
+
+/* List */
+.news-list{ display:grid; grid-template-columns: 1fr; gap: 24px }
+.news-item{ background:#fff; border-radius:16px; padding:20px; box-shadow:0 8px 25px rgba(0,0,0,.08); border:1px solid rgba(0,0,0,.06) }
+.news-date{ font-size:13px; color:var(--muted) }
+.news-category{ font-size:12px; color:#667eea; font-weight:700 }
+.news-title{ font-size:18px; font-weight:700; margin:8px 0; color:var(--text) }
+.news-excerpt{ font-size:14px; color:var(--muted); line-height:1.6; margin:0 0 8px 0 }
+.news-link{ font-weight:700; color:#667eea; text-decoration:none }
+.news-link:hover{ text-decoration:underline }
+
+/* Pagination - Removed */
+
+/* Footer */
+.footer{ padding: 24px 0; border-top:1px solid rgba(0,0,0,.06) }
+.footer p{ color:var(--muted); font-size:13px; margin:0 }
+
+
+/* ===== Newspaper Frontpage (enhanced) ===== */
+.newspaper{ padding-block: clamp(48px, 8vw, 80px); background:
+  linear-gradient(0deg, rgba(0,0,0,.02), rgba(0,0,0,.02)) 0 0/100% 1px no-repeat,
+  linear-gradient(135deg,#faf8f2 0%, #f5f1e8 100%);
+  border-bottom:1px solid rgba(0,0,0,.08)
+}
+.paper-header{ display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid #111; padding-bottom:12px; margin-bottom:20px }
+.paper-name{ font-family: "Noto Serif JP", "Times New Roman", Georgia, serif; font-weight:800; font-size: clamp(28px,6vw,56px); letter-spacing:.04em; color:#111 }
+.paper-date{ font-size:13px; color:#4b5563; font-weight:700; text-transform:uppercase }
+
+/* 12-column frontpage layout */
+.paper-grid{ display:grid; grid-template-columns: repeat(12, 1fr); gap:16px }
+.paper-card{ background:#fff; border:1px solid #e5e1d6; padding:14px 16px; box-shadow: 0 4px 18px rgba(0,0,0,.04); display:flex; flex-direction:column; gap:8px; cursor:pointer; transition:transform .15s ease }
+.paper-card:hover{ transform:translateY(-2px) }
+
+/* placements */
+.paper-lead{ grid-column: 1 / span 8; grid-row: 1 / span 2; padding:18px 20px; border-top:4px double #222; border-bottom:2px solid #222 }
+.paper-sub1{ grid-column: 9 / span 4; grid-row: 1 }
+.paper-sub2{ grid-column: 1 / span 6; grid-row: 3 }
+.paper-sub3{ grid-column: 7 / span 6; grid-row: 3 }
+
+/* typography */
+.paper-kicker{ display:inline-block; border:2px solid #d12e1f; color:#d12e1f; padding:2px 8px; font-weight:900; letter-spacing:.08em; font-size:12px }
+.paper-title{ font-family: "Noto Serif JP", "Times New Roman", Georgia, serif; font-size: clamp(18px,3.2vw,34px); line-height:1.25; margin:6px 0 0 0; color:#111 }
+.paper-title--small{ font-size: clamp(16px,2.4vw,22px) }
+.paper-meta{ display:flex; gap:10px; font-size:12px; color:#6b7280; font-weight:700 }
+.paper-excerpt{ font-size:14px; line-height:1.8; color:#374151; margin:6px 0 0 0 }
+
+/* subtle column rules */
+.paper-lead{ background-image: linear-gradient(#e5e1d6, #e5e1d6); background-size: 100% 1px; background-repeat:no-repeat; background-position: 0 calc(100% - 2px) }
+
+/* Modal */
+.paper-modal{ position:fixed; inset:0; z-index:100; display:none }
+.paper-modal[aria-hidden="false"]{ display:block }
+.paper-modal__overlay{ position:absolute; inset:0; background:rgba(0,0,0,.45) }
+.paper-modal__dialog{ position:relative; max-width:900px; margin:6vh auto; background:#fff; border-radius:10px; overflow:hidden; box-shadow:0 20px 50px rgba(0,0,0,.25); border:1px solid rgba(0,0,0,.08) }
+.paper-modal__close{ position:absolute; top:10px; right:10px; width:36px; height:36px; border-radius:8px; border:1px solid rgba(0,0,0,.08); background:#fff; cursor:pointer }
+.paper-modal__content{ padding:24px }
+.paper-article-title{ font-family: "Noto Serif JP", "Times New Roman", Georgia, serif; font-size:28px; margin:0 0 10px 0 }
+.paper-article-meta{ font-size:12px; color:#6b7280; font-weight:700 }
+.paper-article-body{ margin-top:14px; font-size:15px; line-height:1.9; color:#374151; column-count: 2; column-gap: 28px; column-rule: 1px solid #e5e7eb }
+
+@media (max-width: 1024px){
+  .paper-grid{ gap:14px }
+  .paper-lead{ grid-column:1 / span 12; grid-row:auto }
+  .paper-sub1{ grid-column:1 / span 12 }
+  .paper-sub2{ grid-column:1 / span 12 }
+  .paper-sub3{ grid-column:1 / span 12 }
+  .paper-article-body{ column-count:1 }
+}
+
+
+/* ===== Broadcast style (latest 4) ===== */
+.broadcast{ padding-block: clamp(40px, 6vw, 70px); background: #0b1022; color:#e7ecff; border-bottom:1px solid rgba(255,255,255,.06) }
+.broadcast-header{ display:flex; align-items:center; justify-content:space-between; margin-bottom:14px }
+.broadcast-brand{ font-weight:900; letter-spacing:.12em; font-size: clamp(18px,4vw,24px); background:linear-gradient(135deg,#e11d48,#fb7185); -webkit-background-clip:text; -webkit-text-fill-color:transparent }
+.broadcast-live{ display:flex; align-items:center; gap:8px; font-weight:800; color:#ff6b6b }
+.broadcast-live .dot{ width:8px; height:8px; border-radius:50%; background:#ff6b6b; box-shadow:0 0 10px #ff6b6b; animation: dotPulse 1.2s ease-in-out infinite }
+
+.broadcast-ticker{ overflow:hidden; border-top:1px solid rgba(255,255,255,.08); border-bottom:1px solid rgba(255,255,255,.08); background:rgba(255,255,255,.03) }
+.broadcast-ticker__track{ display:inline-block; padding:8px 0; white-space:nowrap; animation: ticker 25s linear infinite; font-weight:700; letter-spacing:.04em; opacity:.9 }
+
+.broadcast-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-top:16px }
+.broadcast-card{ position:relative; background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:16px; overflow:hidden; box-shadow: 0 8px 24px rgba(0,0,0,.3); transition: transform .2s ease, box-shadow .2s ease; cursor:pointer; min-height:180px; display:flex; flex-direction:column }
+.broadcast-card:hover{ transform: translateY(-3px); box-shadow:0 12px 36px rgba(0,0,0,.38) }
+.broadcast-kicker{ display:inline-block; background:linear-gradient(135deg,#60a5fa,#818cf8); color:#0b1022; padding:3px 8px; border-radius:999px; font-size:11px; font-weight:900; letter-spacing:.04em; align-self:flex-start }
+.broadcast-title{ font-size: clamp(18px, 3vw, 26px); font-weight:900; margin:10px 0 6px 0; color:#e7ecff }
+.broadcast-meta{ font-size:12px; opacity:.85; font-weight:700 }
+.broadcast-excerpt{ font-size:14px; color:#cbd5e1; line-height:1.7; margin:6px 0 0 0 }
+
+/* spotlight */
+.broadcast-card::after{ content:""; position:absolute; inset:-20% -40% auto -40%; height:60%; background: radial-gradient(800px 220px at 20% -10%, rgba(255,255,255,.15), transparent 60%); transform: skewY(-6deg); pointer-events:none; opacity:.7 }
+
+/* animations */
+@keyframes ticker{ from{ transform: translateX(0) } to{ transform: translateX(-50%) } }
+@keyframes dotPulse{ 0%,100%{ transform: scale(1); opacity:.9 } 50%{ transform: scale(1.6); opacity:1 } }
+
+@media (max-width: 880px){
+  .broadcast-grid{ grid-template-columns:1fr }
+  .broadcast-lead{ padding:16px }
+}
+
+
+/* ===== News List Header ===== */
+.news-section-header{ display:flex; align-items:baseline; justify-content:space-between; margin: 8px 0 16px 0 }
+.news-section-title{ font-size:20px; font-weight:800; margin:0; color:var(--text) }
+.news-section-subtitle{ font-size:13px; color:var(--muted); margin:0 }

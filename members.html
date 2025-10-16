@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BKTYS for Students - BKTYSSHOP</title>
+  <link rel="stylesheet" href="css/sanitize.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <style>
+    .page { padding-top: 64px; background: #000; color: #fff; }
+    .container { padding: 20px 16px; max-width: 1200px; margin: 0 auto; }
+    .banner { background: linear-gradient(135deg, rgba(0,200,83,0.8) 0%, rgba(76,175,80,0.8) 100%); color: white; padding: 40px 20px; text-align: center; margin-bottom: 40px; backdrop-filter: blur(10px); border: 1px solid rgba(0,200,83,0.3); }
+    .banner h1 { font-size: 2.5rem; margin: 0 0 16px 0; font-weight: 700; animation: neonGlow 3s ease-in-out infinite; }
+    .banner p { font-size: 1.2rem; margin: 0; opacity: 0.9; }
+    .toggle-section { text-align: center; margin-bottom: 30px; }
+    .toggle-label { display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 18px; color: #fff; }
+    .toggle-switch { position: relative; display: inline-block; width: 60px; height: 34px; }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px; }
+    .toggle-slider:before { position: absolute; content: ""; height: 26px; width: 26px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+    input:checked + .toggle-slider { background-color: #00C853; box-shadow: 0 0 20px rgba(0,200,83,0.4); }
+    input:checked + .toggle-slider:before { transform: translateX(26px); }
+    .category-chips { display: flex; justify-content: center; gap: 12px; margin-bottom: 30px; flex-wrap: wrap; }
+    .category-chips .chip { padding: 8px 16px; border: 1px solid rgba(0,200,83,0.3); background: rgba(0,0,0,0.6); color: #00C853; border-radius: 20px; cursor: pointer; transition: all 0.3s ease; font-size: 14px; backdrop-filter: blur(10px); }
+    .category-chips .chip:hover { background: rgba(0,200,83,0.1); border-color: rgba(0,200,83,0.6); transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0,200,83,0.2); }
+    .category-chips .chip.is-active { background: linear-gradient(45deg, #00C853, #4CAF50); color: white; border-color: #00C853; box-shadow: 0 0 20px rgba(0,200,83,0.4); }
+    .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; margin-top: 30px; }
+    .card { background: rgba(0,0,0,0.8); border: 1px solid rgba(0,200,83,0.3); border-radius: 16px; overflow: hidden; text-decoration: none; color: inherit; transition: all 0.3s ease; backdrop-filter: blur(10px); position: relative; }
+    .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(45deg, rgba(0,200,83,0.05) 0%, transparent 50%, rgba(0,200,83,0.05) 100%); opacity: 0; transition: opacity 0.3s ease; }
+    .card:hover::before { opacity: 1; }
+    .card:hover { transform: translateY(-8px) scale(1.02); border-color: rgba(0,200,83,0.6); box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 30px rgba(0,200,83,0.2); }
+    .card .thumb { position: relative; aspect-ratio: 4/3; overflow: hidden; background: #111; }
+    .card .thumb img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s; }
+    .card .thumb img + img { position: absolute; top: 0; left: 0; opacity: 0; }
+    .card:hover .thumb img + img { opacity: 1; }
+    .card .meta { padding: 16px; color: #fff; }
+    .card .brand { font-size: 12px; color: #00C853; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+    .card .name { font-size: 16px; font-weight: 600; margin-bottom: 12px; line-height: 1.4; color: #fff; }
+    .card .price { font-size: 18px; font-weight: 700; color: #00C853; }
+    .card .price s { color: #9ca3af; margin-right: 8px; }
+    .studio-badge { position: absolute; top: 8px; right: 8px; background: rgba(0,200,83,0.9); color: white; padding: 4px 8px; border-radius: 12px; font-size: 10px; font-weight: 600; text-transform: uppercase; animation: popularityWave 2s ease-in-out infinite; }
+    .empty-state { text-align: center; padding: 60px 20px; color: #ccc; }
+    .empty-state h3 { margin: 0 0 16px 0; font-size: 24px; color: #fff; }
+    .empty-state p { margin: 0 0 24px 0; font-size: 16px; }
+    .cta-button { display: inline-block; padding: 12px 24px; background: linear-gradient(45deg, #00C853, #4CAF50); color: white; text-decoration: none; border-radius: 8px; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,200,83,0.3); }
+    .cta-button:hover { background: linear-gradient(45deg, #4CAF50, #00C853); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,200,83,0.4); }
+    /* 限定感演出 */
+    .scarcity-badge{ position:absolute; top:12px; right:12px; background: linear-gradient(45deg, #ff6b6b, #ffa500); color: white; padding:4px 8px; border-radius:6px; font-size:12px; font-weight:600; animation: scarcityBlink 1s infinite; box-shadow: 0 2px 8px rgba(255,107,107,0.3); }
+    /* 社会的証明 */
+    .social-proof-badge{ position:absolute; bottom:12px; left:12px; background: rgba(0,200,83,0.9); color: white; padding:4px 8px; border-radius:6px; font-size:12px; font-weight:600; animation: popularityWave 2s ease-in-out infinite; }
+  </style>
+</head>
+<body>
+  <header class="site-header future-header">
+    <div class="header-inner">
+      <label for="nav-toggle" class="hamburger" aria-label="メニューを開閉"><span></span><span></span><span></span></label>
+      <a class="brand" href="brand.html" aria-label="BKTYSSHOP Home">BKTYSSHOP</a>
+      <input id="nav-toggle" class="nav-toggle" type="checkbox" aria-hidden="true">
+      <nav class="nav" aria-label="ナビゲーション">
+        <ul>
+          <li><a href="brand.html">BKTYS SHOP</a></li>
+        </ul>
+      </nav>
+      <label class="menu-overlay" for="nav-toggle" aria-hidden="true"></label>
+      <aside class="menu-drawer" aria-label="メニュー">
+        <header class="drawer-head"><span class="drawer-title">BKTYSSHOP</span><label for="nav-toggle" class="drawer-close" aria-label="閉じる">×</label></header>
+        <ul class="drawer-nav">
+          <li><a href="brand.html">Home</a></li>
+          <li><a href="https://velara.official.ec/" target="_blank">Official</a></li>
+          <li><a href="members.html">Members</a></li>
+          <li><a href="#" id="cart-toggle-mobile">Cart</a></li>
+        </ul>
+      </aside>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="banner">
+      <h1>BKTYS for Students</h1>
+      <p>学生デザイナーによるクリエイティブな作品をお届け</p>
+    </div>
+
+    <div class="container">
+      <div class="toggle-section">
+        <label class="toggle-label">
+          <span>Members only</span>
+          <div class="toggle-switch">
+            <input type="checkbox" id="onlyMembers">
+            <span class="toggle-slider"></span>
+          </div>
+        </label>
+      </div>
+
+      <div class="category-chips" id="chips">
+        <!-- カテゴリチップがここに動的に生成されます -->
+      </div>
+
+      <!-- BASEショップ組み込み -->
+      <div class="base-shop-container" style="padding: 20px 0;">
+        <iframe 
+          src="https://your-base-shop.thebase.in/" 
+          width="100%" 
+          height="800" 
+          frameborder="0"
+          style="border-radius: 16px; overflow: hidden; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); border: 1px solid rgba(0,200,83,0.3);">
+        </iframe>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 BKTYS. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- カートドロワー -->
+  <div class="cart-overlay" id="cart-overlay"></div>
+  <aside class="cart-drawer" id="cart-drawer">
+    <header class="cart-drawer-header">
+      <h2>カート</h2>
+      <button class="cart-drawer-close" id="cart-close" aria-label="カートを閉じる">×</button>
+    </header>
+    <div class="cart-drawer-content" id="cart-content">
+      <!-- カートの内容がここに動的に挿入されます -->
+    </div>
+  </aside>
+
+  <script src="js/products-fallback.js"></script>
+  <script src="js/cart.js"></script>
+  <script>
+    // カートドロワーの制御
+    function openCart() {
+      console.log('Opening cart...');
+      const cartDrawer = document.getElementById('cart-drawer');
+      const cartOverlay = document.getElementById('cart-overlay');
+      const cartContent = document.getElementById('cart-content');
+      
+      // 強制的にテスト内容を表示
+      if (cartContent) {
+        cartContent.innerHTML = '<div style="color: #fff; padding: 20px; background: rgba(0,200,83,0.1); border: 1px solid rgba(0,200,83,0.3); margin: 20px; border-radius: 8px;"><h3 style="color: #00C853; margin: 0 0 10px 0;">🛒 カートドロワーが開きました</h3><p style="margin: 0;">テスト表示です。カート機能が正常に動作しています。</p></div>';
+        console.log('Test content added to cart');
+      }
+      
+      if (cartDrawer) {
+        cartDrawer.classList.add('open');
+        cartDrawer.style.display = 'block';
+        cartDrawer.style.visibility = 'visible';
+        console.log('Cart drawer opened');
+      } else {
+        console.error('Cart drawer element not found');
+      }
+      
+      if (cartOverlay) {
+        cartOverlay.classList.add('open');
+        cartOverlay.style.display = 'block';
+        console.log('Cart overlay opened');
+      } else {
+        console.error('Cart overlay element not found');
+      }
+      
+      // カート内容をレンダリング
+      setTimeout(() => {
+        renderCart();
+      }, 200);
+    }
+
+    function closeCart() {
+      document.getElementById('cart-drawer').classList.remove('open');
+      document.getElementById('cart-overlay').classList.remove('open');
+    }
+
+    function renderCart() {
+      console.log('Rendering cart...');
+      const cart = window.BKTYSCart.load();
+      const cartContent = document.getElementById('cart-content');
+      
+      console.log('Cart data:', cart);
+      console.log('Cart items:', cart?.items);
+      console.log('Cart content element:', cartContent);
+      
+      if (!cartContent) {
+        console.error('Cart content element not found!');
+        return;
+      }
+      
+      // 強制的に内容を表示
+      if (!cart || !cart.items || cart.items.length === 0) {
+        console.log('Cart is empty');
+        cartContent.innerHTML = `
+          <div style="color: #fff; padding: 40px 20px; text-align: center;">
+            <h3 style="color: #00C853; margin: 0 0 20px 0;">🛒 カートは空です</h3>
+            <p style="margin: 0; color: #ccc;">商品をカートに追加してください</p>
+            <button onclick="window.location.href='brand.html'" style="margin-top: 20px; padding: 10px 20px; background: linear-gradient(45deg, #00C853, #4CAF50); color: white; border: none; border-radius: 8px; cursor: pointer;">
+              商品を見る
+            </button>
+          </div>
+        `;
+        return;
+      }
+      
+      console.log('Cart has items:', cart.items.length);
+
+      const itemsHtml = cart.items.map(item => `
+        <div class="cart-item">
+          <img src="${item.image || 'assets/images/placeholder.jpg'}" alt="${item.name}" class="cart-item-image">
+          <div class="cart-item-details">
+            <div class="cart-item-name">${item.name || '商品名不明'}</div>
+            <div class="cart-item-size">サイズ: ${item.size || 'M'}</div>
+            <div class="cart-item-controls">
+              <div class="cart-item-qty">
+                <button onclick="updateQty('${item.sku}', ${item.qty - 1})">-</button>
+                <span>${item.qty}</span>
+                <button onclick="updateQty('${item.sku}', ${item.qty + 1})">+</button>
+              </div>
+              <div class="cart-item-price">¥${((item.price || 0) * item.qty).toLocaleString()}</div>
+            </div>
+            <button class="cart-item-remove" onclick="removeItem('${item.sku}')">削除</button>
+          </div>
+        </div>
+      `).join('');
+
+      const cartCalc = window.BKTYSCart.calc();
+      const subtotal = cartCalc.subtotal || 0;
+      const shipping = cartCalc.shipping || 0;
+      const total = cartCalc.total || 0;
+      const progress = Math.min((subtotal / 10000) * 100, 100);
+      const isFreeShipping = subtotal >= 10000;
+
+      const cartHTML = `
+        ${itemsHtml}
+        <div class="cart-shipping-progress">
+          <div class="cart-shipping-progress-text">
+            ${isFreeShipping ? 
+              '<span class="cart-shipping-free">🎉 送料無料</span>' : 
+              `あと ¥${(10000 - subtotal).toLocaleString()} で送料無料`
+            }
+          </div>
+          <div class="cart-shipping-progress-bar">
+            <div class="cart-shipping-progress-fill" style="width: ${progress}%"></div>
+          </div>
+        </div>
+        <div class="cart-summary">
+          <div class="cart-summary-row">
+            <span>小計</span>
+            <span>¥${subtotal.toLocaleString()}</span>
+          </div>
+          <div class="cart-summary-row">
+            <span>送料</span>
+            <span>${isFreeShipping ? '無料' : `¥${shipping.toLocaleString()}`}</span>
+          </div>
+        </div>
+        <div class="cart-summary-total">
+          <span>合計</span>
+          <span>¥${total.toLocaleString()}</span>
+        </div>
+        <button class="cart-checkout-btn" onclick="window.location.href='checkout.html'">
+          チェックアウト
+        </button>
+      `;
+      
+      console.log('Setting cart HTML:', cartHTML);
+      cartContent.innerHTML = cartHTML;
+      cartContent.style.display = 'block';
+      cartContent.style.visibility = 'visible';
+      cartContent.style.opacity = '1';
+      console.log('Cart HTML set successfully');
+      
+      // さらに確実にするため、少し遅延して再設定
+      setTimeout(() => {
+        if (cartContent.innerHTML.trim() === '') {
+          cartContent.innerHTML = '<div style="color: #fff; padding: 20px; background: rgba(0,200,83,0.1); border: 1px solid rgba(0,200,83,0.3); margin: 20px; border-radius: 8px;"><h3 style="color: #00C853; margin: 0 0 10px 0;">⚠️ カート内容の読み込み中...</h3><p style="margin: 0;">しばらくお待ちください。</p></div>';
+        }
+      }, 100);
+    }
+
+    function updateQty(sku, newQty) {
+      if (newQty <= 0) {
+        removeItem(sku);
+        return;
+      }
+      
+      const cart = window.BKTYSCart.load();
+      const item = cart.items.find(i => i.sku === sku);
+      if (item) {
+        item.qty = newQty;
+        window.BKTYSCart.save(cart);
+        renderCart();
+        window.BKTYSCart.updateBadge();
+      }
+    }
+
+    function removeItem(sku) {
+      const cart = window.BKTYSCart.load();
+      cart.items = cart.items.filter(i => i.sku !== sku);
+      window.BKTYSCart.save(cart);
+      renderCart();
+      window.BKTYSCart.updateBadge();
+    }
+
+    // 商品データの取得
+    async function fetchProducts() {
+      try {
+        const res = await fetch('assets/data/products.json');
+        const json = await res.json();
+        return json.products || [];
+      } catch (_e) {
+        return window.BK_PRODUCTS || [];
+      }
+    }
+
+    // 価格表示の生成
+    function price(p) {
+      const member = localStorage.getItem('bktys_member') === 'true';
+      const base = p.salePrice || p.price;
+      const memberPrice = Math.round(base * 0.9);
+      return member ? 
+        `<s>¥${base.toLocaleString()}</s><strong>¥${memberPrice.toLocaleString()}</strong>` : 
+        `<strong>¥${base.toLocaleString()}</strong>`;
+    }
+
+    // 商品カードの生成
+    function card(p) {
+      const studioName = p.studio || 'STUDIO';
+      const isLimited = p.tags && p.tags.includes('limited');
+      const isPopular = p.rank_score && p.rank_score > 80;
+      const stock = p.stock || 0;
+      const isLowStock = stock > 0 && stock <= 5;
+      
+      return `
+        <a class="card" href="product.html?slug=${encodeURIComponent(p.slug)}">
+          <div class="thumb">
+            ${(p.images || []).slice(0, 2).map(img => 
+              `<img src="${img.url}" alt="${img.alt || p.name}">`
+            ).join('')}
+            <div class="studio-badge">${studioName}</div>
+            ${isLimited?`<span class=\"scarcity-badge\">限定</span>`:''}
+            ${isLowStock?`<span class=\"scarcity-badge\">残り${stock}個</span>`:''}
+            ${isPopular?`<span class=\"social-proof-badge\">人気</span>`:''}
+          </div>
+          <div class="meta">
+            <div class="brand">${p.brand}</div>
+            <div class="name">${p.name}</div>
+            <div class="price">${price(p)}</div>
+          </div>
+        </a>
+      `;
+    }
+
+    // メイン初期化処理
+    (async function init() {
+      let all = [];
+      try {
+        all = await fetchProducts();
+      } catch (_e) {
+        all = window.BK_PRODUCTS || [];
+      }
+      
+      if (!all || all.length === 0) {
+        all = window.BK_PRODUCTS || [];
+      }
+
+      // Studentsタグの商品をフィルタリング
+      all = all.filter(p => (p.tags || []).includes('students'));
+
+      // カテゴリチップの生成
+      const chips = ['All', 'Tee', 'Hoodie', 'Bag', 'Accessory'];
+      const chipsEl = document.getElementById('chips');
+      let active = 'All';
+
+      chips.forEach(c => {
+        const b = document.createElement('button');
+        b.className = 'chip';
+        b.textContent = c;
+        if (c === active) b.classList.add('is-active');
+        
+        b.addEventListener('click', () => {
+          active = c;
+          chipsEl.querySelectorAll('.chip').forEach(x => x.classList.remove('is-active'));
+          b.classList.add('is-active');
+          apply();
+        });
+        
+        chipsEl.appendChild(b);
+      });
+
+      // Members only トグルの設定
+      const onlyToggle = document.getElementById('onlyMembers');
+      onlyToggle.checked = false;
+      onlyToggle.addEventListener('change', apply);
+
+      // フィルタリングと表示の適用
+      function apply() {
+        const base = active === 'All' ? 
+          all : 
+          all.filter(p => (p.tags || []).some(t => t.toLowerCase().includes(active.toLowerCase())));
+        
+        const list = onlyToggle.checked ? 
+          base.filter(p => p.isMembersOnly) : 
+          base;
+
+        if (list.length === 0) {
+          document.getElementById('grid').innerHTML = `
+            <div class="empty-state">
+              <h3>商品が見つかりません</h3>
+              <p>選択された条件に一致する商品がありません。</p>
+              <a href="brand.html" class="cta-button">ホームに戻る</a>
+            </div>
+          `;
+        } else {
+          document.getElementById('grid').innerHTML = list.map(card).join('');
+        }
+      }
+
+      apply();
+    })();
+
+    // 規約同意チェック
+    function checkTermsAgreement() {
+      const agreed = localStorage.getItem('bktys_terms_agreed');
+      if (!agreed) {
+        // 規約未同意の場合は規約ページへリダイレクト
+        window.location.href = 'terms.html';
+        return false;
+      }
+      
+      try {
+        const agreementData = JSON.parse(agreed);
+        if (!agreementData.agreed) {
+          // 規約未同意の場合は規約ページへリダイレクト
+          window.location.href = 'terms.html';
+          return false;
+        }
+      } catch (e) {
+        // エラーの場合は規約ページへリダイレクト
+        window.location.href = 'terms.html';
+        return false;
+      }
+      
+      return true;
+    }
+
+    // イベントリスナーの設定
+    document.addEventListener('DOMContentLoaded', function() {
+      // 規約同意チェック
+      if (!checkTermsAgreement()) {
+        return;
+      }
+      
+      // カートアイコンのクリックイベント
+      const cartToggle = document.getElementById('cart-toggle');
+      const cartToggleMobile = document.getElementById('cart-toggle-mobile');
+      const cartOverlay = document.getElementById('cart-overlay');
+      const cartDrawer = document.getElementById('cart-drawer');
+      const cartClose = document.getElementById('cart-close');
+
+      if (cartToggle) {
+        cartToggle.addEventListener('click', function(e) {
+          e.preventDefault();
+          openCart();
+        });
+      }
+
+      if (cartToggleMobile) {
+        cartToggleMobile.addEventListener('click', function(e) {
+          e.preventDefault();
+          openCart();
+        });
+      }
+
+      // カートドロワーの閉じるボタン
+      if (cartClose) {
+        cartClose.addEventListener('click', closeCart);
+      }
+
+      // オーバーレイのクリックでカートを閉じる
+      if (cartOverlay) {
+        cartOverlay.addEventListener('click', closeCart);
+      }
+
+      // カートバッジの初期化
+      if (window.BKTYSCart && window.BKTYSCart.updateBadge) {
+        window.BKTYSCart.updateBadge();
+      }
+    });
+  </script>
+</body>
+</html>

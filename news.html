@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News - BKTS</title>
+    <link rel="stylesheet" href="css/sanitize.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/pages/news.css">
+</head>
+<body>
+    <!-- ===== Header (透けさせる) ===== -->
+    <header class="site-header">
+        <div class="header-inner">
+            <label for="nav-toggle" class="hamburger" aria-label="メニューを開閉">
+                <span></span><span></span><span></span>
+            </label>
+            <a class="brand" href="index.html" aria-label="BKTS Home">BKTYS.</a>
+            <input id="nav-toggle" class="nav-toggle" type="checkbox" aria-hidden="true">
+            <nav class="nav" aria-label="ナビゲーション">
+                <ul>
+                    <li><a href="brand.html">BKTYS SHOP</a></li>
+                </ul>
+            </nav>
+            <!-- ▼▼ index.html：<header class="site-header"><div class="header-inner"> の"末尾"に差し込む。 
+            （必ず <input id="nav-toggle" ...> の"後ろ"に置くこと） -->
+            <label class="menu-overlay" for="nav-toggle" aria-hidden="true"></label>
+
+            <aside class="menu-drawer" aria-label="メニュー">
+                <header class="drawer-head">
+                    <span class="drawer-title">BKTS.</span>
+                    <label for="nav-toggle" class="drawer-close" aria-label="閉じる">×</label>
+                </header>
+                <ul class="drawer-nav">
+                    <li><a href="index.html">Top</a></li>
+                    <li><a href="introduction.html">Introduction</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li><a href="staff.html">Staffs</a></li>
+                    <li><a href="blog.html">Blogs</a></li>
+                    <li><a href="brand.html">BKTYS for Brand</a></li>
+                    <li><a href="note.html">Note</a></li>
+                    <li><a href="links.html">Links</a></li>
+                </ul>
+            </aside>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="news-hero">
+            <div class="hero-content">
+                <h1 class="hero-title">News</h1>
+                <p class="hero-subtitle">BKTYSの最新情報をお届けします</p>
+            </div>
+        </section>
+
+        <!-- Broadcast Frontpage (latest 3 articles with motion) -->
+        <section class="broadcast">
+            <div class="container">
+                <div class="broadcast-header">
+                    <div class="broadcast-brand">BKTYS NEWS</div>
+                    <div class="broadcast-live"><span class="dot"></span> LIVE</div>
+                </div>
+                <div class="broadcast-ticker" aria-hidden="true">
+                    <div class="broadcast-ticker__track" id="broadcast-ticker-track"></div>
+                </div>
+                <div class="broadcast-grid" id="broadcast-grid"></div>
+            </div>
+
+            <!-- Modal for article detail -->
+            <div class="paper-modal" id="paper-modal" aria-hidden="true" role="dialog" aria-modal="true">
+                <div class="paper-modal__overlay" data-close></div>
+                <div class="paper-modal__dialog" role="document">
+                    <button class="paper-modal__close" aria-label="閉じる" data-close>×</button>
+                    <article class="paper-modal__content" id="paper-modal-content"><!-- JS inserts --></article>
+                </div>
+            </div>
+        </section>
+
+        <!-- News Content -->
+        <section class="news-content">
+            <div class="container">
+                <!-- News Filter -->
+                <div class="news-filter">
+                    <button class="filter-btn active" data-filter="all">すべて</button>
+                    <button class="filter-btn" data-filter="activity">活動報告</button>
+                    <button class="filter-btn" data-filter="event">イベント</button>
+                    <button class="filter-btn" data-filter="announcement">お知らせ</button>
+                </div>
+
+                <!-- News List Header -->
+                <div class="news-section-header">
+                    <h2 class="news-section-title">ニュース一覧</h2>
+                    <p class="news-section-subtitle">最新情報とアーカイブ</p>
+                </div>
+
+                <!-- News List -->
+                <div class="news-list">
+                    <!-- JSで動的に生成 -->
+                </div>
+            </div>
+        </section>
+
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 BKTYS. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/news.js"></script>
+    <script src="js/news-filter.js"></script>
+</body>
+</html>

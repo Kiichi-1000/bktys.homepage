@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# サイトマップの場所
+Sitemap: https://bktys.com/sitemap.xml
+
+# クロール不要なディレクトリ
+Disallow: /api/
+Disallow: /admin/
+Disallow: /admin-notion.html
+

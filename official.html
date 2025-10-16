@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Official Designs - BKTYSSHOP</title>
+  <link rel="stylesheet" href="css/sanitize.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <style>
+    :root{ --gap: clamp(16px, 2vw, 24px) }
+    .page{ padding-top:64px; background: #000; color: #fff; }
+    .hero{ position:relative; height:min(86vh,760px); overflow:hidden; background: #000; }
+    .hero img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .8s ease; animation:none!important }
+    .hero img.is-active{ opacity:1 }
+    .hero-copy{ position:absolute; inset:auto 0 14% 0; text-align:center; color:#fff; text-shadow:0 10px 30px rgba(0,0,0,.45); font-weight:800; font-size:clamp(22px,3vw,28px); animation: neonGlow 3s ease-in-out infinite; }
+    .chips{ display:flex; gap:10px; overflow:auto; padding:12px 16px; border-top:1px solid rgba(0,200,83,.3); border-bottom:1px solid rgba(0,200,83,.3); background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); }
+    .chip{ white-space:nowrap; padding:8px 12px; border-radius:999px; border:1px solid rgba(0,200,83,.3); background: rgba(0,0,0,0.6); color: #00C853; cursor: pointer; transition: all 0.3s ease; backdrop-filter: blur(10px); }
+    .chip:hover{ background: rgba(0,200,83,0.1); border-color: rgba(0,200,83,0.6); transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0,200,83,0.2); }
+    .chip.is-active{ background: linear-gradient(45deg, #00C853, #4CAF50); color: white; border-color: #00C853; box-shadow: 0 0 20px rgba(0,200,83,0.4); }
+    .grid{ display:grid; gap:var(--gap); padding:20px 16px; grid-template-columns: repeat(4, 1fr) }
+    @media (max-width: 1024px){ .grid{ grid-template-columns: repeat(3, 1fr) } }
+    @media (max-width: 640px){ .grid{ grid-template-columns: repeat(2, 1fr) } }
+    .card{ background: rgba(0,0,0,0.8); border:1px solid rgba(0,200,83,0.3); border-radius:16px; overflow:hidden; transition: all 0.3s ease; backdrop-filter: blur(10px); position: relative; }
+    .card::before{ content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(45deg, rgba(0,200,83,0.05) 0%, transparent 50%, rgba(0,200,83,0.05) 100%); opacity: 0; transition: opacity 0.3s ease; }
+    .card:hover::before{ opacity: 1; }
+    .card:hover{ transform: translateY(-8px) scale(1.02); border-color: rgba(0,200,83,0.6); box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 30px rgba(0,200,83,0.2); }
+    .thumb{ position:relative; aspect-ratio:1/1; overflow:hidden; background:#111 }
+    .thumb img{ width:100%; height:100%; object-fit:cover; transition:opacity .3s ease, transform .4s ease }
+    .thumb img + img{ position:absolute; inset:0; opacity:0 }
+    .card:hover .thumb img{ transform:scale(1.03) }
+    .card:hover .thumb img + img{ opacity:1 }
+    .meta{ padding:10px 12px; color: #fff; }
+    .brand{ font-size:12px; color:#00C853; }
+    .name{ font-size:14px; font-weight:700; margin-top:4px; color: #fff; }
+    .price{ margin-top:6px; color: #fff; }
+    .price s{ color:#999; margin-right:6px }
+    /* 限定感演出 */
+    .scarcity-badge{ position:absolute; top:12px; right:12px; background: linear-gradient(45deg, #ff6b6b, #ffa500); color: white; padding:4px 8px; border-radius:6px; font-size:12px; font-weight:600; animation: scarcityBlink 1s infinite; box-shadow: 0 2px 8px rgba(255,107,107,0.3); }
+    /* 社会的証明 */
+    .social-proof-badge{ position:absolute; bottom:12px; left:12px; background: rgba(0,200,83,0.9); color: white; padding:4px 8px; border-radius:6px; font-size:12px; font-weight:600; animation: popularityWave 2s ease-in-out infinite; }
+  </style>
+</head>
+<body>
+  <header class="site-header future-header">
+    <div class="header-inner">
+      <label for="nav-toggle" class="hamburger" aria-label="メニューを開閉"><span></span><span></span><span></span></label>
+      <a class="brand" href="brand.html" aria-label="BKTYSSHOP Home">BKTYSSHOP</a>
+      <input id="nav-toggle" class="nav-toggle" type="checkbox" aria-hidden="true">
+      <nav class="nav" aria-label="ナビゲーション">
+        <ul>
+          <li><a href="brand.html">BKTYS SHOP</a></li>
+        </ul>
+      </nav>
+      <label class="menu-overlay" for="nav-toggle" aria-hidden="true"></label>
+      <aside class="menu-drawer" aria-label="メニュー">
+        <header class="drawer-head"><span class="drawer-title">BKTYSSHOP</span><label for="nav-toggle" class="drawer-close" aria-label="閉じる">×</label></header>
+        <ul class="drawer-nav">
+          <li><a href="brand.html">Home</a></li>
+          <li><a href="https://velara.official.ec/" target="_blank">Official</a></li>
+          <li><a href="members.html">Members</a></li>
+          <li><a href="#" id="cart-toggle-mobile">Cart</a></li>
+        </ul>
+      </aside>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="hero" aria-label="Official Hero">
+      <img class="is-active" src="assets/images/S__23273487.jpg" alt="hero1">
+      <img src="assets/images/S__23273486.jpg" alt="hero2">
+      <img src="assets/images/S__23273484.jpg" alt="hero3">
+      <div class="hero-copy">BKTYS 公式デザイン</div>
+    </section>
+
+    <div class="chips" id="chips"></div>
+    <!-- BASEショップ組み込み -->
+    <div class="base-shop-container" style="padding: 20px 16px;">
+      <iframe 
+        src="https://your-base-shop.thebase.in/" 
+        width="100%" 
+        height="800" 
+        frameborder="0"
+        style="border-radius: 16px; overflow: hidden; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); border: 1px solid rgba(0,200,83,0.3);">
+      </iframe>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 BKTYS. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- カートドロワー -->
+  <div class="cart-overlay" id="cart-overlay"></div>
+  <aside class="cart-drawer" id="cart-drawer">
+    <header class="cart-drawer-header">
+      <h2>カート</h2>
+      <button class="cart-drawer-close" id="cart-close" aria-label="カートを閉じる">×</button>
+    </header>
+    <div class="cart-drawer-content" id="cart-content">
+      <!-- カートの内容がここに動的に挿入されます -->
+    </div>
+  </aside>
+
+  <script src="js/app.js"></script>
+  <script src="js/analytics.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/products-fallback.js"></script>
+  <script>
+    (function(){
+      const slides = Array.from(document.querySelectorAll('.hero img'));
+      let i=0; setInterval(()=>{ slides[i].classList.remove('is-active'); i=(i+1)%slides.length; slides[i].classList.add('is-active'); }, 6000);
+    })();
+
+    async function fetchProducts(){ const r=await fetch('assets/data/products.json'); return (await r.json()).products||[] }
+    function price(p){ return p.salePrice?`<s>¥${p.price.toLocaleString()}</s><strong>¥${p.salePrice.toLocaleString()}</strong>`:`<strong>¥${p.price.toLocaleString()}</strong>` }
+    function card(p){
+      const isLimited = p.tags && p.tags.includes('limited');
+      const isPopular = p.rank_score && p.rank_score > 80;
+      const stock = p.stock || 0;
+      const isLowStock = stock > 0 && stock <= 5;
+      
+      return `<a class="card" href="product.html?slug=${encodeURIComponent(p.slug)}">
+        <div class="thumb">${(p.images||[]).slice(0,2).map(img=>`<img src="${img.url}" alt="${img.alt||p.name}">`).join('')}
+          ${isLimited?`<span class=\"scarcity-badge\">限定</span>`:''}
+          ${isLowStock?`<span class=\"scarcity-badge\">残り${stock}個</span>`:''}
+          ${isPopular?`<span class=\"social-proof-badge\">人気</span>`:''}
+        </div>
+        <div class="meta"><div class="brand">${p.brand}</div><div class="name">${p.name}</div><div class="price">${price(p)}</div></div>
+      </a>`;
+    }
+
+    (async function init(){
+      let all = [];
+      try{ all = await fetchProducts(); }catch(_e){ all = window.BK_PRODUCTS||[] }
+      if(!all || all.length===0){ all = window.BK_PRODUCTS||[] }
+      all = all.filter(p=> (p.tags||[]).includes('official'));
+      const chips = ['All','Tee','Hoodie','Bag','Accessory'];
+      const chipsEl = document.getElementById('chips');
+      let active='All';
+      chips.forEach(c=>{ const b=document.createElement('button'); b.className='chip'; b.textContent=c; if(c===active) b.classList.add('is-active'); b.addEventListener('click',()=>{active=c; chipsEl.querySelectorAll('.chip').forEach(x=>x.classList.remove('is-active')); b.classList.add('is-active'); apply();}); chipsEl.appendChild(b); });
+      function apply(){
+        const list = active==='All'? all : all.filter(p=> (p.tags||[]).some(t=> t.toLowerCase().includes(active.toLowerCase())));
+        document.getElementById('grid').innerHTML = list.map(card).join('');
+      }
+      apply();
+    })();
+
+    // 規約同意チェック
+    function checkTermsAgreement() {
+      const agreed = localStorage.getItem('bktys_terms_agreed');
+      if (!agreed) {
+        // 規約未同意の場合は規約ページへリダイレクト
+        window.location.href = 'terms.html';
+        return false;
+      }
+      
+      try {
+        const agreementData = JSON.parse(agreed);
+        if (!agreementData.agreed) {
+          // 規約未同意の場合は規約ページへリダイレクト
+          window.location.href = 'terms.html';
+          return false;
+        }
+      } catch (e) {
+        // エラーの場合は規約ページへリダイレクト
+        window.location.href = 'terms.html';
+        return false;
+      }
+      
+      return true;
+    }
+
+    // カートドロワーの制御
+    document.addEventListener('DOMContentLoaded', function() {
+      // 規約同意チェック
+      if (!checkTermsAgreement()) {
+        return;
+      }
+      const cartToggle = document.getElementById('cart-toggle');
+      const cartToggleMobile = document.getElementById('cart-toggle-mobile');
+      const cartOverlay = document.getElementById('cart-overlay');
+      const cartDrawer = document.getElementById('cart-drawer');
+      const cartClose = document.getElementById('cart-close');
+
+      function openCart() {
+        cartOverlay.classList.add('open');
+        cartDrawer.classList.add('open');
+        renderCart();
+      }
+
+      function closeCart() {
+        cartOverlay.classList.remove('open');
+        cartDrawer.classList.remove('open');
+      }
+
+      function renderCart() {
+        const cart = window.BKTYSCart?.load() || { items: [] };
+        const cartContent = document.getElementById('cart-content');
+        
+        if (cart.items.length === 0) {
+          cartContent.innerHTML = '<p>カートは空です</p>';
+          return;
+        }
+
+        const cartItems = cart.items.map(item => `
+          <div class="cart-item">
+            <img src="${item.image || 'assets/images/placeholder.jpg'}" alt="${item.name}" class="cart-item-image">
+            <div class="cart-item-details">
+              <div class="cart-item-name">${item.name}</div>
+              <div class="cart-item-size">サイズ: ${item.size}</div>
+              <div class="cart-item-controls">
+                <div class="cart-item-qty">
+                  <button onclick="updateQty('${item.sku}', ${item.qty - 1})">-</button>
+                  <span>${item.qty}</span>
+                  <button onclick="updateQty('${item.sku}', ${item.qty + 1})">+</button>
+                </div>
+                <div class="cart-item-price">¥${(item.price * item.qty).toLocaleString()}</div>
+                <button class="cart-item-remove" onclick="removeItem('${item.sku}')">削除</button>
+              </div>
+            </div>
+          </div>
+        `).join('');
+
+        const subtotal = cart.items.reduce((sum, item) => sum + (item.price * item.qty), 0);
+        const shipping = window.BKTYSCart?.calcShipping(subtotal) || 0;
+        const total = subtotal + shipping;
+
+        const shippingProgress = window.BKTYSCart?.progress(subtotal) || { remain: 0, isFree: false };
+        
+        cartContent.innerHTML = `
+          ${cartItems}
+          <div class="cart-shipping-progress">
+            ${shippingProgress.isFree ? 
+              '<div class="cart-shipping-free">送料無料</div>' : 
+              `<div class="cart-shipping-progress-text">あと ¥${shippingProgress.remain.toLocaleString()} で送料無料</div>`
+            }
+            <div class="cart-shipping-progress-bar">
+              <div class="cart-shipping-progress-fill" style="width: ${shippingProgress.percent}%"></div>
+            </div>
+          </div>
+          <div class="cart-summary">
+            <div class="cart-summary-row">
+              <span>小計</span>
+              <span>¥${subtotal.toLocaleString()}</span>
+            </div>
+            <div class="cart-summary-row">
+              <span>送料</span>
+              <span>${shipping === 0 ? '無料' : `¥${shipping.toLocaleString()}`}</span>
+            </div>
+            <div class="cart-summary-total">
+              <span>合計</span>
+              <span>¥${total.toLocaleString()}</span>
+            </div>
+            <button class="cart-checkout-btn" onclick="window.location.href='checkout.html'">購入手続きへ</button>
+          </div>
+        `;
+      }
+
+      // イベントリスナー
+      cartToggle?.addEventListener('click', openCart);
+      cartToggleMobile?.addEventListener('click', openCart);
+      cartOverlay?.addEventListener('click', closeCart);
+      cartClose?.addEventListener('click', closeCart);
+
+      // グローバル関数
+      window.updateQty = function(sku, newQty) {
+        if (newQty <= 0) {
+          removeItem(sku);
+          return;
+        }
+        const cart = window.BKTYSCart?.load() || { items: [] };
+        const item = cart.items.find(i => i.sku === sku);
+        if (item) {
+          item.qty = newQty;
+          window.BKTYSCart?.save(cart);
+          renderCart();
+          window.BKTYSCart?.updateBadge();
+        }
+      };
+
+      window.removeItem = function(sku) {
+        const cart = window.BKTYSCart?.load() || { items: [] };
+        cart.items = cart.items.filter(i => i.sku !== sku);
+        window.BKTYSCart?.save(cart);
+        renderCart();
+        window.BKTYSCart?.updateBadge();
+      };
+    });
+  </script>
+</body>
+</html>
