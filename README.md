@@ -1,6 +1,6 @@
 # BKTYSSHOP Homepage
 
-BKTYS（バスケットボール部）の公式ホームページです。
+BKTYSの公式ホームページです。
 
 ## ブランド
 
