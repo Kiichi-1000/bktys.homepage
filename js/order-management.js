@@ -72,7 +72,7 @@ window.BKTYSOrders = {
       container.innerHTML = `
         <div class="empty-state">
           <p>まだ注文履歴がありません</p>
-          <a href="brand.html" class="cta-button">ショップを見る</a>
+          <a href="https://shop.bktys.com" class="cta-button">ショップを見る</a>
         </div>
       `;
       return;
