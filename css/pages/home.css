@@ -186,13 +186,13 @@
 .sponsor-card:hover::before{ left:100% }
 .sponsor-card::after{ content:""; position:absolute; inset:0; background:linear-gradient(135deg, rgba(102,126,234,.02) 0%, transparent 50%); opacity:0; transition:opacity .4s ease; pointer-events:none }
 .sponsor-card:hover::after{ opacity:1 }
-.sponsor-logo-container{ display:flex; align-items:center; gap:24px; margin-bottom:32px; padding-bottom:24px; border-bottom:1px solid rgba(255,255,255,.1) }
+.sponsor-logo-container{ display:flex; align-items:center; gap:24px; margin-bottom:32px; padding-bottom:24px; border-bottom:1px solid rgba(255,255,255,.1); position:relative; z-index:3 }
 .sponsor-logo{ width:80px; height:80px; background:linear-gradient(135deg,#8fb3ff,#b494ff); border-radius:16px; display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 8px 25px rgba(120,140,255,.35); filter:drop-shadow(0 8px 24px rgba(120,140,255,.45)) }
 .logo-placeholder{ font-size:18px; font-weight:700; color:#fff; letter-spacing:1px }
 .sponsor-company-info{ flex:1 }
 .company-name{ font-size:24px; font-weight:700; margin:0 0 12px 0; color:#1e293b }
 .company-description{ font-size:16px; line-height:1.6; margin:0; color:#475569; font-weight:500 }
-.sponsor-message{ text-align:center; margin-bottom:32px; padding:24px; background:rgba(102,126,234,.05); border-radius:16px; border:1px solid rgba(102,126,234,.1); backdrop-filter:blur(24px); color:#0f172a }
+.sponsor-message{ text-align:center; margin-bottom:32px; padding:24px; background:rgba(102,126,234,.05); border-radius:16px; border:1px solid rgba(102,126,234,.1); backdrop-filter:blur(24px); color:#0f172a; position:relative; z-index:3 }
 .sponsor-message blockquote{ color:#0f172a }
 .sponsor-message cite{ color:#475569 }
 .message-icon{ font-size:32px; margin-bottom:16px; opacity:.8 }
@@ -350,7 +350,7 @@
     padding: 10px 16px;
   }
 }
-.sponsor-cta{ text-align:center }
+.sponsor-cta{ text-align:center; position:relative; z-index:3 }
 .sponsor-link{ display:inline-flex; align-items:center; gap:12px; padding:16px 32px; background:linear-gradient(135deg,#667eea,#764ba2); color:#fff; text-decoration:none; border-radius:50px; font-weight:700; font-size:16px; letter-spacing:.5px; position:relative; overflow:hidden; transition:all .4s ease; box-shadow:0 8px 25px rgba(102,126,234,.3); transform:translateY(0) }
 .sponsor-link:hover{ transform:translateY(-3px); box-shadow:0 15px 35px rgba(102,126,234,.4); background:linear-gradient(135deg,#764ba2,#667eea) }
 
@@ -399,13 +399,14 @@
 .sponsor-card--locked {
   position: relative;
   overflow: hidden;
-  border: 2px solid rgba(212, 175, 55, 0.3);
+  border: 2px solid rgba(212, 175, 55, 0.3) !important;
   box-shadow: 
     0 20px 40px rgba(0, 0, 0, 0.08),
     0 0 0 1px rgba(212, 175, 55, 0.2) inset,
-    0 0 30px rgba(212, 175, 55, 0.15);
+    0 0 30px rgba(212, 175, 55, 0.15) !important;
 }
 
+/* 基本の::afterを上書き */
 .sponsor-card--locked::after {
   content: '';
   position: absolute;
@@ -421,8 +422,9 @@
     rgba(212, 175, 55, 0.1) 100%
   );
   border-radius: 24px;
-  z-index: -1;
+  z-index: 0;
   animation: lockBorderGlow 3s ease-in-out infinite;
+  pointer-events: none;
 }
 
 @keyframes lockBorderGlow {
@@ -435,16 +437,17 @@
 }
 
 /* 大きな鍵アイコン（右上） */
-.lock-icon {
+.sponsor-card--locked .lock-icon {
   position: absolute;
   top: 20px;
   right: 20px;
   width: 48px;
   height: 48px;
   color: #d4af37;
-  z-index: 10;
+  z-index: 15;
   animation: lockPulse 2s ease-in-out infinite;
   filter: drop-shadow(0 4px 8px rgba(212, 175, 55, 0.4));
+  pointer-events: none;
 }
 
 .lock-icon svg {
@@ -464,7 +467,7 @@
 }
 
 /* ロックオーバーレイ（鍵をかけたような視覚効果） */
-.lock-overlay {
+.sponsor-card--locked .lock-overlay {
   position: absolute;
   inset: 0;
   background: 
@@ -483,9 +486,10 @@
       rgba(212, 175, 55, 0.03) 20px
     );
   pointer-events: none;
-  z-index: 1;
+  z-index: 2;
   opacity: 0.6;
   animation: lockPattern 3s linear infinite;
+  border-radius: 24px;
 }
 
 @keyframes lockPattern {
