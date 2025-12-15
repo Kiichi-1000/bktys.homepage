@@ -125,7 +125,7 @@
 
   function cardHTML(p){
     const price = p.salePrice || p.price;
-    return `<a class="reco-card" href="https://shop.bktys.com">
+    return `<a class="reco-card" href="product.html?slug=${encodeURIComponent(p.slug)}">
       <img src="${p.images?.[0]?.url||''}" alt="${p.images?.[0]?.alt||p.name}">
       <div class="reco-meta">
         <div class="reco-brand">${p.brand}</div>

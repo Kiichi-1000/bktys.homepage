@@ -4,8 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BKTYS for Students - BKTYSSHOP</title>
-  <link rel="icon" type="image/jpeg" href="assets/images/BKTYShomepagefavicon.JPG">
-  <link rel="shortcut icon" type="image/jpeg" href="assets/images/BKTYShomepagefavicon.JPG">
   <link rel="stylesheet" href="css/sanitize.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/components.css">
@@ -58,18 +56,18 @@
   <header class="site-header future-header">
     <div class="header-inner">
       <label for="nav-toggle" class="hamburger" aria-label="メニューを開閉"><span></span><span></span><span></span></label>
-      <a class="brand" href="https://shop.bktys.com" aria-label="BKTYSSHOP Home">BKTYSSHOP</a>
+      <a class="brand" href="brand.html" aria-label="BKTYSSHOP Home">BKTYSSHOP</a>
       <input id="nav-toggle" class="nav-toggle" type="checkbox" aria-hidden="true">
       <nav class="nav" aria-label="ナビゲーション">
         <ul>
-          <li><a href="https://shop.bktys.com">BKTYS SHOP</a></li>
+          <li><a href="brand.html">BKTYS SHOP</a></li>
         </ul>
       </nav>
       <label class="menu-overlay" for="nav-toggle" aria-hidden="true"></label>
       <aside class="menu-drawer" aria-label="メニュー">
         <header class="drawer-head"><span class="drawer-title">BKTYSSHOP</span><label for="nav-toggle" class="drawer-close" aria-label="閉じる">×</label></header>
         <ul class="drawer-nav">
-          <li><a href="https://shop.bktys.com">Home</a></li>
+          <li><a href="brand.html">Home</a></li>
           <li><a href="https://velara.official.ec/" target="_blank">Official</a></li>
           <li><a href="members.html">Members</a></li>
           <li><a href="#" id="cart-toggle-mobile">Cart</a></li>
@@ -195,7 +193,7 @@
           <div style="color: #fff; padding: 40px 20px; text-align: center;">
             <h3 style="color: #00C853; margin: 0 0 20px 0;">🛒 カートは空です</h3>
             <p style="margin: 0; color: #ccc;">商品をカートに追加してください</p>
-            <button onclick="window.location.href='https://shop.bktys.com'" style="margin-top: 20px; padding: 10px 20px; background: linear-gradient(45deg, #00C853, #4CAF50); color: white; border: none; border-radius: 8px; cursor: pointer;">
+            <button onclick="window.location.href='brand.html'" style="margin-top: 20px; padding: 10px 20px; background: linear-gradient(45deg, #00C853, #4CAF50); color: white; border: none; border-radius: 8px; cursor: pointer;">
               商品を見る
             </button>
           </div>
@@ -258,7 +256,7 @@
           <span>合計</span>
           <span>¥${total.toLocaleString()}</span>
         </div>
-        <button class="cart-checkout-btn" onclick="window.location.href='https://shop.bktys.com'">
+        <button class="cart-checkout-btn" onclick="window.location.href='checkout.html'">
           チェックアウト
         </button>
       `;
@@ -332,7 +330,7 @@
       const isLowStock = stock > 0 && stock <= 5;
       
       return `
-        <a class="card" href="https://shop.bktys.com">
+        <a class="card" href="product.html?slug=${encodeURIComponent(p.slug)}">
           <div class="thumb">
             ${(p.images || []).slice(0, 2).map(img => 
               `<img src="${img.url}" alt="${img.alt || p.name}">`
@@ -408,7 +406,7 @@
             <div class="empty-state">
               <h3>商品が見つかりません</h3>
               <p>選択された条件に一致する商品がありません。</p>
-              <a href="https://shop.bktys.com" class="cta-button">ホームに戻る</a>
+              <a href="brand.html" class="cta-button">ホームに戻る</a>
             </div>
           `;
         } else {

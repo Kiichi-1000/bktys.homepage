@@ -4,8 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>利用規約 - BKTYSSHOP</title>
-  <link rel="icon" type="image/jpeg" href="assets/images/BKTYShomepagefavicon.JPG">
-  <link rel="shortcut icon" type="image/jpeg" href="assets/images/BKTYShomepagefavicon.JPG">
   <link rel="stylesheet" href="css/sanitize.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/components.css">
@@ -49,7 +47,7 @@
       <input id="nav-toggle" class="nav-toggle" type="checkbox" aria-hidden="true">
       <nav class="nav" aria-label="ナビゲーション">
         <ul>
-          <li><a href="https://shop.bktys.com">BKTYS SHOP</a></li>
+          <li><a href="brand.html">BKTYS SHOP</a></li>
         </ul>
       </nav>
       <label class="menu-overlay" for="nav-toggle" aria-hidden="true"></label>
@@ -64,7 +62,7 @@
           <li><a href="news.html">News</a></li>
           <li><a href="staff.html">Staffs</a></li>
           <li><a href="blog.html">Blogs</a></li>
-          <li><a href="https://shop.bktys.com">BKTYS for Brand</a></li>
+          <li><a href="brand.html">BKTYS for Brand</a></li>
           <li><a href="links.html">Links</a></li>
         </ul>
       </aside>
@@ -166,7 +164,7 @@
         alert('利用規約に同意いただき、ありがとうございます。BKTYSSHOPへようこそ！');
         
         // ショップページへリダイレクト
-        window.location.href = 'https://shop.bktys.com';
+        window.location.href = 'brand.html';
       } else {
         alert('利用規約に同意してください。');
       }
@@ -180,7 +178,7 @@
           const agreementData = JSON.parse(agreed);
           if (agreementData.agreed) {
             // 同意済みの場合はショップページへ
-            window.location.href = 'https://shop.bktys.com';
+            window.location.href = 'brand.html';
           }
         } catch (e) {
           // エラーの場合は規約ページを表示
