@@ -350,3 +350,158 @@
         max-width: 280px;
     }
 }
+
+
+/* ===== Main Sponsor Locked Card (鍵マーク & 募集中デザイン) ===== */
+.sponsor-card--locked{
+  position:relative;
+  overflow:hidden;
+  border:1px solid rgba(102,126,234,.28);
+  box-shadow:0 18px 40px rgba(15,23,42,.25);
+}
+
+/* カード全体にうっすらロックの雰囲気を重ねる */
+.sponsor-card--locked .lock-overlay{
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(15,23,42,.16), transparent 55%),
+    linear-gradient(135deg, rgba(148,163,255,.12), rgba(30,64,175,.04));
+  mix-blend-mode:multiply;
+  pointer-events:none;
+  opacity:.9;
+}
+
+/* 右上に小さめの鍵アイコンバッジ */
+.lock-icon{
+  position:absolute;
+  top:18px;
+  right:18px;
+  width:40px;
+  height:40px;
+  border-radius:999px;
+  background:radial-gradient(circle at 30% 30%, #fff, #d4af37);
+  box-shadow:
+    0 10px 25px rgba(15,23,42,.35),
+    0 0 0 1px rgba(255,255,255,.6) inset;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#1e293b;
+  z-index:3;
+}
+
+.lock-icon svg{
+  width:18px;
+  height:18px;
+}
+
+.lock-icon::after{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  border-radius:inherit;
+  border:1px solid rgba(255,255,255,.7);
+  opacity:.7;
+}
+
+/* 「募集中」バッジを少しリッチに */
+.recruitment-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:6px 16px;
+  border-radius:999px;
+  background:linear-gradient(135deg,#f97316,#ec4899);
+  color:#fff;
+  font-size:13px;
+  font-weight:800;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  box-shadow:0 10px 24px rgba(236,72,153,.35);
+}
+
+.lock-icon-small{
+  font-size:14px;
+}
+
+/* 募集メッセージエリアをカード内で目立たせる */
+.sponsor-message--recruiting{
+  margin-top:12px;
+  text-align:left;
+  background:rgba(129,140,248,.08);
+  border-radius:18px;
+  border:1px dashed rgba(79,70,229,.4);
+  padding:20px 22px;
+}
+
+.sponsor-message--recruiting .message-icon{
+  font-size:26px;
+  margin-bottom:10px;
+  opacity:.9;
+}
+
+.recruitment-message{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.recruitment-title{
+  font-size:20px;
+  font-weight:800;
+  letter-spacing:.06em;
+  color:#0f172a;
+}
+
+.recruitment-text{
+  font-size:14px;
+  line-height:1.7;
+  color:#334155;
+}
+
+.recruitment-benefits{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px 14px;
+  margin-top:8px;
+}
+
+.benefit-item{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:6px 10px;
+  border-radius:999px;
+  background:rgba(255,255,255,.9);
+  color:#1e293b;
+  font-size:12px;
+  box-shadow:0 4px 10px rgba(15,23,42,.08);
+}
+
+.benefit-icon{
+  font-size:14px;
+}
+
+.sponsor-link--recruiting{
+  margin-top:6px;
+}
+
+@media (max-width:768px){
+  .lock-icon{
+    top:14px;
+    right:14px;
+    width:34px;
+    height:34px;
+  }
+  .lock-icon svg{
+    width:16px;
+    height:16px;
+  }
+  .recruitment-title{
+    font-size:18px;
+  }
+  .recruitment-text{
+    font-size:13px;
+  }
+}
